@@ -1,0 +1,58 @@
+---
+title: "Week 10: Nav2 & Reinforcement Learning"
+description: "Implement autonomous navigation and learn the foundations of RL for robot control."
+keywords: ["Navigation", "Nav2", "Reinforcement Learning", "RL", "Motion Planning"]
+sidebar_position: 4
+sidebar_label: "Week 10: Nav2 & RL"
+estimated_time: 10
+week: 10
+module: 3
+prerequisites: ["Week 9: Isaac ROS"]
+learning_objectives:
+  - Configure the ROS 2 Navigation Stack (Nav2)
+  - Understand costmaps, planners, and controllers
+  - Train a simple locomotion policy using Reinforcement Learning
+  - Compare classical navigation vs. RL-based motion control
+---
+
+import LearningObjectives from '@site/src/components/LearningObjectives';
+import Prerequisites from '@site/src/components/Prerequisites';
+
+# Week 10: Nav2 & Reinforcement Learning
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+## 10.1 ROS 2 Navigation (Nav2)
+
+**Nav2** is the state-of-the-art navigation framework for ROS 2. It handles:
+- **Global Planning**: Finding the best path from A to B.
+- **Local Planning**: Avoiding dynamic obstacles and following the global path.
+- **Recovery Behaviors**: Handling situations where the robot gets stuck.
+
+### Key Components of Nav2
+- **Costmaps**: 2D or 3D grids representing obstacles.
+- **Behavior Trees**: Advanced logic for managing navigation states.
+
+## 10.2 Reinforcement Learning (RL) in Robotics
+
+Classical controllers (like PID or MPC) require complex mathematical models. **RL** allows a robot to learn through trial and error.
+
+### The RL Loop
+1. **State**: The robot observes sensors.
+2. **Action**: The robot takes a step.
+3. **Reward**: The robot gets a "+" for staying upright and a "-" for falling.
+
+## 10.3 Merging Nav2 and RL
+
+Modern humanoids often use Nav2 for **high-level path planning** and RL for **low-level motor control (locomotion)**. This combination provides the best of both worlds: safety and adaptability.
+
+---
+
+## Hands-on: Navigating in a Map
+
+Use the `ros2 launch nav2_bringup tb3_simulation_launch.py` to see Nav2 in action within a simulated environment.
+
+### Key Takeaways
+- Nav2 provides robust navigation for complex environments.
+- Reinforcement Learning is the modern tool for complex locomotion tasks.

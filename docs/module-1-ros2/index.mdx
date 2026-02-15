@@ -86,7 +86,27 @@ The ROS 2 skills you learn here will be the foundation for all future modules. Y
 - **Perception node** (Module 3): Publishes to `/detected_objects` topic
 - **Manipulation node** (Module 4): Subscribes to objects → executes grasping actions
 
-Without mastering ROS 2 communication, you cannot build the distributed autonomous system required for the capstone.
+ROS 2 serves as the communication layer for the autonomous humanoid, enabling voice commands to be translated into robot actions. Without mastering ROS 2 communication, you cannot build the distributed autonomous system required for the capstone.
+
+### Capstone Component Mapping
+
+This module specifically contributes to the following capstone components:
+
+- **Voice**: ROS 2 topics for voice command transmission
+- **Plan**: ROS 2 services for task planning coordination
+- **Navigate**: ROS 2 actions for navigation goal setting
+- **Perceive**: ROS 2 topics for sensor data streaming
+- **Manipulate**: ROS 2 actions for manipulation task execution
+
+### Capstone Skills Developed
+
+By completing this module, you will have developed the foundational skills needed for:
+
+1. **Distributed System Architecture**: Understanding how to structure your capstone project as interconnected ROS 2 nodes
+2. **Communication Protocols**: Implementing the communication patterns that will connect all capstone components
+3. **Real-time Coordination**: Using ROS 2's Quality of Service (QoS) settings to ensure reliable communication between capstone components
+4. **System Integration**: Combining different modules of your capstone project using ROS 2 messaging
+5. **Debugging & Monitoring**: Using ROS 2 tools to troubleshoot your capstone project when components don't communicate as expected
 
 ## Time Commitment
 
@@ -95,10 +115,34 @@ Without mastering ROS 2 communication, you cannot build the distributed autonomo
 - **ROS 2 Package Project**: 12 hours (Week 5)
 - **Total**: ~30 hours across 3 weeks
 
+## Module Summary
+
+Module 1: The Robotic Nervous System (ROS 2) provides the foundational communication layer for your autonomous humanoid project. You'll master ROS 2 architecture, communication patterns, and robot modeling to build distributed robotic systems. This module establishes the core infrastructure that all other modules will build upon.
+
+**Time Commitment Estimates:**
+- Week 3 (ROS 2 Architecture & Core Concepts): 10 hours
+- Week 4 (Nodes, Topics & Services): 10 hours
+- Week 5 (URDF & Package Management): 10 hours
+- **Total Module Time**: 30 hours
+
+**Learning Outcomes Achieved:**
+- Architected distributed systems with clear separation of concerns
+- Implemented communication patterns using topics, services, and actions
+- Modeled robots in URDF with proper geometry and sensors
+- Debugged robotic systems using ROS 2 tools
+- Built production packages with proper dependencies and launch files
+
+**Capstone Contribution:**
+- Serves as the communication layer for all capstone components
+- Enables voice commands to be translated into robot actions
+- Provides the foundation for distributed autonomous system architecture
+
 ## Assessment
 
 **ROS 2 Package Project** (Week 5):
 Build a multi-node system that demonstrates publishers, subscribers, services, and URDF robot modeling. Detailed rubric coming soon.
+
+[Complete ROS 2 Package Assessment](../../assessments/ros2-package)
 
 ## Next Steps
 

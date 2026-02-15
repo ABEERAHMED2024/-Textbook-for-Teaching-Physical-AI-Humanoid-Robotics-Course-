@@ -1,0 +1,58 @@
+---
+title: "Week 2: Sensor Systems & Perception in Physical AI"
+description: "Explore the 'eyes and ears' of robots: LiDAR, depth cameras, IMUs, and force sensors for environmental perception."
+keywords: ["Sensors", "LiDAR", "IMU", "Camera", "Perception", "Robotics"]
+sidebar_position: 3
+sidebar_label: "Week 2: Sensors"
+learning_objectives:
+  - "Identify different types of robotic sensors and their specific use cases"
+  - "Understand the difference between active and passive sensing systems"
+  - "Demonstrate knowledge of the role of IMUs in robot balance"
+  - "Analyze camera data for depth and distance estimation"
+prerequisites: ["docs/week-1-foundations"]
+estimated_time: 300
+content_type: "concept"
+difficulty: "beginner"
+---
+
+import LearningObjectives from '@site/src/components/LearningObjectives';
+import Prerequisites from '@site/src/components/Prerequisites';
+
+# Week 2: Sensor Systems & Perception
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+## 2.1 The Robotic Nervous System
+
+Sensors are the inputs of the robotic nervous system. They allow the robot to perceive its own state (proprioception) and the state of the world (exteroception).
+
+### Key Sensors in Physical AI
+
+1. **LiDAR (Light Detection and Ranging)**: Uses lasers to create 3D point clouds of the environment.
+2. **RGB-D Cameras**: Standard cameras that also provide depth (distance) information for every pixel.
+3. **IMU (Inertial Measurement Unit)**: Combines accelerometers and gyroscopes to measure orientation and acceleration.
+4. **Force/Torque Sensors**: Measure the interaction forces at joints or end-effectors.
+
+## 2.2 Active vs. Passive Sensing
+
+- **Active Sensing**: The sensor emits energy (like LiDAR's laser or Ultrasound) and measures the reflection.
+- **Passive Sensing**: The sensor simply detects existing energy (like a standard camera detecting light).
+
+## 2.3 Visual Perception
+
+For humanoid robots, vision is the primary way to understand human intent and navigate complex spaces. We use techniques like:
+- **Object Detection**: Identifying "What" is there.
+- **Semantic Segmentation**: Identifying "Which pixels" belong to what.
+- **Depth Estimation**: Identifying "How far" things are.
+
+---
+
+## Hands-on: Reading Sensor Data
+
+In Later weeks, we will use ROS 2 to visualize these sensors in real-time. For now, research the technical specifications of the **Intel RealSense D435i** (a common RGB-D camera).
+
+### Key Takeaways
+- Sensors bridge the gap between physical reality and digital data.
+- IMUs are critical for the balance of bipedal humanoid robots.
+- LiDAR and Vision are the primary tools for spatial awareness.

@@ -1,0 +1,67 @@
+---
+title: "Week 13: Vision-Language-Action (VLA) Models"
+description: "The cutting edge: Conversational robots that understand natural language and execute complex physical tasks."
+keywords: ["VLA", "Foundational Models", "RT-2", "Conversational Robotics", "LLM"]
+sidebar_position: 4
+sidebar_label: "Week 13: VLA Models"
+estimated_time: 12
+week: 13
+module: 4
+prerequisites: ["Week 12: Manipulation"]
+learning_objectives:
+  - Understand the architecture of Vision-Language-Action (VLA) models
+  - Integrate Large Language Models (LLMs) for high-level reasoning
+  - Use Voice Agents to trigger robotic actions
+  - Deploy an end-to-end "Voice-to-Action" pipeline for the capstone
+---
+
+import LearningObjectives from '@site/src/components/LearningObjectives';
+import Prerequisites from '@site/src/components/Prerequisites';
+
+# Week 13: Vision-Language-Action (VLA) Models
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+## 13.1 The Convergence of Generative AI and Robotics
+
+We are entering the era of **Foundational Models for Robotics**. These models, like Google's RT-2 or NVIDIA's GR00T, are trained on massive amounts of data to understand:
+- **Vision**: "I see a blue cup."
+- **Language**: "Pick up that cup and put it on the table."
+- **Action**: Sending joint velocity commands to execute it.
+
+## 13.2 Vision-Language-Action (VLA) Architecture
+
+A typical VLA pipeline looks like this:
+1. **Perception**: An image encoder extracts features.
+2. **Reasoning**: A Large Language Model (LLM) interprets the natural language command and the visual features.
+3. **Control**: The model outputs discrete tokens that map to joint motor values.
+
+## 13.3 Conversational Agents
+
+Instead of writing code like `move_to(x, y)`, we can speak to the robot:
+> "Hey Robot, I'm hungry."
+> **Robot**: "I see an apple on the counter. Should I bring it to you?"
+> "Yes, please."
+
+The robot uses its **VLA model** to plan the trajectory, its **Nav2 stack** to move to the counter, and its **Manipulation pipeline** to grasp the apple.
+
+## 13.4 Your Capstone: The Autonomous Humanoid
+
+For your final project, you will integrate everything you've learned:
+1. **Voice**: Speech-to-text input.
+2. **Plan**: LLM-based task decomposition.
+3. **Navigate**: Moving through the environment.
+4. **Perceive**: Detecting objects.
+5. **Manipulate**: Executing the task.
+
+---
+
+## Final Project: The Physical AI Assistant
+
+Showcase your humanoid in a simulated or real environment performing a "Voice-to-Action" task.
+
+### Key Takeaways
+- VLA models are the modern "brain" of humanoid robots.
+- Robotics is shifting from hand-coded logic to learned foundational models.
+- The future of Physical AI is conversational and general-purpose.

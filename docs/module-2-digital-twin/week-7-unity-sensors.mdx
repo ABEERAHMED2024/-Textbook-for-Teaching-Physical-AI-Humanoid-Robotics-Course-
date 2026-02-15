@@ -1,0 +1,55 @@
+---
+title: "Week 7: Unity for Photorealistic Simulation"
+description: "Leverage the power of game engines for high-fidelity sensor simulation and human-robot interaction."
+keywords: ["Unity", "Simulation", "Robotics", "Computer Vision", "Synthetic Data"]
+sidebar_position: 3
+sidebar_label: "Week 7: Unity"
+estimated_time: 8
+week: 7
+module: 2
+prerequisites: ["Week 6: Gazebo"]
+learning_objectives:
+  - Understand why Unity is used for computer vision in robotics
+  - Import URDF models into Unity using the Robotics Hub
+  - Simulate photorealistic camera data with noise
+  - Bridge Unity and ROS 2 using the TCP Connector
+---
+
+import LearningObjectives from '@site/src/components/LearningObjectives';
+import Prerequisites from '@site/src/components/Prerequisites';
+
+# Week 7: Unity for Photorealistic Simulation
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+## 7.1 Why Unity for Robotics?
+
+While Gazebo is great for physics, its graphics are dated. For AI-driven robots that rely on **Computer Vision**, we need photorealism. Unity provides:
+- **High-Fidelity Rendering**: Reflections, shadows, and materials.
+- **Sensor Diversity**: Realistic depth cameras, semantic segmentation cameras.
+- **Human Simulation**: Rich assets for simulating people interacting with robots.
+
+## 7.2 Unity Robotics Hub
+
+The **Unity Robotics Hub** is a suite of tools that includes:
+- **URDF Importer**: Automatically converts your ROS URDF into a Unity GameObject.
+- **ROS-TCP Connector**: A high-performance bridge to pass messages between Unity and ROS 2.
+
+## 7.3 Synthetic Data Generation
+
+One of Unity's biggest roles is creating training data for AI. We can:
+- Randomize textures and lighting (Domain Randomization).
+- Automatically label objects for object detection.
+- Export thousands of images per hour for training Vision-Language-Action (VLA) models.
+
+---
+
+## Hands-on: Exploring Unity Robotics
+
+Check out the [Unity Robotics Hub](https://github.com/Unity-Technologies/Unity-Robotics-Hub) tutorials to see how to bridge a simple robot to ROS 2.
+
+### Key Takeaways
+- Unity is chosen for its superior visual and sensor simulation.
+- The Sim-to-Real gap is narrowed by realistic visual data.
+- Unity enables the training of end-to-end AI policies in simulation.

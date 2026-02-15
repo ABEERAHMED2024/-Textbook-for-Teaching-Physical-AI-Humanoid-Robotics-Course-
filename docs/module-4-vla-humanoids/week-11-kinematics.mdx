@@ -1,0 +1,54 @@
+---
+title: "Week 11: Humanoid Kinematics & Control"
+description: "Master the mathematics of humanoid movement, balance, and stability."
+keywords: ["Kinematics", "Inverse Kinematics", "Balance", "Center of Mass", "ZMP"]
+sidebar_position: 2
+sidebar_label: "Week 11: Kinematics"
+estimated_time: 10
+week: 11
+module: 4
+prerequisites: ["Module 3: NVIDIA Isaac"]
+learning_objectives:
+  - Calculate Forward and Inverse Kinematics for a humanoid limb
+  - Understand the Zero Moment Point (ZMP) for balance
+  - Control the Center of Mass (CoM) to maintain stability
+  - Implement basic bipedal walking gates
+---
+
+import LearningObjectives from '@site/src/components/LearningObjectives';
+import Prerequisites from '@site/src/components/Prerequisites';
+
+# Week 11: Humanoid Kinematics & Control
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+## 11.1 The Complexity of Humanoid Motion
+
+Unlike a 4-wheeled robot, a humanoid is **inherently unstable**. It has a high Center of Mass (CoM) and a small support polygon (its feet). Keeping it upright requires high-frequency control loops.
+
+## 11.2 Forward vs. Inverse Kinematics
+
+- **Forward Kinematics (FK)**: From joint angles to end-effector position.
+- **Inverse Kinematics (IK)**: From desired position to required joint angles. This is where the magic happens for humanoids picking up objects.
+
+## 11.3 Balance: The Zero Moment Point (ZMP)
+
+To walk without falling, the **ZMP** (the point where all forces exerted on the ground result in no moment) must stay within the support polygon. If the ZMP leaves the footprint, the robot tips over.
+
+## 11.4 Bipedal Locomotion
+
+Walking consists of:
+1. **Double Support Phase**: Both feet on the ground.
+2. **Single Support Phase**: One foot swinging forward.
+3. **Transition**: Shifting weight.
+
+---
+
+## Exercise: Solving 3-DOF IK
+
+Try to manually calculate the joint angles for a 2D planar arm to reach a target point (X, Y).
+
+### Key Takeaways
+- Humanoids are high-DOF systems that require sophisticated IK solvers.
+- Balance is the most critical challenge in humanoid robotics.

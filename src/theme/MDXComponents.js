@@ -22,6 +22,7 @@ import CodeExample from '@site/src/components/learning/CodeExample';
 import ExerciseBlock from '@site/src/components/learning/ExerciseBlock';
 import ConceptCallout from '@site/src/components/learning/ConceptCallout';
 import AssessmentChecklist from '@site/src/components/learning/AssessmentChecklist';
+import ChapterControls from '@site/src/components/ChapterControls';
 
 // These components will be registered as they are created in subsequent phases
 // import KeyTakeaways from '@site/src/components/KeyTakeaways';
@@ -58,6 +59,7 @@ export default {
   ExerciseBlock,
   ConceptCallout,
   AssessmentChecklist,
+  ChapterControls,
 
   // Uncomment these as components are created in subsequent phases
   // KeyTakeaways,

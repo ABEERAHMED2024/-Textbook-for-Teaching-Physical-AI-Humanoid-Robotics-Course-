@@ -1,0 +1,52 @@
+---
+title: "Week 8: NVIDIA Isaac Sim & Omniverse"
+description: "Master GPU-accelerated simulation with NVIDIA Isaac Sim."
+keywords: ["Isaac Sim", "Omniverse", "NVIDIA", "GPU Simulation", "Digital Twin"]
+sidebar_position: 2
+sidebar_label: "Week 8: Isaac Sim"
+estimated_time: 10
+week: 8
+module: 3
+prerequisites: ["Module 2: Digital Twin"]
+learning_objectives:
+  - Install and configure Isaac Sim on an RTX-powered workstation
+  - Understand the Omniverse ecosystem and USD (Universal Scene Description)
+  - Perform high-speed physics simulation on the GPU
+  - Use Isaac Gym for Reinforcement Learning (RL)
+---
+
+import LearningObjectives from '@site/src/components/LearningObjectives';
+import Prerequisites from '@site/src/components/Prerequisites';
+
+# Week 8: NVIDIA Isaac Sim & Omniverse
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+## 8.1 The Power of GPU Simulation
+
+NVIDIA Isaac Sim is built on **Omniverse**, a platform for real-time 3D collaboration. Unlike Gazebo (CPU-based), Isaac Sim offloads physics and rendering to the **GPU**, enabling:
+- **Massive Parallelism**: Simulate thousands of robots simultaneously.
+- **RTX Rendering**: Real-time ray tracing for perfect sensor simulation.
+- **PhysX 5**: Advanced physics with deformable bodies and fluid simulation.
+
+## 8.2 Universal Scene Description (USD)
+
+Isaac Sim uses Pixar's **USD** as its native format. USD allows for:
+- **Layering**: Multiple people working on the same scene simultaneously.
+- **Interoperability**: Easy export/import from Maya, Blender, and 3ds Max.
+- **Scalability**: Scenes with millions of objects.
+
+## 8.3 Isaac Gym
+
+For training humanoid locomotion, Isaac Sim integrates with **Isaac Gym**. This allows the robot to learn to walk through millions of trials in just a few hours of real-world time.
+
+---
+
+## Exercise: Running Isaac Sim
+
+If you have an RTX GPU, launch Isaac Sim and open the "Hospital" or "Warehouse" demo environments.
+
+### Key Takeaways
+- Isaac Sim is the future of large-scale robotic AI training.
+- GPU acceleration is mandatory for modern humanoid research.

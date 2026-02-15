@@ -1,0 +1,61 @@
+---
+title: "Week 6: Gazebo Simulation"
+description: "Learn to build physics-accurate simulations using Gazebo and ROS 2."
+keywords: ["Gazebo", "Simulation", "ROS 2", "Physics Engine", "URDF"]
+sidebar_position: 2
+sidebar_label: "Week 6: Gazebo"
+estimated_time: 8
+week: 6
+module: 2
+prerequisites: ["Module 1: ROS 2"]
+learning_objectives:
+  - Set up Gazebo with ROS 2 integration
+  - Create physics-accurate worlds using SDF
+  - Spawn URDF models into a simulated environment
+  - Control a simulated robot using ROS 2 topics
+---
+
+import LearningObjectives from '@site/src/components/LearningObjectives';
+import Prerequisites from '@site/src/components/Prerequisites';
+
+# Week 6: Gazebo Simulation
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+## 6.1 Introduction to Gazebo
+
+Gazebo is the industry standard for open-source robotics simulation. It allows you to test code in a 3D environment with gravity, friction, and sensor noise.
+
+### Why Gazebo for Humanoids?
+- **Physics Fidelity**: Uses engines like ODE and Bullet.
+- **ROS 2 Native**: The `gazebo_ros_pkgs` bridge allows seamless communication.
+- **Large Community**: Thousands of pre-built robot and environment models.
+
+## 6.2 Building Worlds
+
+A Gazebo "world" file (`.world`) defines the environment. It includes:
+- **Gravity**: Direction and magnitude.
+- **Physics**: Solver parameters.
+- **Models**: Buildings, obstacles, and furniture.
+- **Lighting**: Sun direction and ambient light.
+
+## 6.3 Spawning Your Robot
+
+To bring your humanoid (from Week 5) into Gazebo, you use the `gazebo_ros` spawn service. Your URDF must include `<gazebo>` tags for:
+- **Sensors**: Attaching virtual cameras or LiDAR.
+- **Plugins**: Adding controllers for motors.
+
+---
+
+## Exercise: Spawning a Mobile Robot
+
+Try running the following command if you have Gazebo installed:
+```bash
+ros2 launch gazebo_ros gazebo.launch.py
+```
+Then spawn a simple box or a pre-built robot model from the Gazebo library.
+
+### Key Takeaways
+- Gazebo provides the physical "grounding" for your code.
+- Simulation is the first step in the Sim-to-Real workflow.

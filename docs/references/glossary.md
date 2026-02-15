@@ -1,383 +1,465 @@
 ---
-title: Robotics Glossary
-description: Comprehensive glossary of robotics, ROS 2, simulation, and AI terminology used throughout the course
-keywords: [glossary, robotics terms, ROS 2, Isaac Sim, VLA, definitions]
+title: Glossary of Robotics Terms
+description: Comprehensive glossary of robotics terms used throughout the Physical AI & Humanoid Robotics Textbook
+keywords: [robotics, glossary, terminology, definitions]
 sidebar_position: 1
+sidebar_label: Glossary
 ---
 
-import GlossarySearch from '@site/src/components/GlossarySearch';
+<ChapterControls />
 
-# Robotics Glossary
-
-Quick reference for robotics terminology used throughout the Physical AI & Humanoid Robotics course. Terms are organized alphabetically.
-
-<GlossarySearch />
-
----
+# Glossary of Robotics Terms
 
 ## A
 
-## Action (ROS 2)
-Asynchronous communication pattern in ROS 2 for long-running tasks (e.g., navigation to a goal). Actions provide feedback during execution and can be preempted. Consists of goal, result, and feedback messages.
+### Actuator
+**Definition**: A component of a robot that converts energy (electrical, hydraulic, or pneumatic) into mechanical motion$1 Common types include servo motors, stepper motors, and linear actuators$1
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+**Related Terms**: Motor, Joint, Control System
 
-## Actuator
-Device that converts energy (electrical, pneumatic, hydraulic) into motion. Examples: electric motors, servo motors, pneumatic cylinders. Actuators enable robots to move and manipulate objects.
+**Used In**: [Introduction](intro)
+<!-- TODO: [Week 3: ROS 2 Architecture]($1$1/module-1-ros2/chapter-1-intro-ros2), [Week 4: Topics & Services]($1$1/module-1-ros2/chapter-2-nodes-topics) -->
 
-## Algolia DocSearch
-Search-as-a-service solution for documentation websites. Provides instant search with typo tolerance, faceting, and custom ranking. Used in this textbook for content search.
+### Artificial Intelligence (AI)
+**Definition**: The simulation of human intelligence processes by machines, especially computer systems$1 In robotics, AI enables robots to perceive, reason, learn, and adapt to their environment$1
 
-**Related**: [Introduction](../intro)
+**Related Terms**: Machine Learning, Deep Learning, Cognitive Robotics
 
----
+**Used In**: [Introduction](intro)
+<!-- TODO: [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics) -->
+
+### Autonomous System
+**Definition**: A system that can operate independently without human intervention, making decisions based on its programming and environmental inputs$1
+
+**Related Terms**: Autonomy, Control System, Perception
+
+**Used In**: [Introduction](intro), [Module 4: VLA & Humanoids](module-4-vla-humanoids/index)
 
 ## B
 
-## Bag File (ROS 2)
-Format for recording and playing back ROS 2 message data. Essential for debugging, algorithm development, and sharing datasets. File extension: `.db3` (SQLite format in ROS 2).
+### Behavior-Based Robotics
+**Definition**: An approach to robotics that structures robot control systems as collections of individual behaviors that operate in parallel and compete for control of the robot$1
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+**Related Terms**: Control Architecture, Subsumption Architecture, Reactive Systems
 
-## Base Link
-Standard coordinate frame attached to a robot's base (typically center of robot at ground level). All other robot frames are defined relative to base_link.
+**Used In**: <!-- TODO: [Week 4: Topics & Services]($1$1/module-1-ros2/chapter-2-nodes-topics) -->
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+### Bipedal Locomotion
+**Definition**: The act of walking on two legs, a complex control problem in humanoid robotics that requires balance, coordination, and dynamic stability$1
 
----
+**Related Terms**: Gait, Balance Control, Inverse Dynamics
+
+**Used In**: [Module 4: VLA & Humanoids]($1$1/module-4-vla-humanoids/index$1mdx), [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation)
 
 ## C
 
-## Capstone Project
-Culminating project integrating all course modules. Students build an autonomous humanoid system with voice-driven manipulation: Voice → Plan → Navigate → Perceive → Manipulate.
+### Cartesian Space
+**Definition**: The 3D space defined by X, Y, and Z coordinates, as opposed to joint space which is defined by joint angles$1 In robotics, this is used to describe the position and orientation of an end-effector$1
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+**Related Terms**: Joint Space, End-Effector, Kinematics
 
-## Computation Graph
-Network of ROS 2 nodes communicating via topics, services, and actions. Visualized using `rqt_graph`. Enables distributed robotics architectures.
+**Used In**: [Week 5: URDF]($1$1/module-1-ros2/chapter-4-urdf-robot-modeling), [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics)
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+### Control System
+**Definition**: A system that manages, commands, directs, or regulates the behavior of other devices or systems$1 In robotics, this typically refers to the algorithms and hardware that determine how a robot moves and responds to its environment$1
 
-## CUDA (Compute Unified Device Architecture)
-NVIDIA parallel computing platform enabling GPU-accelerated computation. Required for Isaac Sim and deep learning inference on robots.
+**Related Terms**: Actuator, Sensor, Feedback Control
 
-**Related**: [Workstation Setup](../setup/workstation)
+**Used In**: [Week 3: ROS 2 Architecture]($1$1/module-1-ros2/chapter-1-intro-ros2), [Week 4: Topics & Services]($1$1/module-1-ros2/chapter-2-nodes-topics)
 
----
+### Computer Vision
+**Definition**: A field of artificial intelligence that trains computers to interpret and understand the visual world$1 Using digital images from cameras and videos and deep learning models, machines can accurately identify and classify objects and react accordingly$1
+
+**Related Terms**: Perception, Image Processing, Object Recognition
+
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 9: Isaac ROS & VSLAM]($1$1/module-3-isaac/week-9-isaac-ros-vslam$1md)
 
 ## D
 
-## DDS (Data Distribution Service)
-Middleware standard used by ROS 2 for real-time, reliable communication. Implementations include Fast-DDS, CycloneDDS, RTI Connext. Replaces TCPROS from ROS 1.
+### Degrees of Freedom (DOF)
+**Definition**: The number of independent movements a mechanical system can make$1 In robotics, this refers to the number of joints or independent movements a robot or robot arm can perform$1
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+**Related Terms**: Joint, Kinematics, Workspace
 
-## Degrees of Freedom (DOF)
-Number of independent parameters defining robot configuration. A humanoid arm typically has 7 DOF (shoulder: 3, elbow: 1, wrist: 3).
+**Used In**: [Week 5: URDF]($1$1/module-1-ros2/chapter-4-urdf-robot-modeling), [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics)
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+### Differential Drive
+**Definition**: A common drive mechanism used in mobile robotics that uses two wheels mounted on a common axis and a set of castor wheels for balance$1 The robot is turned by driving the wheels at different speeds$1
 
-## Digital Twin
-Virtual replica of a physical system used for simulation, testing, and optimization. In robotics, digital twins enable algorithm validation before hardware deployment.
+**Related Terms**: Mobile Robot, Wheel Odometry, Navigation
 
-**Related**: [Module 2: Digital Twin](../module-2-digital-twin)
+**Used In**: [Module 2: Digital Twin]($1$1/module-2-digital-twin/index$1md), [Week 6: Gazebo]($1$1/module-2-digital-twin/week-6-gazebo$1md)
 
-## Docusaurus
-Static site generator used to build this textbook. Features include React-based theming, Algolia search, and MDX support.
+### Direct Kinematics
+**Definition**: The process of calculating the position and orientation of the end-effector of a robot arm given the joint angles$1 Also known as forward kinematics$1
 
----
+**Related Terms**: Forward Kinematics, Inverse Kinematics, Joint Space
+
+**Used In**: [Week 5: URDF]($1$1/module-1-ros2/chapter-4-urdf-robot-modeling), [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics)
 
 ## E
 
-## Embodied AI
-AI systems that interact with the physical world through sensors and actuators. Combines perception, reasoning, and action execution. Contrast with purely digital AI (e.g., chatbots).
+### End-Effector
+**Definition**: The device at the end of a robotic arm that interacts with the environment$1 This can be a gripper, tool, or sensor depending on the robot's intended function$1
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+**Related Terms**: Manipulator, Tool Center Point, Gripper
 
-## End Effector
-Terminal device attached to robot's kinematic chain (e.g., gripper, suction cup, camera). Performs manipulation tasks.
+**Used In**: [Week 5: URDF]($1$1/module-1-ros2/week-5-urdf$1md), [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation$1md)
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+### Embodiment
+**Definition**: The physical form of a robot, including its shape, size, and sensory-motor capabilities$1 The concept that intelligence emerges from the interaction between an agent and its environment$1
 
----
+**Related Terms**: Morphology, Sensorimotor Loop, Situated Cognition
+
+**Used In**: [Introduction]($1$1/intro$1mdx), [Module 4: VLA & Humanoids]($1$1/module-4-vla-humanoids/index$1md)
 
 ## F
 
-## Flexsearch
-Fast, memory-efficient full-text search library. Used in this textbook for glossary search. Provides sub-100ms query times.
+### Feedback Control
+**Definition**: A control system that uses sensors to monitor the output of a system and adjusts the input to achieve the desired output$1 Essential for stable robot control$1
 
-**Related**: This glossary uses Flexsearch for instant term lookup
+**Related Terms**: PID Controller, Sensor, Actuator
 
-## Forward Kinematics (FK)
-Computing end-effector pose given joint angles. Used for simulation and motion visualization.
+**Used In**: [Week 3: ROS 2 Architecture]($1$1/module-1-ros2/week-3-architecture$1md), [Week 10: Nav2 & Reinforcement Learning]($1$1/module-3-isaac/week-10-nav2-rl$1md)
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+### Forward Kinematics
+**Definition**: The process of calculating the position and orientation of the end-effector of a robot arm given the joint angles$1 Also known as direct kinematics$1
 
----
+**Related Terms**: Direct Kinematics, Inverse Kinematics, Joint Space
+
+**Used In**: [Week 5: URDF]($1$1/module-1-ros2/chapter-4-urdf-robot-modeling), [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics)
+
+### Force Control
+**Definition**: A control strategy that regulates the forces applied by a robot to its environment, often used in tasks requiring precise interaction with objects$1
+
+**Related Terms**: Impedance Control, Compliance, Haptic Feedback
+
+**Used In**: [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation$1md)
 
 ## G
 
-## Gazebo
-Open-source 3D robotics simulator with physics engines (ODE, Bullet, Dart). Integrates natively with ROS 2. Suitable for rapid prototyping.
+### Gazebo
+**Definition**: A 3D simulation environment for robotics that provides realistic physics simulation, high-quality graphics, and convenient programmatic interfaces$1 Commonly used with ROS$1
 
-**Related**: [Module 2: Digital Twin](../module-2-digital-twin)
+**Related Terms**: Simulation, Physics Engine, Robot Simulation
 
-## GPU (Graphics Processing Unit)
-Parallel processor designed for graphics rendering. Repurposed for AI training (CUDA), physics simulation (PhysX), and ray tracing. NVIDIA RTX GPUs required for Isaac Sim.
+**Used In**: [Module 2: Digital Twin]($1$1/module-2-digital-twin/index$1md), [Week 6: Gazebo]($1$1/module-2-digital-twin/week-6-gazebo$1md)
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+### General-Purpose Robot
+**Definition**: A robot designed to perform a variety of tasks rather than being specialized for a single function$1 These robots typically have more degrees of freedom and flexible programming$1
 
----
+**Related Terms**: Specialized Robot, Manipulator, Task Flexibility
+
+**Used In**: [Introduction]($1$1/intro$1mdx), [Module 4: VLA & Humanoids]($1$1/module-4-vla-humanoids/index$1md)
+
+### Gripper
+**Definition**: An end-effector designed to grasp and hold objects$1 Can be mechanical (with fingers), vacuum-based, or magnetic depending on the application$1
+
+**Related Terms**: End-Effector, Manipulator, Grasping
+
+**Used In**: [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation$1md)
 
 ## H
 
-## Homogeneous Transformation
-4x4 matrix combining rotation (3x3) and translation (3x1) for coordinate frame transformations. Standard in robotics for pose representation.
+### Hardware-in-the-Loop (HIL)
+**Definition**: A testing technique that involves connecting physical hardware components to a simulation environment to validate system behavior under realistic conditions$1
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+**Related Terms**: Simulation, Testing, Validation
 
-## Humanoid Robot
-Robot with human-like morphology (head, torso, two arms, two legs). Examples: Boston Dynamics Atlas, Unitree H1, Tesla Optimus. Typically 30+ degrees of freedom.
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 8: Isaac Sim]($1$1/module-3-isaac/week-8-isaac-sim$1md)
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+### Haptic Feedback
+**Definition**: The use of touch and motion to communicate with the user, often implemented in robotic systems to provide tactile information about the environment$1
 
----
+**Related Terms**: Force Control, Tactile Sensors, Teleoperation
+
+**Used In**: [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation$1md)
+
+### Humanoid Robot
+**Definition**: A robot with a human-like body structure, typically featuring a head, torso, two arms, and two legs$1 Designed to operate in human environments$1
+
+**Related Terms**: Bipedal Locomotion, Anthropomorphic Design, Social Robotics
+
+**Used In**: [Introduction]($1$1/intro$1mdx), [Module 4: VLA & Humanoids]($1$1/module-4-vla-humanoids/index$1md)
 
 ## I
 
-## IMU (Inertial Measurement Unit)
-Sensor measuring acceleration and angular velocity. Combines accelerometer, gyroscope, and sometimes magnetometer. Essential for robot balance and orientation estimation.
+### Inverse Dynamics
+**Definition**: The calculation of the forces and torques required to generate a specific motion of a robot, taking into account the robot's mass, inertia, and external forces$1
 
-**Related**: [Module 2: Digital Twin](../module-2-digital-twin)
+**Related Terms**: Forward Dynamics, Kinematics, Force Control
 
-## Inverse Kinematics (IK)
-Computing joint angles needed to achieve desired end-effector pose. More complex than FK; may have multiple solutions or no solution.
+**Used In**: [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics$1md), [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation$1md)
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+### Inverse Kinematics
+**Definition**: The process of calculating the joint angles required to position the end-effector of a robot arm at a specific location and orientation$1
 
-## Isaac Gym
-NVIDIA's reinforcement learning toolkit built on Isaac Sim. Enables massively parallel policy training (10,000+ environments simultaneously) using GPU acceleration.
+**Related Terms**: Forward Kinematics, Joint Space, Workspace
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+**Used In**: [Week 5: URDF]($1$1/module-1-ros2/chapter-4-urdf-robot-modeling), [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics)
 
-## Isaac Sim
-NVIDIA's GPU-accelerated robotics simulator built on Omniverse. Features photorealistic RTX rendering, PhysX 5 physics, native ROS 2 integration.
+### IMU (Inertial Measurement Unit)
+**Definition**: A device that measures and reports a body's specific force, angular rate, and sometimes the magnetic field surrounding the body, using a combination of accelerometers, gyroscopes, and magnetometers$1
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+**Related Terms**: Sensor, Accelerometer, Gyroscope
 
----
+**Used In**: [Week 7: Unity Sensors]($1$1/module-2-digital-twin/week-7-unity-sensors$1md)
 
 ## J
 
-## Jacobian Matrix
-Matrix relating joint velocities to end-effector velocities. Used for velocity control and singularity analysis. Size: 6×n (6 DOF end-effector, n joints).
+### Jacobian Matrix
+**Definition**: A matrix that describes the relationship between the joint velocities of a robot and the linear and angular velocities of its end-effector$1
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+**Related Terms**: Kinematics, Velocity, Manipulator
 
-## Jetson Orin Nano
-NVIDIA embedded GPU platform for edge AI. Features 1024 CUDA cores, 8GB RAM, 5-15W power consumption. Ideal for on-robot AI inference.
+**Used In**: [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics$1md)
 
-**Related**: [Edge Kit Setup](../setup/edge-kit)
+### Joint
+**Definition**: A connection between two or more links in a robot that allows relative motion between them$1 Joints can be revolute (rotary), prismatic (linear), or more complex$1
 
----
+**Related Terms**: Link, Degrees of Freedom, Actuator
+
+**Used In**: [Week 5: URDF]($1$1/module-1-ros2/chapter-4-urdf-robot-modeling), [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics)
+
+## K
+
+### Kinematics
+**Definition**: The study of motion without considering the forces that cause the motion$1 In robotics, it refers to the relationship between joint positions and the position and orientation of the end-effector$1
+
+**Related Terms**: Forward Kinematics, Inverse Kinematics, Jacobian
+
+**Used In**: [Week 5: URDF]($1$1/module-1-ros2/chapter-4-urdf-robot-modeling), [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics)
+
+### Kinesthetic Teaching
+**Definition**: A method of programming a robot by physically guiding it through the desired motions, allowing the robot to learn and repeat the demonstrated behavior$1
+
+**Related Terms**: Programming by Demonstration, Learning from Demonstration, Physical Human-Robot Interaction
+
+**Used In**: [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation$1md)
 
 ## L
 
-## LiDAR (Light Detection and Ranging)
-Sensor using laser pulses to measure distances and create 3D point clouds. Used for mapping, obstacle avoidance, and localization.
+### LIDAR (Light Detection and Ranging)
+**Definition**: A remote sensing method that uses light in the form of a pulsed laser to measure distances to objects, creating precise, three-dimensional information about the surrounding environment$1
 
-**Related**: [Module 2: Digital Twin](../module-2-digital-twin)
+**Related Terms**: Sensor, Range Finder, SLAM
 
-## LLM (Large Language Model)
-AI model trained on text data for natural language understanding. Examples: GPT-4, Claude, LLaMA. In robotics, used for task planning from voice commands.
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 9: Isaac ROS & VSLAM]($1$1/module-3-isaac/week-9-isaac-ros-vslam$1md)
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+### Localization
+**Definition**: The process by which a robot determines its position and orientation in a given environment, often using sensors and maps$1
 
----
+**Related Terms**: Mapping, SLAM, Navigation
+
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 10: Nav2 & Reinforcement Learning]($1$1/module-3-isaac/week-10-nav2-rl$1md)
+
+### Learning from Demonstration
+**Definition**: A technique in robotics where a robot learns a task by observing and imitating human demonstrations, reducing the need for explicit programming$1
+
+**Related Terms**: Programming by Demonstration, Imitation Learning, Kinesthetic Teaching
+
+**Used In**: [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation$1md)
 
 ## M
 
-## Manipulation
-Process of grasping, moving, and releasing objects. Requires perception (object detection), planning (grasp pose), and control (trajectory execution).
+### Manipulator
+**Definition**: A robot arm designed to manipulate objects in its environment, typically consisting of multiple links connected by joints and ending in an end-effector$1
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+**Related Terms**: End-Effector, Joint, Degrees of Freedom
 
-## MoveIt 2
-Motion planning framework for ROS 2. Includes inverse kinematics solvers, collision checking, and trajectory generation. Widely used for manipulation.
+**Used In**: [Week 5: URDF]($1$1/module-1-ros2/week-5-urdf$1md), [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation$1md)
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+### Mobile Robot
+**Definition**: A robot that is capable of moving around in its environment, as opposed to being fixed in one location$1 Includes wheeled, legged, and tracked robots$1
 
----
+**Related Terms**: Differential Drive, Navigation, Locomotion
+
+**Used In**: [Module 2: Digital Twin]($1$1/module-2-digital-twin/index$1md), [Week 6: Gazebo]($1$1/module-2-digital-twin/week-6-gazebo$1md)
+
+### Motion Planning
+**Definition**: The computational problem of finding a valid sequence of configurations to move a robot from a start state to a goal state while avoiding obstacles$1
+
+**Related Terms**: Path Planning, Trajectory Generation, Collision Detection
+
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 10: Nav2 & Reinforcement Learning]($1$1/module-3-isaac/week-10-nav2-rl$1md)
 
 ## N
 
-## Nav2 (Navigation 2)
-ROS 2 navigation stack for mobile robots. Provides path planning, obstacle avoidance, and recovery behaviors. Uses costmaps for environment representation.
+### Navigation
+**Definition**: The ability of a robot to move through an environment to reach a desired destination, typically involving localization, mapping, and path planning$1
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+**Related Terms**: Localization, Mapping, SLAM, Path Planning
 
-## Node (ROS 2)
-Independent process performing computation (perception, planning, control). Nodes communicate via topics/services/actions. Example: camera driver node publishes to `/camera/image_raw`.
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 10: Nav2 & Reinforcement Learning]($1$1/module-3-isaac/week-10-nav2-rl$1md)
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+### Node
+**Definition**: In ROS (Robot Operating System), a process that performs computation$1 Nodes are the fundamental building blocks of ROS applications and communicate with each other via topics, services, and actions$1
 
----
+**Related Terms**: ROS, Topic, Service, Process
+
+**Used In**: [Week 3: ROS 2 Architecture]($1$1/module-1-ros2/chapter-1-intro-ros2), [Week 4: Topics & Services]($1$1/module-1-ros2/chapter-2-nodes-topics)
 
 ## O
 
-## Occupancy Grid
-2D/3D representation of environment where each cell indicates free, occupied, or unknown space. Used by Nav2 for path planning.
+### Odometry
+**Definition**: The use of data from motion sensors to estimate change in position over time$1 In robotics, it typically refers to estimating position based on wheel rotations or other motion sensors$1
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+**Related Terms**: Localization, Sensor Fusion, Differential Drive
 
-## Odometry
-Estimation of robot position based on motion sensors (wheel encoders, IMU, visual). Accumulates error over time; corrected by SLAM or GPS.
+**Used In**: [Module 2: Digital Twin]($1$1/module-2-digital-twin/index$1md), [Week 6: Gazebo]($1$1/module-2-digital-twin/week-6-gazebo$1md)
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+### Operational Space
+**Definition**: The space in which the robot's end-effector operates, typically defined by Cartesian coordinates (position and orientation) rather than joint angles$1
 
-## Omniverse
-NVIDIA platform for 3D collaboration and simulation. Isaac Sim is built on Omniverse. Supports USD format and RTX rendering.
+**Related Terms**: Cartesian Space, Joint Space, Task Space
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
-
----
+**Used In**: [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics$1md)
 
 ## P
 
-## PhysX
-NVIDIA's GPU-accelerated physics engine. Supports rigid bodies, soft bodies, fluids, and cloth. Used in Isaac Sim for realistic simulation.
+### Path Planning
+**Definition**: The computational process of determining a route from a starting point to a destination, considering obstacles and other constraints$1
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+**Related Terms**: Motion Planning, Navigation, Trajectory Generation
 
-## Point Cloud
-Set of 3D points representing object surfaces. Generated by LiDAR, depth cameras, or stereo vision. Format: PCL, Open3D.
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 10: Nav2 & Reinforcement Learning]($1$1/module-3-isaac/week-10-nav2-rl$1md)
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+### Perception
+**Definition**: The ability of a robot to interpret sensory information from its environment, including vision, touch, sound, and other modalities$1
 
----
+**Related Terms**: Computer Vision, Sensor, SLAM
 
-## Q
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 9: Isaac ROS & VSLAM]($1$1/module-3-isaac/week-9-isaac-ros-vslam$1md)
 
-## QoS (Quality of Service)
-Configuration for ROS 2 communication reliability and performance. Profiles include: Best Effort, Reliable, Sensor Data, Services. Tunable parameters: history depth, durability, liveliness.
+### PID Controller
+**Definition**: A control loop feedback mechanism widely used in robotics and industrial control systems$1 It calculates an error value as the difference between a desired setpoint and a measured process variable and applies a correction based on proportional, integral, and derivative terms$1
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+**Related Terms**: Feedback Control, Control System, Tuning
 
----
+**Used In**: [Week 3: ROS 2 Architecture]($1$1/module-1-ros2/week-3-architecture$1md), [Week 10: Nav2 & Reinforcement Learning]($1$1/module-3-isaac/week-10-nav2-rl$1md)
 
 ## R
 
-## rclpy
-ROS 2 Python client library. Used for writing nodes, publishers, subscribers, services in Python. Alternative: rclcpp (C++).
+### Range Finder
+**Definition**: A sensor that measures the distance to objects in the environment, including technologies like LIDAR, sonar, and structured light systems$1
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+**Related Terms**: LIDAR, Sonar, Sensor, SLAM
 
-## Reinforcement Learning (RL)
-Machine learning paradigm where agents learn by trial and error through rewards. In robotics, used for grasping, manipulation, and navigation.
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 9: Isaac ROS & VSLAM]($1$1/module-3-isaac/week-9-isaac-ros-vslam$1md)
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+### ROS (Robot Operating System)
+**Definition**: A flexible framework for writing robot software that provides services designed for a heterogeneous computer cluster such as hardware abstraction, device drivers, libraries, visualizers, message-passing, package management, and more$1
 
-## RGB-D Camera
-Camera providing both color (RGB) and depth (D) information. Examples: Intel RealSense, Microsoft Kinect. Used for 3D perception.
+**Related Terms**: Node, Topic, Service, Package
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+**Used In**: [Week 3: ROS 2 Architecture]($1$1/module-1-ros2/chapter-1-intro-ros2), [Week 4: Topics & Services]($1$1/module-1-ros2/chapter-2-nodes-topics)
 
-## ROS 2 (Robot Operating System 2)
-Middleware framework for robot software development. Provides communication (DDS), tools (rviz, rqt), and libraries (tf2, nav2).
+### Robot Operating System (ROS)
+**Definition**: See ROS (Robot Operating System)$1
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+**Related Terms**: ROS
 
-## RTX (Ray Tracing Texel eXtreme)
-NVIDIA GPU architecture with dedicated ray tracing cores. Enables photorealistic rendering in Isaac Sim for sensor simulation.
-
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
-
-## RViz2
-3D visualization tool for ROS 2. Displays robot models, sensor data, transforms, and planning results. Essential debugging tool.
-
-**Related**: [Module 1: ROS 2](../module-1-ros2)
-
----
+**Used In**: [Week 3: ROS 2 Architecture]($1$1/module-1-ros2/week-3-architecture$1md)
 
 ## S
 
-## Service (ROS 2)
-Synchronous request-response communication pattern. Client sends request, waits for server response. Used for queries and short-lived tasks.
+### SLAM (Simultaneous Localization and Mapping)
+**Definition**: The computational problem of constructing or updating a map of an unknown environment while simultaneously keeping track of an agent's location within it$1
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+**Related Terms**: Localization, Mapping, Navigation, LIDAR
 
-## SLAM (Simultaneous Localization and Mapping)
-Problem of building a map while simultaneously localizing within it. Variants: LiDAR SLAM, Visual SLAM (VSLAM), RGB-D SLAM.
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 9: Isaac ROS & VSLAM]($1$1/module-3-isaac/week-9-isaac-ros-vslam$1md)
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+### Sensor Fusion
+**Definition**: The process of combining data from multiple sensors to improve the accuracy and reliability of information obtained from the environment$1
 
----
+**Related Terms**: Perception, Sensor, Kalman Filter
+
+**Used In**: [Week 7: Unity Sensors]($1$1/module-2-digital-twin/week-7-unity-sensors$1md)
+
+### Servo Motor
+**Definition**: A rotary actuator that allows for precise control of angular position, velocity, and acceleration$1 Consists of a motor coupled to a sensor for position feedback$1
+
+**Related Terms**: Actuator, Motor, Feedback Control
+
+**Used In**: [Week 3: ROS 2 Architecture]($1$1/module-1-ros2/week-3-architecture$1md)
 
 ## T
 
-## TF2 (Transform Library 2)
-ROS 2 library for managing coordinate frame relationships. Tracks transforms over time, enabling conversion between frames (e.g., base_link → camera_link).
+### Teleoperation
+**Definition**: The remote operation of a robot by a human operator, often used for tasks that are too dangerous or difficult for direct human involvement$1
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+**Related Terms**: Human-Robot Interaction, Remote Control, Haptic Feedback
 
-## Topic (ROS 2)
-Named communication channel for asynchronous message passing. Publishers send messages, subscribers receive. Many-to-many pattern. Example: `/camera/image_raw`.
+**Used In**: [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation$1md)
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+### Trajectory Generation
+**Definition**: The process of creating a time-parameterized path that specifies the position, velocity, and acceleration of a robot over time$1
 
----
+**Related Terms**: Path Planning, Motion Planning, Interpolation
+
+**Used In**: [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics$1md)
+
+### Topic
+**Definition**: In ROS, a named bus over which nodes exchange messages$1 Topics implement a publish-subscribe communication pattern$1
+
+**Related Terms**: ROS, Node, Message, Publish-Subscribe
+
+**Used In**: [Week 4: Topics & Services]($1$1/module-1-ros2/week-4-topics-services$1md)
 
 ## U
 
-## Unity
-Game engine used for photorealistic robot simulation. Unity Robotics Hub provides ROS integration. Alternative to Gazebo for synthetic data generation.
+### URDF (Unified Robot Description Format)
+**Definition**: An XML format for representing a robot model in ROS, including physical properties, visual representation, and kinematic structure$1
 
-**Related**: [Module 2: Digital Twin](../module-2-digital-twin)
+**Related Terms**: Robot Model, XML, ROS, Kinematics
 
-## URDF (Unified Robot Description Format)
-XML format for describing robot kinematics, dynamics, and visual properties. Parsed by ROS 2 for robot_state_publisher and visualization.
+**Used In**: [Week 5: URDF]($1$1/module-1-ros2/week-5-urdf$1md)
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+### Underactuated System
+**Definition**: A mechanical system with fewer actuators than degrees of freedom, making it challenging to control but often more energy-efficient$1
 
----
+**Related Terms**: Degrees of Freedom, Actuator, Control
+
+**Used In**: [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics$1md)
 
 ## V
 
-## VLA (Vision-Language-Action)
-AI model architecture that integrates visual perception, language understanding, and physical action. Enables robots to respond to natural language commands.
+### Visual Servoing
+**Definition**: A technique in robotics that uses visual feedback to control the motion of a robot, typically to position an end-effector relative to objects in the environment$1
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+**Related Terms**: Computer Vision, Feedback Control, Manipulation
 
-## VSLAM (Visual SLAM)
-SLAM variant using camera images for localization and mapping. Algorithms: ORB-SLAM3, RTAB-Map, OpenVSLAM. Less affected by transparent/reflective surfaces than LiDAR.
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 9: Isaac ROS & VSLAM]($1$1/module-3-isaac/week-9-isaac-ros-vslam$1md)
 
-**Related**: [Module 3: Isaac Sim](../module-3-isaac)
+### VSLAM (Visual Simultaneous Localization and Mapping)
+**Definition**: A variant of SLAM that uses visual sensors (cameras) instead of or in addition to other sensors like LIDAR for mapping and localization$1
 
----
+**Related Terms**: SLAM, Computer Vision, Mapping
 
-## X
+**Used In**: [Module 3: NVIDIA Isaac]($1$1/module-3-isaac/index$1md), [Week 9: Isaac ROS & VSLAM]($1$1/module-3-isaac/week-9-isaac-ros-vslam$1md)
 
-## Xacro (XML Macros)
-Extension to URDF enabling parameterization and code reuse via macros. Simplifies complex robot descriptions. File extension: `.xacro`.
+## W
 
-**Related**: [Module 1: ROS 2](../module-1-ros2)
+### Workspace
+**Definition**: The volume of space that a robot's end-effector can reach$1 This can be classified as the reachable workspace (positions the end-effector can reach) or the dexterous workspace (positions with all orientations)$1
 
----
+**Related Terms**: Kinematics, Reach, Manipulator
 
-## Z
+**Used In**: [Week 11: Kinematics]($1$1/module-4-vla-humanoids/week-11-kinematics$1md)
 
-## Zero-Shot Generalization
-AI model's ability to perform tasks without specific training. VLA models like RT-2 can execute novel manipulation tasks by leveraging web-scale pre-training.
+### Wheeled Mobile Robot
+**Definition**: A mobile robot that uses wheels for locomotion, including configurations like differential drive, Ackermann steering, and omnidirectional wheels$1
 
-**Related**: [Module 4: VLA & Humanoids](../module-4-vla-humanoids)
+**Related Terms**: Mobile Robot, Differential Drive, Locomotion
 
----
+**Used In**: [Module 2: Digital Twin]($1$1/module-2-digital-twin/index$1md), [Week 6: Gazebo]($1$1/module-2-digital-twin/week-6-gazebo$1md)
 
-## Contributing
+## X, Y, Z
 
-Found a missing term? Submit a pull request to add robotics terminology to this glossary.
+### Zero Moment Point (ZMP)
+**Definition**: A concept used in bipedal robotics to describe the point on the ground where the sum of all moments of the ground reaction forces equals zero, important for balance control$1
 
-**Search Tips**:
-- Use the search box above to find terms quickly
-- Terms link to relevant course modules for deeper learning
-- Alphabetically organized for easy browsing
+**Related Terms**: Bipedal Locomotion, Balance Control, Stability
+
+**Used In**: [Module 4: VLA & Humanoids]($1$1/module-4-vla-humanoids/index$1md), [Week 12: Manipulation]($1$1/module-4-vla-humanoids/week-12-manipulation$1md)

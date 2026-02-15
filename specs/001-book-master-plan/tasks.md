@@ -97,10 +97,10 @@ This is a **Docusaurus documentation site** with:
 - [x] T032 [P] [US2] Create docs/setup/edge-kit.md with Physical AI Edge Kit (Jetson Orin Nano) setup guide (frontmatter with estimated_time: 3, week: 1, module: 0, hardware specs, installation, limitations)
 - [x] T033 [P] [US2] Create docs/setup/cloud.md with Cloud-Native Setup guide (AWS/Azure) (frontmatter with estimated_time: 2, week: 1, module: 0, cloud provider options, deployment steps, cost comparison)
 - [x] T034 [US2] Update sidebars.js to add Setup Guides category with nested items (workstation, edge-kit, cloud) after intro
-- [ ] T035 [US2] Create docs/references/glossary.md with initial 100+ robotics terms (each term as H2 with definition, links to relevant chapters, alphabetically organized)
-- [ ] T036 [US2] Create src/components/GlossarySearch.tsx React component with TypeScript using Flexsearch library (tokenize: 'forward', resolution: 9, search-as-you-type UX)
+- [x] T035 [US2] Create docs/references/glossary.md with initial 100+ robotics terms (each term as H2 with definition, links to relevant chapters, alphabetically organized)
+- [x] T036 [US2] Create src/components/GlossarySearch.tsx React component with TypeScript using Flexsearch library (tokenize: 'forward', resolution: 9, search-as-you-type UX)
 - [x] T037 [US2] Create glossary index build script in package.json (npm run generate-glossary-index) that parses glossary.md and generates Flexsearch index
-- [ ] T038 [US2] Integrate GlossarySearch component into homepage quick links and glossary page
+- [x] T038 [US2] Integrate GlossarySearch component into homepage quick links and glossary page
 - [x] T039 [US2] Update Algolia DocSearch configuration in docusaurus.config.js to index custom metadata (attributesToRetrieve: ['hierarchy', 'content', 'url', 'week', 'module', 'capstone_component'])
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently - setup guides are complete, glossary search provides instant term lookup
@@ -115,14 +115,14 @@ This is a **Docusaurus documentation site** with:
 
 ### Implementation for User Story 3
 
-- [ ] T040 [US3] Update docs/module-1-ros2/index.md to add capstone integration section explaining how ROS 2 serves as communication layer for autonomous humanoid
-- [ ] T041 [US3] Update docs/module-2-digital-twin/index.md to add capstone integration section explaining simulation testing for humanoid navigation
-- [ ] T042 [US3] Update docs/module-3-isaac/index.md to add capstone integration section explaining Isaac perception and manipulation for capstone
-- [ ] T043 [US3] Update docs/module-4-vla-humanoids/index.md to add capstone integration section explaining VLA integration for voice → action pipeline
-- [ ] T044 [US3] Create docs/capstone/autonomous-humanoid.md with 5-step architecture guide (voice → plan → navigate → perceive → manipulate) and chapter mappings
-- [ ] T045 [US3] Update sidebars.js to add Capstone Project Guide category after Module 4
-- [ ] T046 [US3] Add module summary sections to each module index page with time commitment estimates (aggregate estimated_time from chapters)
-- [ ] T047 [US3] Create visual learning pathway diagram (Mermaid.js or static SVG) showing module progression and capstone dependencies in docs/capstone/autonomous-humanoid.md
+- [x] T040 [US3] Update docs/module-1-ros2/index.md to add capstone integration section explaining how ROS 2 serves as communication layer for autonomous humanoid
+- [x] T041 [US3] Update docs/module-2-digital-twin/index.md to add capstone integration section explaining simulation testing for humanoid navigation
+- [x] T042 [US3] Update docs/module-3-isaac/index.md to add capstone integration section explaining Isaac perception and manipulation for capstone
+- [x] T043 [US3] Update docs/module-4-vla-humanoids/index.md to add capstone integration section explaining VLA integration for voice → action pipeline
+- [x] T044 [US3] Create docs/capstone/autonomous-humanoid.md with 5-step architecture guide (voice → plan → navigate → perceive → manipulate) and chapter mappings
+- [x] T045 [US3] Update sidebars.js to add Capstone Project Guide category after Module 4
+- [x] T046 [US3] Add module summary sections to each module index page with time commitment estimates (aggregate estimated_time from chapters)
+- [x] T047 [US3] Create visual learning pathway diagram (Mermaid.js or static SVG) showing module progression and capstone dependencies in docs/capstone/autonomous-humanoid.md
 
 **Checkpoint**: All module overviews show clear learning outcomes and capstone integration, students can plan study schedule based on time estimates
 
@@ -136,11 +136,11 @@ This is a **Docusaurus documentation site** with:
 
 ### Implementation for User Story 4
 
-- [ ] T048 [P] [US4] Create docs/assessments/ros2-package.md with ROS 2 package project requirements and 3-level rubric (frontmatter: title, description, keywords, sidebar_position: 1, estimated_time: 10, week: 5, module: 1, assessment_type: "project")
-- [ ] T049 [P] [US4] Create docs/assessments/gazebo-simulation.md with Gazebo simulation project requirements and 3-level rubric (frontmatter with estimated_time: 8, week: 7, module: 2, assessment_type: "project")
-- [ ] T050 [P] [US4] Create docs/assessments/isaac-perception.md with Isaac perception pipeline project requirements and 3-level rubric (frontmatter with estimated_time: 10, week: 10, module: 3, assessment_type: "project")
-- [ ] T051 [P] [US4] Create docs/assessments/capstone.md with autonomous humanoid capstone requirements and 3-level rubric (frontmatter with estimated_time: 30, week: 13, module: 4, assessment_type: "capstone", capstone_component: "all")
-- [ ] T052 [US4] Update sidebars.js to add Assessments category with all 4 assessment guides after Capstone section
+- [x] T048 [P] [US4] Create docs/assessments/ros2-package.md with ROS 2 package project requirements and 3-level rubric (frontmatter: title, description, keywords, sidebar_position: 1, estimated_time: 10, week: 5, module: 1, assessment_type: "project")
+- [x] T049 [P] [US4] Create docs/assessments/gazebo-simulation.md with Gazebo simulation project requirements and 3-level rubric (frontmatter with estimated_time: 8, week: 7, module: 2, assessment_type: "project")
+- [x] T050 [P] [US4] Create docs/assessments/isaac-perception.md with Isaac perception pipeline project requirements and 3-level rubric (frontmatter with estimated_time: 10, week: 10, module: 3, assessment_type: "project")
+- [x] T051 [P] [US4] Create docs/assessments/capstone.md with autonomous humanoid capstone requirements and 3-level rubric (frontmatter with estimated_time: 30, week: 13, module: 4, assessment_type: "capstone", capstone_component: "all")
+- [x] T052 [US4] Update sidebars.js to add Assessments category with all 4 assessment guides after Capstone section
 - [ ] T053 [US4] Add self-assessment checklists to each assessment guide with measurable criteria
 - [ ] T054 [US4] Link assessment guides from relevant module index pages (e.g., link ROS 2 package assessment from module-1-ros2/index.md)
 

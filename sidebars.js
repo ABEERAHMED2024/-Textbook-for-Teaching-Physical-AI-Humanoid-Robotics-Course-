@@ -16,6 +16,8 @@ const sidebars = {
   // Main tutorial sidebar with nested collapsible categories
   tutorialSidebar: [
     'intro',
+    'week-1-foundations',
+    'week-2-sensors',
     {
       type: 'category',
       label: 'Setup Guides',
@@ -46,21 +48,54 @@ const sidebars = {
       label: 'Module 2: Digital Twin (Weeks 6-7)',
       collapsible: true,
       collapsed: true,
-      items: ['module-2-digital-twin/index'],
+      items: [
+        'module-2-digital-twin/index',
+        'module-2-digital-twin/week-6-gazebo',
+        'module-2-digital-twin/week-7-unity-sensors',
+      ],
     },
     {
       type: 'category',
       label: 'Module 3: NVIDIA Isaac (Weeks 8-10)',
       collapsible: true,
       collapsed: true,
-      items: ['module-3-isaac/index'],
+      items: [
+        'module-3-isaac/index',
+        'module-3-isaac/week-8-isaac-sim',
+        'module-3-isaac/week-9-isaac-ros-vslam',
+        'module-3-isaac/week-10-nav2-rl',
+      ],
     },
     {
       type: 'category',
       label: 'Module 4: VLA & Humanoids (Weeks 11-13)',
       collapsible: true,
       collapsed: true,
-      items: ['module-4-vla-humanoids/index'],
+      items: [
+        'module-4-vla-humanoids/index',
+        'module-4-vla-humanoids/week-11-kinematics',
+        'module-4-vla-humanoids/week-12-manipulation',
+        'module-4-vla-humanoids/week-13-conversational-vla',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Capstone Project Guide',
+      collapsible: true,
+      collapsed: true,
+      items: ['capstone/autonomous-humanoid'],
+    },
+    {
+      type: 'category',
+      label: 'Assessments',
+      collapsible: true,
+      collapsed: true,
+      items: [
+        'assessments/ros2-package',
+        'assessments/gazebo-simulation',
+        'assessments/isaac-perception',
+        'assessments/capstone'
+      ],
     },
     {
       type: 'category',

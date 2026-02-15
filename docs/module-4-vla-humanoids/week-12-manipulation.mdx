@@ -1,0 +1,56 @@
+---
+title: "Week 12: Dexterous Manipulation & HRI"
+description: "Enable your humanoid to interact with objects and humans using vision and touch."
+keywords: ["Manipulation", "Grasping", "HRI", "Human-Robot Interaction", "Force Control"]
+sidebar_position: 3
+sidebar_label: "Week 12: Manipulation"
+estimated_time: 10
+week: 12
+module: 4
+prerequisites: ["Week 11: Kinematics"]
+learning_objectives:
+  - Implement grasping strategies for various object shapes
+  - Explore force and impedance control for safe interaction
+  - Design human-aware behaviors for collaborative tasks
+  - Use Teleoperation for data collection and teaching
+---
+
+import LearningObjectives from '@site/src/components/LearningObjectives';
+import Prerequisites from '@site/src/components/Prerequisites';
+
+# Week 12: Dexterous Manipulation & HRI
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+## 12.1 Dexterous Manipulation
+
+Manipulation is the ability of a robot to move, rotate, or transform objects. For humanoids, this usually involves:
+- **Motion Planning**: Avoiding self-collisions while reaching.
+- **Grasp Planning**: Identifying the best points to apply pressure.
+- **Tactile Feedback**: Understanding how hard the robot is squeezing.
+
+## 12.2 Force & Impedance Control
+
+In human environments, **position control** can be dangerous. If a robot hits a person, it will keep pushing until it reaches its target position. **Impedance control** makes the robot feel soft or compliant, allowing it to yield when it encounters unexpected resistance.
+
+## 12.3 Human-Robot Interaction (HRI)
+
+Humanoids are social robots. They must understand:
+- **Personal Space**: Not standing too close.
+- **Gaze**: Looking at what they are interacting with.
+- **Gesture**: Using arm movements to communicate intent.
+
+## 12.4 Teleoperation
+
+Teleoperation (controlling the robot remotely) is not just for use cases like remote surgery. In Physical AI, we use it to **collect data** of humans performing tasks, which we then use to train AI models via **Imitation Learning**.
+
+---
+
+## Exercise: Designing a Grasp
+
+Research the difference between a **Power Grasp** and a **Precision Grasp**.
+
+### Key Takeaways
+- Manipulation is about interaction, not just motion.
+- Force control is essential for safe operation in human spaces.

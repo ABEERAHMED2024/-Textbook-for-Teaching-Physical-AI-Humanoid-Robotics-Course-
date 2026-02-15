@@ -1,0 +1,54 @@
+---
+title: "Week 9: Isaac ROS & Visual SLAM"
+description: "Deploy hardware-accelerated perception pipelines with Isaac ROS."
+keywords: ["Isaac ROS", "VSLAM", "Visual Odometry", "Perception", "NVIDIA Jetson"]
+sidebar_position: 3
+sidebar_label: "Week 9: Isaac ROS"
+estimated_time: 8
+week: 9
+module: 3
+prerequisites: ["Week 8: Isaac Sim"]
+learning_objectives:
+  - Configure NVIDIA Isaac ROS GEMs for hardware acceleration
+  - Implement Visual SLAM (VSLAM) for robot localization
+  - Optimizing perception pipelines for edge devices (Jetson)
+  - Integrate visual odometry with wheeled or legged robot state estimation
+---
+
+import LearningObjectives from '@site/src/components/LearningObjectives';
+import Prerequisites from '@site/src/components/Prerequisites';
+
+# Week 9: Isaac ROS & Visual SLAM
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+## 9.1 Hardware-Accelerated Perception
+
+Standard ROS 2 perception nodes can be slow. **NVIDIA Isaac ROS** provides "GEMs"—highly optimized packages that offload computation to the GPU or specialized hardware (DLA/VIC) on NVIDIA chips.
+
+### Key Isaac ROS GEMs
+- **VSLAM**: Stereo or RGB-D based simultaneous localization and mapping.
+- **Image Segmentation**: Deep learning-based object classification.
+- **AprilTag**: High-speed detection of visual markers.
+
+## 9.2 Visual SLAM (VSLAM)
+
+Visual SLAM allows a robot to navigate in environments without GPS or expensive LiDAR by using camera feeds to:
+1. **Track keyframes** in the environment.
+2. **Estimate motion** between frames (Visual Odometry).
+3. **Build a 3D map** and locate the robot within it.
+
+## 9.3 Deploying to the Edge
+
+For humanoid robots, carrying a powerful PC is difficult. We use **NVIDIA Jetson Orin** modules. Isaac ROS allows us to run complex AI models with low latency and low power consumption.
+
+---
+
+## Exercise: Running VSLAM in Simulation
+
+In Isaac Sim, use the `isaac_ros_vslam` package to localize a robot in a virtual warehouse.
+
+### Key Takeaways
+- Hardware acceleration is the key to real-time perception.
+- Isaac ROS provides the building blocks for autonomous navigation.
