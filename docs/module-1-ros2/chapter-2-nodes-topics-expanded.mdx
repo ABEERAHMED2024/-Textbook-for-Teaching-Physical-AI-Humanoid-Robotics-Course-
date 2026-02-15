@@ -1,0 +1,383 @@
+---
+# ============================================================================
+# TUTORIAL: ROS 2 Nodes, Topics, and Publishers/Subscribers
+# ============================================================================
+
+# REQUIRED METADATA (Replace ALL values below)
+title: ROS 2 Nodes, Topics, and Publishers/Subscribers
+description: Learn how to create ROS 2 nodes that communicate using topics with publishers and subscribers
+keywords: [ros2, nodes, topics, publishers, subscribers, communication, messaging]
+sidebar_position: 2
+learning_objectives:
+  - Understand the ROS 2 communication model using nodes, topics, and messages
+  - Apply the creation of publisher and subscriber nodes in Python
+  - Implement a simple communication system between ROS 2 nodes
+  - Demonstrate inter-node communication using custom messages
+
+# Prerequisites: paths to required chapters (use "docs/path/to/chapter" format)
+# Use empty array [] if no prerequisites
+prerequisites:
+  - docs/module-1-ros2/chapter-1-intro-ros2-expanded
+  - docs/module-1-ros2/chapter-1-intro-ros2
+
+# Estimated completion time in minutes (must be multiple of 5: 15, 30, 45, 60, etc.)
+estimated_time: 75
+
+# Content type (DO NOT CHANGE for this template)
+content_type: tutorial
+
+# Difficulty level: beginner | intermediate | advanced
+difficulty: intermediate
+
+# OPTIONAL METADATA (Uncomment if needed)
+# tags: [ros2, python, communication, messaging]  # For tag-based filtering
+# draft: true  # Hide from production builds during authoring
+# pagination_prev: docs/previous-chapter  # Override default previous link
+# pagination_next: docs/next-chapter      # Override default next link
+---
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+# {frontMatter.title}
+
+## Introduction
+
+In this tutorial, you'll learn how to create ROS 2 nodes that communicate using topics with publishers and subscribers. By the end, you'll have built a simple communication system between ROS 2 nodes.
+
+**Why this matters:** Understanding nodes, topics, and message passing is fundamental to ROS 2. This communication model enables different parts of a robot system to exchange information efficiently and reliably.
+
+## Prerequisites and Setup
+
+Before you begin, ensure you have:
+
+- **Software:** ROS 2 Humble Hawksbill installed (from previous chapter)
+- **Workspace:** A functional ROS 2 workspace with a package
+- **Knowledge:** Understanding of ROS 2 environment setup
+
+### Verify Your Environment
+
+```bash
+# Check if ROS 2 is properly sourced
+echo $ROS_DISTRO
+# Expected output: humble
+```
+
+## Step 1: Understanding ROS 2 Communication Concepts
+
+Before diving into code, let's understand the fundamental concepts of ROS 2 communication.
+
+### Instructions
+
+1. **Nodes:** A node is an executable that uses ROS 2 to communicate with other nodes. Nodes are organized into packages.
+
+2. **Topics:** A topic is a named bus over which nodes exchange messages. Each topic has a type associated with it.
+
+3. **Messages:** Messages are the data structures that are sent along topics between nodes.
+
+4. **Publishers:** Publishers send messages to a topic.
+
+5. **Subscribers:** Subscribers receive messages from a topic.
+
+**Expected result:** You understand the basic concepts of ROS 2 communication model.
+
+## Step 2: Create Publisher Node
+
+Create a simple publisher node that sends messages to a topic.
+
+### Instructions
+
+1. Navigate to your package directory:
+   ```bash
+   cd ~/ros2_ws/src/my_first_ros2_pkg/my_first_ros2_pkg
+   ```
+
+2. Create a new Python file for the publisher:
+   ```bash
+   touch talker.py
+   chmod +x talker.py
+   ```
+
+3. Edit the `talker.py` file:
+   ```python
+   import rclpy
+   from rclpy.node import Node
+   from std_msgs.msg import String
+
+
+   class MinimalPublisher(Node):
+
+       def __init__(self):
+           super().__init__('minimal_publisher')
+           self.publisher_ = self.create_publisher(String, 'topic', 10)
+           timer_period = 0.5  # seconds
+           self.timer = self.create_timer(timer_period, self.timer_callback)
+           self.i = 0
+
+       def timer_callback(self):
+           msg = String()
+           msg.data = 'Hello World: %d' % self.i
+           self.publisher_.publish(msg)
+           self.get_logger().info('Publishing: "%s"' % msg.data)
+           self.i += 1
+
+
+   def main(args=None):
+       rclpy.init(args=args)
+
+       minimal_publisher = MinimalPublisher()
+
+       rclpy.spin(minimal_publisher)
+
+       # Destroy the node explicitly
+       minimal_publisher.destroy_node()
+       rclpy.shutdown()
+
+
+   if __name__ == '__main__':
+       main()
+   ```
+
+4. Make the file executable:
+   ```bash
+   chmod +x talker.py
+   ```
+
+**Expected result:** A publisher node file is created that publishes "Hello World" messages to the 'topic' every 0.5 seconds.
+
+## Step 3: Create Subscriber Node
+
+Create a subscriber node that listens to messages from the publisher.
+
+### Instructions
+
+1. In the same directory, create a new Python file for the subscriber:
+   ```bash
+   touch listener.py
+   chmod +x listener.py
+   ```
+
+2. Edit the `listener.py` file:
+   ```python
+   import rclpy
+   from rclpy.node import Node
+   from std_msgs.msg import String
+
+
+   class MinimalSubscriber(Node):
+
+       def __init__(self):
+           super().__init__('minimal_subscriber')
+           self.subscription = self.create_subscription(
+               String,
+               'topic',
+               self.listener_callback,
+               10)
+           self.subscription  # prevent unused variable warning
+
+       def listener_callback(self, msg):
+           self.get_logger().info('I heard: "%s"' % msg.data)
+
+
+   def main(args=None):
+       rclpy.init(args=args)
+
+       minimal_subscriber = MinimalSubscriber()
+
+       rclpy.spin(minimal_subscriber)
+
+       # Destroy the node explicitly
+       minimal_subscriber.destroy_node()
+       rclpy.shutdown()
+
+
+   if __name__ == '__main__':
+       main()
+   ```
+
+3. Make the file executable:
+   ```bash
+   chmod +x listener.py
+   ```
+
+**Expected result:** A subscriber node file is created that listens to messages from the 'topic' and prints them to the console.
+
+## Step 4: Update Package Configuration
+
+Update the package configuration to make the nodes executable.
+
+### Instructions
+
+1. Navigate to your package root:
+   ```bash
+   cd ~/ros2_ws/src/my_first_ros2_pkg
+   ```
+
+2. Edit the `setup.py` file to add entry points:
+   ```python
+   import os
+   from glob import glob
+   from setuptools import setup
+   from setuptools import find_packages
+
+   package_name = 'my_first_ros2_pkg'
+
+   setup(
+       name=package_name,
+       version='0.0.0',
+       packages=find_packages(exclude=['test']),
+       data_files=[
+           ('share/ament_index/resource_index/packages',
+               ['resource/' + package_name]),
+           ('share/' + package_name, ['package.xml']),
+           (os.path.join('share', package_name, 'launch'), glob('launch/*launch.[pxy][yma]*')),
+       ],
+       install_requires=['setuptools'],
+       zip_safe=True,
+       maintainer='Your Name',
+       maintainer_email='your.email@example.com',
+       description='TODO: Package description',
+       license='Apache-2.0',
+       tests_require=['pytest'],
+       entry_points={
+           'console_scripts': [
+               'talker = my_first_ros2_pkg.talker:main',
+               'listener = my_first_ros2_pkg.listener:main',
+           ],
+       },
+   )
+   ```
+
+3. Build the workspace:
+   ```bash
+   cd ~/ros2_ws
+   colcon build --packages-select my_first_ros2_pkg
+   ```
+
+4. Source the workspace:
+   ```bash
+   source install/setup.bash
+   ```
+
+**Expected result:** The package is built successfully with the talker and listener executables available.
+
+## Step 5: Test the Communication System
+
+Run the publisher and subscriber nodes to test the communication.
+
+### Instructions
+
+1. Open a new terminal and source the ROS 2 environment:
+   ```bash
+   source ~/ros2_ws/install/setup.bash
+   ```
+
+2. Run the publisher node:
+   ```bash
+   ros2 run my_first_ros2_pkg talker
+   ```
+
+3. In another terminal, source the environment and run the subscriber:
+   ```bash
+   source ~/ros2_ws/install/setup.bash
+   ros2 run my_first_ros2_pkg listener
+   ```
+
+4. Observe the communication between nodes. The publisher should be printing "Publishing: ..." messages and the subscriber should be printing "I heard: ..." messages.
+
+**Expected result:** The publisher and subscriber nodes communicate successfully, with the subscriber receiving and displaying messages from the publisher.
+
+## Step 6: Create a Launch File
+
+Create a launch file to run both nodes simultaneously.
+
+### Instructions
+
+1. Create a launch directory in your package:
+   ```bash
+   mkdir -p ~/ros2_ws/src/my_first_ros2_pkg/launch
+   ```
+
+2. Create a launch file:
+   ```bash
+   touch ~/ros2_ws/src/my_first_ros2_pkg/launch/talker_listener.launch.py
+   ```
+
+3. Edit the launch file:
+   ```python
+   from launch import LaunchDescription
+   from launch_ros.actions import Node
+
+
+   def generate_launch_description():
+       return LaunchDescription([
+           Node(
+               package='my_first_ros2_pkg',
+               executable='talker',
+               name='talker',
+               output='screen'
+           ),
+           Node(
+               package='my_first_ros2_pkg',
+               executable='listener',
+               name='listener',
+               output='screen'
+           )
+       ])
+   ```
+
+4. Build the workspace again:
+   ```bash
+   cd ~/ros2_ws
+   colcon build --packages-select my_first_ros2_pkg
+   source install/setup.bash
+   ```
+
+5. Run both nodes using the launch file:
+   ```bash
+   ros2 launch my_first_ros2_pkg talker_listener.launch.py
+   ```
+
+**Expected result:** Both the talker and listener nodes start simultaneously and communicate as before.
+
+## Key Takeaways
+
+**What you learned:**
+- How to create publisher and subscriber nodes in ROS 2
+- How to configure a package to make nodes executable
+- How to use launch files to run multiple nodes simultaneously
+- How nodes communicate using topics and messages
+
+## Next Steps
+
+Now that you've mastered ROS 2 nodes and topics, you're ready to:
+
+1. **Try it yourself:** Modify the messages to include numerical data or custom structures
+2. **Go deeper:** Explore services and actions in ROS 2
+3. **Apply it:** Use this communication model in your robotics projects
+
+### Related Chapters
+
+- [ROS 2 Services, Actions, and Parameters](../module-1-ros2/chapter-3-services-actions-parameters)
+- [URDF and Robot Modeling in ROS 2](../module-1-ros2/chapter-4-urdf-robot-modeling)
+
+## Practice Exercises
+
+### Exercise 1: Modify Message Content
+
+**Challenge:** Modify the publisher to send sensor data (e.g., temperature readings) instead of "Hello World" messages. The subscriber should process and display this data appropriately.
+
+**Hints:**
+- Use appropriate message types for numerical data
+- Consider adding timestamps to the messages
+- Format the output in the subscriber to show meaningful information
+
+**Solution:** Available in `examples/ros2-communication/exercise1-solution.py`
+
+---
+
+## References
+
+- [ROS 2 Tutorials: Writing a Simple Publisher and Subscriber](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Python-Publisher-And-Subscriber.html)
+- [ROS 2 Launch Files Guide](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html)
+- [ROS 2 Message Types Documentation](https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html)

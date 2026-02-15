@@ -31,7 +31,9 @@ By the end of this chapter, you'll build a URDF model of a simplified humanoid r
 
 ## 4.1 What is URDF?
 
-<ConceptCallout type="definition" title="URDF: Unified Robot Description Format">
+
+
+<ConceptCallout>
 
 **URDF** is an XML-based specification for robot models:
 - **Links**: Rigid bodies (base, limbs, sensors)
@@ -52,7 +54,6 @@ URDF files are used by:
 
 Every URDF file starts with the `<robot>` root element:
 
-<CodeExample language="xml" filename="simple_robot.urdf" difficulty="beginner">
 {`<?xml version="1.0"?>
 <robot name="simple_robot">
   <!-- Links define rigid body parts -->
@@ -72,7 +73,6 @@ Every URDF file starts with the `<robot>` root element:
   </joint>
 </robot>
 `}
-</CodeExample>
 
 **Key Rules**:
 - Every robot has a **root link** (typically `base_link`)
@@ -91,7 +91,7 @@ A **link** represents a rigid body part of the robot. Each link can have:
 
 Visual geometry defines how the link appears in visualization tools:
 
-<CodeExample language="xml" filename="link_with_visual.urdf" difficulty="beginner">
+
 {`<link name="torso">
   <visual>
     <origin xyz="0 0 0.25" rpy="0 0 0"/>
@@ -104,7 +104,6 @@ Visual geometry defines how the link appears in visualization tools:
   </visual>
 </link>
 `}
-</CodeExample>
 
 **Visual Elements**:
 - **`<origin>`**: Position (xyz in meters) and orientation (rpy in radians, roll-pitch-yaw)
@@ -115,7 +114,9 @@ Visual geometry defines how the link appears in visualization tools:
   - `<mesh filename="package://my_robot/meshes/torso.stl"/>`: 3D mesh file
 - **`<material>`**: Color (rgba: red, green, blue, alpha 0-1)
 
-<ConceptCallout type="tip" title="Coordinate Frames">
+
+
+<ConceptCallout>
 
 Each link has its own **coordinate frame**:
 - **Origin** is at the link's reference point (often center of mass or joint attachment)
@@ -125,13 +126,12 @@ Each link has its own **coordinate frame**:
 
 Follow the **right-hand rule**: curl fingers from X to Y, thumb points to Z.
 
-</ConceptCallout>
 
 ### 4.2.2 Collision Geometry
 
 Collision geometry is used for physics simulation and path planning. Use **simpler shapes** than visual geometry for performance:
 
-<CodeExample language="xml" filename="link_with_collision.urdf" difficulty="beginner">
+
 {`<link name="forearm">
   <!-- Visual: detailed mesh -->
   <visual>
@@ -149,7 +149,6 @@ Collision geometry is used for physics simulation and path planning. Use **simpl
   </collision>
 </link>
 `}
-</CodeExample>
 
 **Best Practice**: Visual geometry can be detailed meshes, but collision geometry should use primitive shapes (box, cylinder, sphere) for computational efficiency.
 
@@ -157,7 +156,7 @@ Collision geometry is used for physics simulation and path planning. Use **simpl
 
 Inertial properties define mass distribution for physics simulation:
 
-<CodeExample language="xml" filename="link_with_inertial.urdf" difficulty="intermediate">
+
 {`<link name="upper_arm">
   <!-- Visual and collision omitted for brevity -->
 
@@ -171,7 +170,6 @@ Inertial properties define mass distribution for physics simulation:
   </inertial>
 </link>
 `}
-</CodeExample>
 
 **Inertial Elements**:
 - **`<mass>`**: Mass in kilograms
@@ -179,7 +177,9 @@ Inertial properties define mass distribution for physics simulation:
   - Diagonal elements (ixx, iyy, izz): moments of inertia
   - Off-diagonal (ixy, ixz, iyz): products of inertia (often 0 for symmetric objects)
 
-<ConceptCallout type="warning" title="Inertia Tensor Requirements">
+
+
+<ConceptCallout>
 
 For stable physics simulation, the inertia tensor must be:
 - **Positive definite**: All eigenvalues > 0
@@ -192,7 +192,6 @@ For simple shapes:
 
 Tools like MeshLab can compute inertia from 3D meshes.
 
-</ConceptCallout>
 
 ## 4.3 Joints: Connecting Links
 
@@ -209,7 +208,7 @@ Tools like MeshLab can compute inertia from 3D meshes.
 
 ### 4.3.1 Revolute Joint Example
 
-<CodeExample language="xml" filename="revolute_joint.urdf" difficulty="intermediate">
+
 {`<joint name="shoulder_pitch" type="revolute">
   <parent link="torso"/>
   <child link="upper_arm"/>
@@ -232,7 +231,6 @@ Tools like MeshLab can compute inertia from 3D meshes.
   <dynamics damping="0.7" friction="0.0"/>
 </joint>
 `}
-</CodeExample>
 
 **Joint Elements**:
 - **`<parent>`** and **`<child>`**: Links being connected
@@ -245,7 +243,7 @@ Tools like MeshLab can compute inertia from 3D meshes.
 
 Let's build a simple 2-DOF arm with a base, upper arm, and forearm:
 
-<CodeExample language="xml" filename="two_dof_arm.urdf" difficulty="intermediate" estimatedTime={30}>
+
 {`<?xml version="1.0"?>
 <robot name="two_dof_arm">
 
@@ -341,7 +339,6 @@ Let's build a simple 2-DOF arm with a base, upper arm, and forearm:
 
 </robot>
 `}
-</CodeExample>
 
 **Kinematic Chain**: `base_link` → (shoulder_joint) → `upper_arm` → (elbow_joint) → `forearm`
 
@@ -351,7 +348,9 @@ Humanoid robots require more complex kinematic trees with multiple branches for 
 
 ### 4.5.1 Humanoid Naming Conventions
 
-<ConceptCallout type="concept" title="Standard Humanoid Link Names">
+
+
+<ConceptCallout>
 
 Follow REP-120 naming conventions for consistency:
 - **Base**: `base_link` (pelvis/hip center)
@@ -367,7 +366,7 @@ Follow REP-120 naming conventions for consistency:
 
 ### 4.5.2 Simplified Humanoid URDF
 
-<CodeExample language="xml" filename="simple_humanoid.urdf" difficulty="advanced" estimatedTime={60}>
+
 {`<?xml version="1.0"?>
 <robot name="simple_humanoid">
 
@@ -550,7 +549,6 @@ Follow REP-120 naming conventions for consistency:
 
 </robot>
 `}
-</CodeExample>
 
 **Kinematic Tree Structure**:
 ```
@@ -569,7 +567,7 @@ base_link (pelvis)
 
 Use `check_urdf` to validate syntax and structure:
 
-<CodeExample language="bash" showLineNumbers={false}>
+
 {`# Install urdf-tutorial package
 sudo apt install ros-humble-urdf-tutorial
 
@@ -587,7 +585,6 @@ check_urdf simple_humanoid.urdf
 #     child(2):  left_thigh
 #         child(1):  left_shin
 `}
-</CodeExample>
 
 Common errors:
 - **Not a tree**: Loops in kinematic chain (each link can only have one parent)
@@ -596,7 +593,7 @@ Common errors:
 
 ### 4.6.2 Visualizing in RViz2
 
-<CodeExample language="bash" showLineNumbers={false}>
+
 {`# Terminal 1: Launch robot_state_publisher and joint_state_publisher_gui
 ros2 launch urdf_tutorial display.launch.py model:=simple_humanoid.urdf
 
@@ -610,9 +607,10 @@ ros2 launch urdf_tutorial display.launch.py model:=simple_humanoid.urdf
 # - Move sliders in joint_state_publisher_gui to animate joints
 # - View TF frames to see coordinate transformations
 `}
-</CodeExample>
 
-<ConceptCallout type="tip" title="RViz2 Debugging Tips">
+
+
+<ConceptCallout>
 
 If your robot doesn't appear in RViz2:
 1. **Check Fixed Frame**: Set to "base_link" in Global Options
@@ -635,7 +633,7 @@ For complex robots, writing raw URDF becomes tedious (copy-pasting left/right ar
 - **Macros**: Template functions for repeated structures
 - **Math**: Compute values (e.g., `${'${pi/2}'}`)
 
-<CodeExample language="xml" filename="humanoid.urdf.xacro" difficulty="advanced">
+
 {`<?xml version="1.0"?>
 <robot name="humanoid" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
@@ -677,18 +675,16 @@ For complex robots, writing raw URDF becomes tedious (copy-pasting left/right ar
 
 </robot>
 `}
-</CodeExample>
 
 **Convert xacro to URDF:**
 
-<CodeExample language="bash" showLineNumbers={false}>
+
 {`# Process xacro file to generate URDF
 ros2 run xacro xacro humanoid.urdf.xacro > humanoid.urdf
 
 # Now use generated URDF file
 check_urdf humanoid.urdf
 `}
-</CodeExample>
 
 ## 4.8 Hands-On Exercise: Build a Humanoid Torso
 

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Comprehensive textbook for Physical AI & Humanoid Robotics 13-week course",
   "private": true,
+  "type": "module",
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
@@ -17,13 +18,17 @@
     "validate-metadata": "node scripts/validate-metadata.js",
     "generate-glossary-index": "node scripts/generate-glossary-index.js",
     "check-links": "linkinator build --recurse --skip node_modules",
-    "lighthouse": "lhci autorun"
+    "lighthouse": "lhci autorun",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx .",
+    "lint:fix": "eslint --cache --ext .js,.jsx,.ts,.tsx . --fix",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@docusaurus/core": "^3.5.2",
     "@docusaurus/preset-classic": "^3.5.2",
     "@docusaurus/theme-search-algolia": "^3.5.2",
     "@mdx-js/react": "^3.0.1",
+    "better-auth": "^1.4.18",
     "clsx": "^2.1.1",
     "flexsearch": "^0.7.43",
     "prism-react-renderer": "^2.4.0",
@@ -35,11 +40,19 @@
     "@docusaurus/tsconfig": "^3.5.2",
     "@docusaurus/types": "^3.5.2",
     "@lhci/cli": "^0.13.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.1",
+    "@types/jest": "^30.0.0",
     "@types/react": "^18.3.11",
     "ajv": "^8.17.1",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "glob": "^13.0.0",
     "gray-matter": "^4.0.3",
+    "jest": "^30.2.0",
     "linkinator": "^6.1.2",
+    "prettier": "^3.3.3",
     "typescript": "~5.6.3"
   },
   "engines": {

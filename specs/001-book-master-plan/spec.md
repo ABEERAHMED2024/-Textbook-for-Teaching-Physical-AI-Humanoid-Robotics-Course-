@@ -131,6 +131,12 @@ As an **industry practitioner**, I need quick-reference guides for ROS 2 command
 
 - **FR-013**: Homepage MUST use a dashboard-style layout featuring: (1) grid of 4 module cards showing title, week range, and learning outcomes, (2) quick links sidebar for hardware setup, assessments, and glossary, (3) recent updates section for content changes
 
+- **FR-014**: Book MUST implement basic security headers and HTTPS enforcement
+
+- **FR-015**: Book MUST comply with WCAG 2.1 AA accessibility standards
+
+- **FR-016**: Book MUST implement comprehensive monitoring with performance metrics
+
 ### Key Entities
 
 - **Module**: Represents a major course section (4 total: ROS 2, Digital Twin, Isaac, VLA). Contains learning outcomes, week ranges, chapters, and integration points with capstone
@@ -169,6 +175,16 @@ As an **industry practitioner**, I need quick-reference guides for ROS 2 command
 
 - **SC-010**: Instructors can customize chapter order by following the prerequisite dependency graph without breaking learning progression
 
+- **SC-011**: Page loads complete within "fast loading" timeframes and search responses are "responsive" as defined by user experience benchmarks
+
+- **SC-012**: Site implements basic security headers and enforces HTTPS for all connections
+
+- **SC-013**: Site achieves WCAG 2.1 AA compliance for accessibility standards
+
+- **SC-014**: Site handles modest traffic loads with basic GitHub Pages hosting without performance degradation
+
+- **SC-015**: Comprehensive monitoring captures performance metrics and user engagement data
+
 ## Assumptions
 
 - Students are industry practitioners with programming knowledge (Python) as stated in course requirements
@@ -181,6 +197,10 @@ As an **industry practitioner**, I need quick-reference guides for ROS 2 command
 - Students have access to at least one of the three hardware configurations
 - Assessment rubrics follow academic standards for technical courses
 - Book will be continuously updated as hardware/software evolves
+- Traffic will be modest, allowing basic GitHub Pages hosting
+- Basic security headers and HTTPS enforcement will be sufficient
+- WCAG 2.1 AA compliance will meet accessibility requirements
+- Comprehensive monitoring will be implemented for performance metrics
 
 ## Scope Boundaries
 
@@ -191,10 +211,14 @@ As an **industry practitioner**, I need quick-reference guides for ROS 2 command
 - Hardware setup documentation for all 3 configuration options
 - Capstone project guide with detailed architecture
 - Assessment guides and rubrics for all 4 course assessments
-- Reference materials (glossary, notation, quick references, troubleshooting)
+- Reference materials (glossary, notation, quick reference, troubleshooting)
 - Navigation structure supporting multiple access patterns (week, module, topic)
 - Prerequisite tracking and dependency documentation
 - Instructor customization guidance
+- Basic security headers and HTTPS enforcement
+- WCAG 2.1 AA accessibility compliance
+- Comprehensive monitoring with performance metrics
+- Modest traffic handling with GitHub Pages hosting
 
 ### Out of Scope
 
@@ -224,6 +248,12 @@ As an **industry practitioner**, I need quick-reference guides for ROS 2 command
 
 - **External Tools**: ROS 2, Gazebo, Unity, Isaac Sim versioning affects prerequisite setup guides
 
+- **Security Standards**: Implementation must follow basic security header requirements and HTTPS enforcement protocols
+
+- **Accessibility Standards**: Implementation must comply with WCAG 2.1 AA guidelines
+
+- **Monitoring Tools**: Implementation must include comprehensive monitoring for performance metrics
+
 ## Clarifications
 
 ### Session 2025-11-29
@@ -233,6 +263,11 @@ As an **industry practitioner**, I need quick-reference guides for ROS 2 command
 - Q: Homepage layout and course overview presentation? → A: Dashboard-style with module cards + quick links sidebar (hardware setup, assessments, glossary) + recent updates section
 - Q: Search functionality configuration for content and glossary? → A: Hybrid approach using Algolia DocSearch for main content with custom metadata indexing, plus dedicated glossary search component for term lookup
 - Q: Code example repository structure and hosting? → A: Embedded code snippets only in markdown files, no separate example file repository (simplifies maintenance, though deviates from Constitution Principle V)
+- Q: What are the specific performance requirements? → A: Keep current vague performance requirements: "fast loading" and "responsive search"
+- Q: What security measures are required? → A: Basic security headers and HTTPS enforcement
+- Q: What accessibility standards should be followed? → A: WCAG 2.1 AA compliance
+- Q: What are the scalability requirements? → A: Assume modest traffic, basic GitHub Pages hosting
+- Q: What observability features are needed? → A: Comprehensive monitoring with performance metrics
 
 ## Constitution Compliance Notes
 

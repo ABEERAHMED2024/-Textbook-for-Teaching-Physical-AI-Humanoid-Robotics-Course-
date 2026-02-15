@@ -1,0 +1,5 @@
+/* QuickLinks.module.css */
+.links {
+    display: flex;
+    gap: 1rem;
+}

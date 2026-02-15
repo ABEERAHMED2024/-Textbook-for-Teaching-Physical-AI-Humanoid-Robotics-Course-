@@ -1,0 +1,60 @@
+.personalization-bar {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.personalize-btn, .translate-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #007bff;
+  border-radius: 0.25rem;
+  background-color: white;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.personalize-btn:hover, .translate-btn:hover {
+  background-color: #e9ecef;
+}
+
+.personalize-btn.active, .translate-btn.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.auth-prompt {
+  padding: 0.5rem 1rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 0.25rem;
+  color: #856404;
+  font-size: 0.9rem;
+}
+
+.auth-prompt span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .personalization-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .personalize-btn, .translate-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -26,7 +26,9 @@ By the end of this chapter, you'll build a temperature monitoring system with a 
 
 Every ROS 2 application starts with nodes. A node is a process that performs computation—reading sensors, processing data, controlling motors, etc.
 
-<ConceptCallout type="definition" title="What is rclpy?">
+
+
+<ConceptCallout>
 
 **rclpy** is the official Python client library for ROS 2. It provides:
 - **Node class**: Base class for creating ROS 2 nodes
@@ -42,8 +44,8 @@ Think of rclpy as the Python API for interacting with the ROS 2 middleware (DDS)
 
 Every rclpy node follows this pattern:
 
-<CodeExample language="python" filename="minimal_node.py" difficulty="beginner">
-{`import rclpy
+```python
+import rclpy
 from rclpy.node import Node
 
 class MinimalNode(Node):
@@ -60,8 +62,7 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-`}
-</CodeExample>
+```
 
 **Key Components Explained:**
 
@@ -70,11 +71,10 @@ if __name__ == '__main__':
 3. **`rclpy.spin()`**: Blocks and processes callbacks (subscriptions, timers, services). Without this, your node exits immediately.
 4. **`destroy_node()` / `shutdown()`**: Clean up resources when the node exits.
 
-<ConceptCallout type="tip" title="Node Names Must Be Unique">
+
 
 Each node in a ROS 2 system must have a unique name. If you launch two nodes with the same name, the newer one will cause a naming conflict. Use descriptive names like `camera_driver`, `perception_node`, `motor_controller`.
 
-</ConceptCallout>
 
 ### 2.1.2 Node Lifecycle
 
@@ -100,8 +100,9 @@ The **publish-subscribe** pattern is the most common ROS 2 communication method 
 
 A **publisher** sends messages to a topic at regular intervals.
 
-<CodeExample language="python" filename="temperature_publisher.py" difficulty="beginner" estimatedTime={15}>
-{`import rclpy
+
+```python
+import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float32
 
@@ -137,8 +138,7 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-`}
-</CodeExample>
+```
 
 **Publisher API Breakdown:**
 
@@ -169,8 +169,9 @@ Timers are essential for periodic tasks like sensor sampling or control loops.
 
 A **subscriber** receives messages from a topic and processes them in a callback function.
 
-<CodeExample language="python" filename="temperature_subscriber.py" difficulty="beginner" estimatedTime={15}>
-{`import rclpy
+
+```python
+import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float32
 
@@ -205,8 +206,7 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-`}
-</CodeExample>
+```
 
 **Subscriber API Breakdown:**
 
@@ -235,9 +235,9 @@ Callbacks execute asynchronously whenever a message arrives. Keep them short (< 
 ```mermaid
 sequenceDiagram
     participant Timer
-    participant Publisher as Temperature<br/>Publisher
-    participant Topic as /temperature<br/>(DDS Topic)
-    participant Subscriber as Temperature<br/>Subscriber
+    participant Publisher as Temperature\\nPublisher
+    participant Topic as /temperature\\n(DDS Topic)
+    participant Subscriber as Temperature\\nSubscriber
 
     loop Every 1 second
         Timer->>Publisher: timer_callback()
@@ -271,7 +271,7 @@ You'll see the publisher logging temperatures and the subscriber receiving them 
 
 Quality of Service (QoS) policies control **how** messages are delivered between publishers and subscribers. This is critical for robotics where some data (sensor readings) can be dropped, but other data (safety commands) must be guaranteed.
 
-<ConceptCallout type="concept" title="Why QoS Matters in Robotics">
+
 
 Different data streams have different requirements:
 - **Camera images (30 FPS)**: Dropping occasional frames is acceptable. Use "best effort" delivery.
@@ -281,7 +281,6 @@ Different data streams have different requirements:
 
 QoS lets you optimize for latency, bandwidth, and reliability based on your application's needs.
 
-</ConceptCallout>
 
 ### 2.3.1 QoS Policies
 
@@ -297,8 +296,9 @@ ROS 2 uses DDS QoS policies. The most important ones are:
 
 ### 2.3.2 Using QoS Profiles
 
-<CodeExample language="python" filename="qos_example.py" difficulty="intermediate">
-{`import rclpy
+
+```python
+import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
 from std_msgs.msg import String
@@ -338,10 +338,9 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-`}
-</CodeExample>
+```
 
-<ConceptCallout type="warning" title="QoS Compatibility">
+
 
 **Publishers and subscribers must have compatible QoS profiles to communicate!**
 
@@ -352,14 +351,14 @@ if __name__ == '__main__':
 
 If messages aren't flowing, use `ros2 topic info /topic_name --verbose` to check QoS compatibility.
 
-</ConceptCallout>
 
 ### 2.3.3 Predefined QoS Profiles
 
 ROS 2 provides common presets:
 
-<CodeExample language="python" showLineNumbers={false}>
-{`from rclpy.qos import qos_profile_sensor_data, qos_profile_system_default
+
+```python
+from rclpy.qos import qos_profile_sensor_data, qos_profile_system_default
 
 # Use sensor data preset (best-effort, keep last 1)
 self.sensor_pub = self.create_publisher(
@@ -374,8 +373,7 @@ self.command_pub = self.create_publisher(
     'cmd_vel',
     qos_profile_system_default
 )
-`}
-</CodeExample>
+```
 
 **Common Presets:**
 - `qos_profile_sensor_data`: Best-effort, keep last 5, volatile
@@ -389,7 +387,7 @@ ROS 2 provides powerful CLI tools to inspect running systems without modifying c
 
 ### 2.4.1 Node Introspection
 
-<CodeExample language="bash" showLineNumbers={false}>
+
 {`# List all active nodes
 ros2 node list
 
@@ -409,12 +407,12 @@ ros2 node info /temperature_publisher
 #   Action Servers:
 #   Action Clients:
 `}
-</CodeExample>
 
 ### 2.4.2 Topic Introspection
 
-<CodeExample language="bash" showLineNumbers={false}>
-{`# List all active topics
+
+```bash
+# List all active topics
 ros2 topic list
 
 # Get topic type
@@ -432,12 +430,11 @@ ros2 topic hz /temperature
 
 # Publish a message from command line
 ros2 topic pub /temperature std_msgs/msg/Float32 "{data: 25.5}"
-`}
-</CodeExample>
+```
 
 ### 2.4.3 Debugging Communication Issues
 
-<ConceptCallout type="tip" title="Common Debugging Workflow">
+
 
 When nodes don't communicate:
 
@@ -448,7 +445,6 @@ When nodes don't communicate:
 5. **Echo the topic**: `ros2 topic echo /topic_name` (are messages flowing?)
 6. **Check frequency**: `ros2 topic hz /topic_name` (is rate correct?)
 
-</ConceptCallout>
 
 ## 2.5 Hands-On Exercise: Build a Temperature Monitor
 

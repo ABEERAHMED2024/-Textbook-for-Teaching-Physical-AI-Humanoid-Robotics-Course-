@@ -1,176 +1,225 @@
 ---
-title: "Assessment: Gazebo Simulation Project"
-description: Build a Gazebo simulation environment with a robot performing navigation and manipulation tasks
-keywords: [Gazebo, simulation, navigation, manipulation, robotics, physics, sensors]
-sidebar_position: 1
-sidebar_label: "Gazebo Simulation Project"
-estimated_time: 8
+title: "Assessment Guide: Gazebo Simulation Project"
+description: "Detailed assessment guide for the Gazebo simulation project in Week 7"
+keywords: ["Gazebo", "simulation", "assessment", "project", "robotics"]
+sidebar_position: 2
+sidebar_label: "Gazebo Simulation Assessment"
+estimated_time: 3
 week: 7
 module: 2
-prerequisites: ["module-2-digital-twin"]
+prerequisites: ["module-2-digital-twin/week-7-unity-sensors"]
 learning_objectives:
-  - Create a Gazebo world with custom environment and physics properties
-  - Implement robot navigation in a simulated environment with obstacles
-  - Configure sensors (camera, LiDAR, IMU) with realistic noise models
-  - Test manipulation tasks in simulation before hardware deployment
-  - Validate sim-to-real transfer capabilities for your robot system
+  - "Create a realistic simulation environment with multiple robots"
+  - "Implement sensor simulation and physics modeling"
+  - "Integrate simulation with ROS 2 for hardware-in-the-loop testing"
+  - "Validate robot behaviors in simulation before real-world deployment"
 assessment_type: "project"
 difficulty_level: "intermediate"
-capstone_component: "navigate"
+capstone_component: "perceive"
 ---
 
-import LearningObjectives from '@site/src/components/LearningObjectives';
-import Prerequisites from '@site/src/components/Prerequisites';
-import AssessmentChecklist from '@site/src/components/learning/AssessmentChecklist';
-
-# Assessment: Gazebo Simulation Project
-
-<LearningObjectives objectives={frontMatter.learning_objectives} />
-<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
-
----
+# Assessment Guide: Gazebo Simulation Project
 
 ## Overview
 
-In this assessment, you will create a complete Gazebo simulation environment featuring a robot that performs navigation and manipulation tasks. You'll design a custom world, configure realistic sensors, and implement navigation algorithms to move the robot through an obstacle course. This project will demonstrate your understanding of simulation environments and their importance in robotics development.
+This assessment evaluates your ability to create realistic simulation environments using Gazebo. You will develop a complex simulation scenario that includes multiple robots, realistic physics, and sensor simulation. The project will demonstrate your understanding of simulation design, physics modeling, and integration with ROS 2.
 
-## Learning Objectives Assessed
+## Learning Objectives
 
-- [ ] Create a custom Gazebo world with terrain, obstacles, and lighting
-- [ ] Configure robot sensors (camera, LiDAR, IMU) with realistic noise models
-- [ ] Implement navigation algorithms to move robot through an obstacle course
-- [ ] Test manipulation tasks in simulation environment
-- [ ] Validate sim-to-real transfer capabilities
-- [ ] Document simulation results and compare to expected outcomes
+By completing this assessment, you will demonstrate the ability to:
+- Design and implement complex simulation environments
+- Configure realistic physics properties and sensor models
+- Integrate Gazebo with ROS 2 for hardware-in-the-loop testing
+- Validate robot behaviors in simulation before real-world deployment
+- Analyze and compare simulation vs. real-world performance
 
-## Scenario
+## Project Requirements
 
-You are tasked with creating a simulation environment for testing a mobile manipulator robot. The robot must navigate through an office environment, locate specific objects, and perform manipulation tasks. The simulation will be used to validate algorithms before deployment on physical hardware.
+### Environment Design
 
-## Requirements
+Your simulation environment must include:
 
-### Functional Requirements
+1. **Complex Environment**:
+   - Multiple rooms or areas with different characteristics
+   - Various obstacles and interactive objects
+   - Dynamic elements (movable objects, doors, etc.)
+   - Appropriate lighting conditions
 
-#### 1. Custom World Environment (`office_world.world`)
-- Create a 10m x 10m office environment with walls, furniture (tables, chairs)
-- Include at least 5 static obstacles (desks, filing cabinets, plants)
-- Add dynamic obstacles (movable boxes) that the robot must navigate around
-- Implement realistic lighting with shadows
-- Include textured surfaces for visual realism
+2. **Robot Models**:
+   - At least 2 different robot models
+   - Accurate physical properties (mass, friction, etc.)
+   - Properly configured sensors (camera, LIDAR, IMU)
+   - Realistic actuator models
 
-#### 2. Robot Model Integration
-- Spawn a mobile manipulator robot (e.g., TurtleBot3 with manipulator arm)
-- Configure robot with differential drive controller
-- Attach sensors: RGB camera, 2D LiDAR, IMU
-- Set appropriate physics properties (mass, friction, damping)
+3. **Scenarios**:
+   - Navigation scenario with obstacles
+   - Manipulation scenario (if applicable)
+   - Multi-robot coordination scenario
+   - Failure/recovery scenario
 
-#### 3. Navigation Task
-- Create a navigation goal at a specific location in the world
-- Implement path planning to reach the goal while avoiding obstacles
-- Use Nav2 stack for navigation with appropriate costmaps
-- Log navigation performance metrics (time, path length, collisions)
+### Physics Modeling
 
-#### 4. Manipulation Task
-- Place objects (cubes, cylinders) in the environment
-- Implement pick-and-place task to move objects between locations
-- Use MoveIt2 for motion planning and collision checking
-- Validate successful manipulation through simulation
+Your simulation must demonstrate:
 
-#### 5. Sensor Simulation
-- Configure RGB camera with realistic parameters (resolution, FOV, noise)
-- Set up 2D LiDAR with appropriate range and resolution
-- Implement IMU with realistic noise characteristics
-- Validate sensor data accuracy and consistency
+1. **Accurate Physics**:
+   - Proper mass and inertia properties
+   - Realistic friction and collision models
+   - Appropriate damping and stiffness parameters
 
-### Technical Requirements
+2. **Sensor Simulation**:
+   - Camera with realistic noise and distortion
+   - LIDAR with appropriate range and resolution
+   - IMU with realistic drift and noise models
+   - Additional sensors as appropriate for your scenario
 
-- Gazebo Garden or Fortress
-- ROS 2 Humble with Gazebo ROS packages
-- Nav2 stack for navigation
-- MoveIt2 for manipulation planning
-- Rviz2 for visualization
-- Package structure:
-  ```
-  gazebo_simulation_project/
-  ├── worlds/
-  │   └── office_world.world
-  ├── models/
-  │   ├── custom_desk/
-  │   ├── custom_plant/
-  │   └── custom_box/
-  ├── launch/
-  │   ├── simulation_launch.py
-  │   └── navigation_launch.py
-  ├── config/
-  │   ├── nav2_params.yaml
-  │   ├── robot_controllers.yaml
-  │   └── sensors_config.yaml
-  ├── scripts/
-  │   ├── navigation_task.py
-  │   ├── manipulation_task.py
-  │   └── sensor_validation.py
-  ├── test/
-  │   └── test_simulation.py
-  ├── CMakeLists.txt
-  ├── package.xml
-  └── README.md
-  ```
-- Must include:
-  - World file with custom environment
-  - URDF models for custom objects
-  - Launch files for simulation and navigation
-  - Configuration files for Nav2 and controllers
-  - Python scripts for navigation and manipulation tasks
-  - README.md with setup and execution instructions
+### ROS 2 Integration
+
+Your simulation must include:
+
+1. **Control Interface**:
+   - ROS 2 nodes for robot control
+   - Proper topic and service interfaces
+   - TF tree for coordinate transformations
+
+2. **Data Interface**:
+   - Sensor data publishing
+   - Robot state publishing
+   - Diagnostic information
 
 ## Assessment Rubric
 
-| Criterion | Exemplary (100%) | Proficient (80%) | Developing (60%) | Beginning (40%) |
-|-----------|------------------|------------------|------------------|-----------------|
-| **Functionality** (40%) | All simulation components work flawlessly, robot completes all tasks, exceeds requirements with additional features | Minor bugs, robot completes main tasks, 1 requirement partially missing | Robot completes basic navigation, manipulation has issues, multiple bugs | Robot fails to navigate or manipulate, major functionality missing |
-| **Simulation Quality** (25%) | Highly realistic environment, accurate physics, realistic sensor models, detailed textures | Good realism, mostly accurate physics and sensors, decent textures | Basic environment, simplified physics/models, minimal details | Very basic environment, unrealistic physics, poor sensor models |
-| **Navigation Performance** (20%) | Efficient path planning, zero collisions, optimal path, adaptive to dynamic obstacles | Good path planning, few collisions, mostly efficient path | Basic navigation, frequent collisions, inefficient path planning | Poor navigation, many collisions, unable to reach goals |
-| **Documentation** (15%) | Comprehensive documentation, detailed setup guide, troubleshooting, performance analysis | Good documentation, clear setup, basic troubleshooting | Basic documentation, minimal setup guide | Poor or missing documentation |
+### Needs Improvement (50-69 points)
 
-## Submission
+**Environment Design (20 points)**:
+- Environment lacks complexity or realism
+- Missing required elements
+- Poor organization or structure
 
-1. Create a GitHub repository: `<your-username>-gazebo-simulation-project`
-2. Repository structure must match technical requirements above
-3. Include a `REPORT.md` file that explains:
-   - Design decisions for the environment and robot configuration
-   - Challenges faced during simulation setup and how they were resolved
-   - Performance analysis of navigation and manipulation tasks
-   - Comparison between simulation and expected real-world behavior
-   - Recommendations for improving sim-to-real transfer
+**Physics Modeling (20 points)**:
+- Physics parameters unrealistic or incorrect
+- Sensor models inaccurate or missing
+- No attention to physical realism
 
-## Self-Assessment Checklist
+**ROS 2 Integration (20 points)**:
+- Integration incomplete or non-functional
+- Missing required interfaces
+- Poor ROS 2 practices
 
-<AssessmentChecklist
-  items={[
-    "Custom world environment created with obstacles and lighting",
-    "Robot model properly configured with sensors and controllers",
-    "Navigation task successfully implemented with Nav2",
-    "Manipulation task completed using MoveIt2",
-    "Sensors configured with realistic parameters",
-    "Launch files properly configured for simulation",
-    "Configuration files properly set up for Nav2 and controllers",
-    "README.md includes setup and execution instructions",
-    "REPORT.md analyzes simulation performance and real-world applicability",
-    "All dependencies properly declared in package.xml"
-  ]}
-/>
+**Functionality (20 points)**:
+- Basic functionality does not work
+- Significant issues with simulation
+- Little to no evidence of required concepts
+
+**Documentation (20 points)**:
+- Lack of documentation or explanation
+- No usage instructions
+- Missing design rationale
+
+### Proficient (70-84 points)
+
+**Environment Design (20 points)**:
+- Environment includes required elements
+- Reasonable complexity and variety
+- Good organization and structure
+
+**Physics Modeling (20 points)**:
+- Physics parameters reasonably accurate
+- Sensor models implemented correctly
+- Attention to physical realism
+
+**ROS 2 Integration (20 points)**:
+- Integration functional with required interfaces
+- Proper ROS 2 practices followed
+- Good communication patterns
+
+**Functionality (20 points)**:
+- Core functionality works as expected
+- Minor issues that don't significantly impact operation
+- Demonstrates understanding of simulation concepts
+
+**Documentation (20 points)**:
+- Code follows appropriate style guides
+- Basic documentation provided
+- Clear usage instructions
+
+### Excellent (85-100 points)
+
+**Environment Design (20 points)**:
+- All proficient criteria met
+- Creative and innovative environment design
+- High level of detail and realism
+
+**Physics Modeling (20 points)**:
+- All proficient criteria met
+- Advanced physics modeling techniques
+- Accurate and realistic sensor simulation
+
+**ROS 2 Integration (20 points)**:
+- All proficient criteria met
+- Advanced ROS 2 features utilized
+- Efficient and robust communication
+
+**Functionality (20 points)**:
+- All proficient criteria met
+- Robust implementation with comprehensive error handling
+- Creative extension of basic requirements
+
+**Documentation (20 points)**:
+- All proficient criteria met
+- Comprehensive documentation with examples
+- Detailed design rationale and analysis
+- Video demonstration of functionality
+
+**Additional Excellence (10 points)**:
+- Innovative features beyond basic requirements
+- Performance optimizations
+- Advanced testing and validation
+- Real-world comparison analysis
+
+## Submission Requirements
+
+Submit the following:
+
+1. **Simulation Package**: Complete Gazebo simulation environment
+2. **Robot Models**: Custom robot models with accurate physics
+3. **Launch Files**: For different simulation scenarios
+4. **ROS 2 Nodes**: For control and data interfaces
+5. **Documentation**: Comprehensive documentation including:
+   - Environment design overview
+   - Physics parameter justification
+   - Sensor model descriptions
+   - Usage instructions
+6. **Video Demonstration**: Show the simulation in operation (3-5 minutes)
+7. **Analysis Report**: 2-3 pages comparing simulation to real-world expectations
+8. **Reflection Report**: 1-2 pages discussing:
+   - Design decisions and rationale
+   - Challenges faced and solutions
+   - Validation against real-world data (if available)
+   - Future improvements
+
+## Evaluation Process
+
+1. **Environment Review**: Design quality and complexity
+2. **Physics Review**: Accuracy and realism of models
+3. **Integration Review**: Quality of ROS 2 integration
+4. **Functionality Test**: Does the simulation work as described?
+5. **Validation Analysis**: Comparison to real-world expectations
 
 ## Resources
 
-- [Module 2: Digital Twin](../module-2-digital-twin) - Simulation concepts and Gazebo setup
-- [Gazebo Documentation](https://gazebosim.org/docs) - Official Gazebo simulation documentation
-- [Nav2 Documentation](https://navigation.ros.org/) - Navigation stack for ROS 2
-- [MoveIt2 Documentation](https://moveit.ros.org/) - Motion planning framework
-- [ROS 2 Gazebo Tutorials](https://classic.gazebosim.org/tutorials?tut=ros2_overview_2) - Integration tutorials
+- [Gazebo Documentation](http://gazebosim.org/)
+- [Gazebo Tutorials](http://gazebosim.org/tutorials)
+- [ROS 2 with Gazebo](https://github.com/ros-simulation/gazebo_ros_pkgs)
+- [Physics Modeling Best Practices](http://gazebosim.org/tutorials?tut=physics)
 
-## Grading Notes
+## Support
 
-- **Late Submission**: -10% per day (max 3 days)
-- **Partial Credit**: Available for incomplete but well-documented attempts
-- **Simulation Quality**: Heavily weighted in evaluation
-- **Performance Analysis**: Evidence of comparing simulation to expected behavior will positively impact your grade
+If you encounter issues:
+- Review the Gazebo tutorials and documentation
+- Use the Gazebo community forums
+- Consult with peers and instructors
+- Attend office hours for additional support
+
+---
+
+**Ready to start?** Review the requirements and begin planning your Gazebo simulation project!

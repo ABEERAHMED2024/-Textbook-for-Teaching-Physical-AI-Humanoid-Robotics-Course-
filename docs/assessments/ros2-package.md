@@ -1,165 +1,207 @@
 ---
-title: "Assessment: ROS 2 Package Development Project"
-description: Build a ROS 2 package that demonstrates publishers, subscribers, services, and URDF robot modeling
-keywords: [ROS 2, package, publisher, subscriber, service, URDF, robotics, development]
+title: "Assessment Guide: ROS 2 Package Development Project"
+description: "Detailed assessment guide for the ROS 2 package development project in Week 5"
+keywords: ["ROS 2", "assessment", "project", "package development", "robotics"]
 sidebar_position: 1
-sidebar_label: "ROS 2 Package Project"
-estimated_time: 10
+sidebar_label: "ROS 2 Package Assessment"
+estimated_time: 2
 week: 5
 module: 1
-prerequisites: ["module-1-ros2"]
+prerequisites: ["module-1-ros2/week-5-urdf"]
 learning_objectives:
-  - Create a complete ROS 2 package with proper structure and dependencies
-  - Implement publishers and subscribers for sensor data streaming
-  - Design and implement services for request/response communication
-  - Model a robot using URDF and visualize in RViz2
-  - Test and validate the package using ROS 2 tools
+  - "Build a multi-node ROS 2 package that demonstrates core concepts"
+  - "Implement communication between nodes using topics, services, and actions"
+  - "Create launch files for easy package execution"
+  - "Document the package following ROS 2 standards"
 assessment_type: "project"
-difficulty_level: "intermediate"
-capstone_component: null
+difficulty_level: "beginner"
+capstone_component: "voice"
 ---
 
-import LearningObjectives from '@site/src/components/LearningObjectives';
-import Prerequisites from '@site/src/components/Prerequisites';
-import AssessmentChecklist from '@site/src/components/learning/AssessmentChecklist';
-
-# Assessment: ROS 2 Package Development Project
-
-<LearningObjectives objectives={frontMatter.learning_objectives} />
-<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
-
----
+# Assessment Guide: ROS 2 Package Development Project
 
 ## Overview
 
-In this assessment, you will build a complete ROS 2 package that demonstrates core communication patterns and robot modeling. You'll create a simulated robot system that includes publishers, subscribers, services, and a URDF model. This project will showcase your understanding of ROS 2 architecture and communication patterns.
+This assessment evaluates your understanding of ROS 2 core concepts by developing a multi-node package that demonstrates communication patterns, node management, and system integration. You will create a package that simulates a simple robot performing basic tasks.
 
-## Learning Objectives Assessed
+## Learning Objectives
 
-- [ ] Create a publisher node that publishes simulated sensor data
-- [ ] Create a subscriber node that processes sensor data
-- [ ] Implement a service server that responds to requests
-- [ ] Create a client node that calls the service
-- [ ] Define a robot model using URDF
-- [ ] Visualize the robot in RViz2
-- [ ] Launch the complete system using a launch file
+By completing this assessment, you will demonstrate the ability to:
+- Create and structure a ROS 2 package
+- Implement multiple nodes with different responsibilities
+- Establish communication between nodes using topics, services, and actions
+- Use launch files to coordinate system startup
+- Document your code following ROS 2 standards
 
-## Scenario
+## Project Requirements
 
-You are developing a sensor monitoring system for a humanoid robot. The system must:
-- Publish simulated sensor data (temperature, proximity, battery level)
-- Subscribe to sensor data and log alerts when thresholds are exceeded
-- Provide a diagnostic service that returns system health status
-- Include a URDF model of the robot with at least 3 joints
+### Core Components
 
-## Requirements
+Your ROS 2 package must include:
 
-### Functional Requirements
+1. **Robot Controller Node**:
+   - Subscribe to sensor data topics
+   - Publish commands to actuator topics
+   - Implement basic decision-making logic
 
-#### 1. Publisher Node (`sensor_publisher`)
-- Publishes to `/sensors/temperature`, `/sensors/proximity`, and `/sensors/battery` topics
-- Message types: `std_msgs/Float32` for all sensor data
-- Publish rate: 1 Hz for temperature and battery, 10 Hz for proximity
-- Simulate realistic sensor values with some random noise
+2. **Sensor Simulator Node**:
+   - Publish simulated sensor data (e.g., LIDAR, camera, IMU)
+   - Include realistic noise models
+   - Publish at appropriate frequencies
 
-#### 2. Subscriber Node (`sensor_subscriber`)
-- Subscribes to all sensor topics
-- Logs messages to console with timestamps
-- Issues alerts when temperature > 80°C or battery < 20%
-- Implements a simple moving average filter for noisy data
+3. **Actuator Interface Node**:
+   - Subscribe to command topics
+   - Simulate actuator responses
+   - Publish feedback on actuator status
 
-#### 3. Service Server (`diagnostic_server`)
-- Provides `/diagnostics` service using `std_srvs/Trigger` type
-- Returns system health status (OK, WARNING, ERROR)
-- Checks all sensor values and returns appropriate status
+4. **Behavior Node**:
+   - Implement a specific behavior (e.g., wall following, obstacle avoidance)
+   - Use services for high-level commands
+   - Use actions for long-running tasks
 
-#### 4. Service Client (`diagnostic_client`)
-- Calls `/diagnostics` service every 5 seconds
-- Logs health status to console
-- Implements retry logic for failed service calls
+### Communication Patterns
 
-#### 5. URDF Robot Model
-- Create a simple humanoid robot model with at least 3 joints
-- Include base_link, torso, and two limbs (arms or legs)
-- Use appropriate visual and collision geometries
-- Define joint limits and types appropriately
+Your package must demonstrate all three primary ROS 2 communication patterns:
 
-### Technical Requirements
+1. **Topics**: Continuous data streams (sensor data, actuator commands)
+2. **Services**: Request-response interactions (configuration, calibration)
+3. **Actions**: Long-running tasks with feedback (navigation, manipulation)
 
-- ROS 2 Humble Hawksbill
-- Python 3.10+ with rclpy
-- Package structure following ROS 2 conventions:
-  ```
-  ros2_sensor_package/
-  ├── ros2_sensor_package/
-  │   ├── sensor_publisher.py
-  │   ├── sensor_subscriber.py
-  │   ├── diagnostic_server.py
-  │   ├── diagnostic_client.py
-  │   └── __init__.py
-  ├── urdf/
-  │   └── simple_robot.urdf
-  ├── launch/
-  │   └── sensor_system_launch.py
-  ├── test/
-  │   └── test_nodes.py
-  ├── CMakeLists.txt
-  ├── package.xml
-  └── setup.py
-  ```
-- Must include:
-  - `package.xml` with dependencies (rclpy, std_msgs, std_srvs)
-  - `setup.py` with entry points for nodes
-  - `launch` file to start all nodes
-  - `README.md` with usage instructions
+### Launch Files
+
+Create launch files for:
+- Complete system startup
+- Individual node testing
+- Different operational modes
 
 ## Assessment Rubric
 
-| Criterion | Exemplary (100%) | Proficient (80%) | Developing (60%) | Beginning (40%) |
-|-----------|------------------|------------------|------------------|-----------------|
-| **Functionality** (40%) | All nodes work flawlessly, system meets all requirements, additional features implemented | Minor bugs, core features work, 1 requirement missing | Multiple features incomplete, significant bugs | Does not run or missing major functionality |
-| **Code Quality** (30%) | Clean, well-documented, follows PEP 8, excellent error handling, comprehensive comments | Mostly clean, adequate docs, minor style issues, good error handling | Inconsistent style, limited docs, basic error handling | Hard to read, minimal docs, poor error handling |
-| **ROS 2 Best Practices** (20%) | Proper QoS, node lifecycle, parameter usage, logging, appropriate message types | Good practices, minor issues (e.g., hardcoded values) | Some practices ignored, QoS defaults used without consideration | Poor practices, no consideration of ROS 2 patterns |
-| **Documentation** (10%) | Comprehensive README, usage examples, troubleshooting, docstrings in all functions | Good README, basic usage, some docstrings | Minimal README, no usage examples, few docstrings | No README or documentation |
+### Needs Improvement (50-69 points)
 
-## Submission
+**Package Structure (10 points)**:
+- Package structure incomplete or does not build
+- Missing essential files (package.xml, CMakeLists.txt/setup.py)
+- Dependencies not properly declared
 
-1. Create a GitHub repository: `<your-username>-ros2-package-project`
-2. Repository structure must match technical requirements above
-3. Include a `REPORT.md` file that explains:
-   - Design decisions you made
-   - Challenges you faced and how you solved them
-   - Testing approach you used
-   - Possible improvements or extensions
+**Nodes (15 points)**:
+- Nodes do not communicate correctly
+- Missing required node types
+- Poor separation of concerns
 
-## Self-Assessment Checklist
+**Communication (15 points)**:
+- Communication patterns not properly implemented
+- Topics, services, or actions missing
+- Incorrect message/service/action definitions
 
-<AssessmentChecklist
-  items={[
-    "Package structure follows ROS 2 conventions",
-    "All required nodes implemented and functional",
-    "URDF model created with at least 3 joints",
-    "Launch file starts all nodes correctly",
-    "Service communication works as expected",
-    "Code follows PEP 8 style guide",
-    "Appropriate error handling implemented",
-    "README.md includes usage instructions",
-    "REPORT.md explains design decisions and challenges",
-    "All dependencies properly declared in package.xml"
-  ]}
-/>
+**Functionality (20 points)**:
+- Basic functionality does not work
+- Significant bugs prevent operation
+- Little to no evidence of required concepts
+
+**Documentation (10 points)**:
+- Lack of comments or documentation
+- README missing or incomplete
+- No usage instructions
+
+### Proficient (70-84 points)
+
+**Package Structure (10 points)**:
+- Package builds successfully with all dependencies declared
+- Proper file organization following ROS 2 conventions
+- package.xml includes appropriate metadata
+
+**Nodes (15 points)**:
+- Nodes communicate via topics with correct message types
+- All required node types implemented
+- Clear separation of responsibilities
+
+**Communication (15 points)**:
+- All three communication patterns implemented correctly
+- Appropriate message types used
+- Proper service and action definitions
+
+**Functionality (20 points)**:
+- Core functionality works as expected
+- Minor bugs that don't significantly impact operation
+- Demonstrates understanding of ROS 2 concepts
+
+**Documentation (10 points)**:
+- Code follows PEP 8 style guide
+- Basic documentation provided (README with usage instructions)
+- Comments explain key functionality
+
+### Excellent (85-100 points)
+
+**Package Structure (10 points)**:
+- All proficient criteria met
+- Advanced package features utilized (parameters, interfaces)
+- Comprehensive package.xml with all metadata
+
+**Nodes (15 points)**:
+- All proficient criteria met
+- Elegant design with good separation of concerns
+- Error handling and graceful degradation
+
+**Communication (15 points)**:
+- All proficient criteria met
+- Advanced communication patterns (custom messages, complex services)
+- Proper QoS settings for different data types
+
+**Functionality (20 points)**:
+- All proficient criteria met
+- Robust implementation with comprehensive error handling
+- Creative extension of basic requirements
+
+**Documentation (10 points)**:
+- All proficient criteria met
+- Comprehensive documentation with examples
+- API documentation for custom messages/services/actions
+- Video demonstration of functionality
+
+**Additional Excellence (10 points)**:
+- Innovative features beyond basic requirements
+- Performance optimizations
+- Advanced testing (unit tests, integration tests)
+- Real hardware integration
+
+## Submission Requirements
+
+Submit the following:
+
+1. **Complete ROS 2 Package**: Well-documented source code
+2. **README.md**: Comprehensive documentation including:
+   - Package overview and purpose
+   - Installation and setup instructions
+   - Usage examples
+   - Node descriptions and interfaces
+3. **Launch Files**: For different operational scenarios
+4. **Video Demonstration**: Show the package in operation (2-3 minutes)
+5. **Reflection Report**: 1-2 pages discussing:
+   - Design decisions and rationale
+   - Challenges faced and solutions
+   - Future improvements
+
+## Evaluation Process
+
+1. **Code Review**: Structure, documentation, and implementation quality
+2. **Functionality Test**: Does the package work as described?
+3. **ROS 2 Concepts**: Are core concepts properly demonstrated?
+4. **Creativity and Innovation**: Bonus points for creative solutions
 
 ## Resources
 
-- [Module 1: ROS 2](../module-1-ros2) - Core concepts and architecture
-- [ROS 2 Humble Documentation](https://docs.ros.org/en/humble/) - Official ROS 2 documentation
-- [URDF Tutorials](http://wiki.ros.org/urdf/Tutorials) - Robot modeling with URDF
-- [ROS 2 Launch Files](https://docs.ros.org/en/humble/Tutorials/Launch-Files.html) - Creating launch files
-- [ROS 2 Services](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html) - Service implementation
+- [ROS 2 Documentation](https://docs.ros.org/en/humble/)
+- [ROS 2 Tutorials](https://docs.ros.org/en/humble/Tutorials.html)
+- [ROS 2 Package Conventions](https://docs.ros.org/en/humble/The-ROS2-Project/Contributing/Code-Style-Language-Versions.html)
 
-## Grading Notes
+## Support
 
-- **Late Submission**: -10% per day (max 3 days)
-- **Partial Credit**: Available for incomplete but well-documented attempts
-- **Code Quality**: Heavily weighted in evaluation
-- **Testing**: Evidence of testing will positively impact your grade
+If you encounter issues:
+- Review the ROS 2 tutorials and documentation
+- Use the ROS 2 community forums
+- Consult with peers and instructors
+- Attend office hours for additional support
+
+---
+
+**Ready to start?** Review the requirements and begin planning your ROS 2 package implementation!

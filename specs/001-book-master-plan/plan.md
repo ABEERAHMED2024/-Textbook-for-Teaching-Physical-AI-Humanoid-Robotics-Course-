@@ -27,18 +27,16 @@ Create the foundational Docusaurus-based textbook structure for a 13-week Physic
 - Broken link checker (validates internal/external links)
 - Lighthouse CI (performance, accessibility, SEO scores ≥ 90)
 - Metadata schema validation (JSON Schema for frontmatter)
-- Visual regression testing for homepage dashboard (optional, using Percy or Chromatic)
+- Accessibility testing (WCAG 2.1 AA compliance validation)
 
 **Target Platform**: GitHub Pages (static site hosting), responsive web design for desktop/tablet/mobile
 
 **Project Type**: Documentation site (Docusaurus-based static site generator)
 
 **Performance Goals**:
-- Initial page load: < 3 seconds (per Constitution Principle VI)
-- Largest Contentful Paint (LCP): < 2.5s
-- Cumulative Layout Shift (CLS): < 0.1
-- Search query response: < 300ms (Algolia)
-- Glossary search: < 100ms (local index)
+- Initial page load: "fast loading" as defined by user experience benchmarks (NEEDS CLARIFICATION)
+- Search query response: "responsive" as defined by user experience benchmarks (NEEDS CLARIFICATION)
+- Lighthouse performance score: ≥ 90
 
 **Constraints**:
 - GitHub Pages deployment (free tier, no server-side logic)
@@ -46,6 +44,9 @@ Create the foundational Docusaurus-based textbook structure for a 13-week Physic
 - File size limits: images < 500KB, SVG optimized
 - Incremental publishing (Week 1-2 can deploy independently)
 - Build time: < 5 minutes for full site rebuild
+- Security: Basic security headers and HTTPS enforcement
+- Accessibility: WCAG 2.1 AA compliance
+- Monitoring: Comprehensive monitoring with performance metrics
 
 **Scale/Scope**:
 - ~15-20 chapters across 13 weeks
@@ -90,8 +91,8 @@ Create the foundational Docusaurus-based textbook structure for a 13-week Physic
 
 ### Principle VI: Deployment & Publishing Standards
 - ✅ **Pass**: GitHub Pages deployment with build gates (no warnings, broken links, performance checks)
-- 📝 **Requirement**: Build pipeline must enforce: Docusaurus build success, broken link check, Lighthouse score ≥ 90, image optimization
-- 📝 **Requirement**: `docusaurus.config.js` must include redirects for deprecated URLs, SEO metadata, sitemap generation
+- 📝 **Requirement**: Build pipeline must enforce: Docusaurus build success, broken link check, Lighthouse score ≥ 90, image optimization, security header validation, accessibility compliance validation
+- 📝 **Requirement**: `docusaurus.config.js` must include redirects for deprecated URLs, SEO metadata, sitemap generation, security headers, and accessibility features
 
 ### Summary
 **Status**: ✅ **PASS** (with one documented deviation for Principle V)
@@ -240,11 +241,18 @@ Physical-AI-Humanoid-Robotics-Textbook/
    - Research: Prerequisite graph visualization libraries (D3.js, Mermaid)
    - Research: Time estimate aggregation for study planning
 
-5. **Build Pipeline & Deployment**
+5. **Performance & Accessibility Optimization**
+   - Research: Techniques for achieving "fast loading" page load times
+   - Research: Methods for ensuring "responsive" search performance
+   - Research: WCAG 2.1 AA compliance implementation strategies
+   - Research: Security header best practices for static sites
+
+6. **Build Pipeline & Deployment**
    - Research: GitHub Actions workflows for Docusaurus deployment
    - Research: Broken link checker tools (linkinator, broken-link-checker)
    - Research: Lighthouse CI integration for performance monitoring
    - Research: Image optimization automation (sharp, svgo)
+   - Research: Comprehensive monitoring solutions for static sites
 
 **Output**: `research.md` documenting all decisions with rationale and alternatives considered.
 
@@ -454,6 +462,7 @@ export const exampleSidebarConfig: SidebarConfig = {
    npm run check-links    # Validates internal/external links
    npm run lighthouse     # Runs performance/accessibility/SEO checks
    npm run validate-metadata  # Validates chapter frontmatter against schema
+   npm run check-accessibility  # Verifies WCAG 2.1 AA compliance
    ```
 7. **Updating Glossary**:
    - Edit `docs/references/glossary.md`
@@ -476,14 +485,20 @@ Tasks will be organized by user story (P1: Navigation, P1: Setup Docs, P2: Modul
 After Phase 1 artifacts are generated, run:
 
 ```bash
-.specify/scripts/bash/update-agent-context.sh claude
+.specify/scripts/bash/update-agent-context.sh qwen
 ```
 
-This will add to `CLAUDE.md`:
+This will add to `QWEN.md`:
 - Docusaurus 3.x as documentation framework
 - TypeScript 5.x for component development
 - Algolia DocSearch 3.x for search
 - React 18.x for homepage dashboard
+
+## Phase Status
+
+**Phase 0 (Research)**: ✅ COMPLETED - research.md generated with all technical unknowns resolved
+**Phase 1 (Design & Contracts)**: ✅ COMPLETED - data-model.md, quickstart.md, and contracts/ directory created with schema definitions
+**Phase 2 (Task Breakdown)**: PENDING - Execute `/sp.tasks book-master-plan` to generate implementation tasks
 
 ---
 
@@ -499,18 +514,23 @@ This will add to `CLAUDE.md`:
 
 ## Success Criteria Mapping
 
-| Success Criteria | Design Element |
-|------------------|----------------|
-| SC-001: 2-click navigation | Dashboard homepage with module cards + nested sidebar |
-| SC-002: 95% links work | Broken link checker in build pipeline |
-| SC-003: Module learning outcomes | Module entity with learningOutcomes field |
-| SC-004: 3 hardware setups | setup/ directory with workstation.md, edge-kit.md, cloud.md |
-| SC-005: Capstone mapping (5 min) | capstone_component metadata field + capstone guide |
-| SC-006: Time estimates | estimated_time metadata field + TOC aggregation |
-| SC-007: 100+ glossary terms | glossary.md + GlossarySearch component |
-| SC-008: 3-level rubrics | Assessment entity with rubric array |
-| SC-009: Independent Week 1-2 | Incremental build support, intro.md as standalone |
-| SC-010: Prerequisite graph | prerequisites metadata field + visualization option |
+| Success Criteria | Design Element | Task IDs |
+|------------------|----------------|----------|
+| SC-001: 2-click navigation | Dashboard homepage with module cards + nested sidebar | T023-T035 |
+| SC-002: 95% links work | Broken link checker in build pipeline | T086 |
+| SC-003: Module learning outcomes | Module entity with learningOutcomes field | T053 |
+| SC-004: 3 hardware setups | setup/ directory with workstation.md, edge-kit.md, cloud.md | T036-T038 |
+| SC-005: Capstone mapping (5 min) | capstone_component metadata field + capstone guide | T068-T069 |
+| SC-006: Time estimates | estimated_time metadata field + TOC aggregation | T055 |
+| SC-007: 100+ glossary terms | glossary.md + GlossarySearch component | T042, T048c, T048d, T088 |
+| SC-008: 3-level rubrics | Assessment entity with rubric array | T067 |
+| SC-009: Independent Week 1-2 | Incremental build support, intro.md as standalone | T029 |
+| SC-010: Prerequisite graph | prerequisites metadata field + visualization option | T056 |
+| SC-011: Fast loading/responsive search | Performance optimization + Algolia DocSearch + glossary search | T048a-T048i, T087 |
+| SC-012: Security headers and HTTPS | Docusaurus config with security headers + HTTPS enforcement | T095-T099 |
+| SC-013: WCAG 2.1 AA compliance | Accessibility features and validation tools | T100-T106 |
+| SC-014: Modest traffic handling | GitHub Pages hosting with optimization | T074 (deployment) |
+| SC-015: Comprehensive monitoring | Analytics and monitoring tools implementation | T107-T112 |
 
 ---
 

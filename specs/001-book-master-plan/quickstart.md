@@ -1,269 +1,224 @@
-# Quickstart Guide
+# Quickstart Guide: Book Master Plan - Physical AI & Humanoid Robotics Textbook
+
+**Feature**: Book Master Plan | **Date**: 2025-11-29 | **Spec**: [spec.md](../001-book-master-plan/spec.md)
 
 ## Purpose
 
-Enable developers to set up, run, and contribute to the Physical AI & Humanoid Robotics Textbook.
+This guide enables developers to set up, run, and contribute to the Physical AI & Humanoid Robotics textbook project.
 
 ## Prerequisites
 
-- **Node.js**: Version 18 or higher
-- **Git**: For version control
-- **Text Editor**: VS Code, Sublime Text, or similar
+- Node.js 18+ (LTS recommended)
+- Git
+- Text editor with Markdown support
+- Basic command-line knowledge
 
 ## Installation
 
-Clone the repository and install dependencies:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ameen-alam/Physical-AI-Humanoid-Robotics-Textbook.git
+   cd Physical-AI-Humanoid-Robotics-Textbook
+   ```
 
-```bash
-git clone <repo-url>
-cd Physical-AI-Humanoid-Robotics-Textbook
-npm install
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
 ## Development Server
 
-Start the local development server:
-
+Start the development server:
 ```bash
 npm start
-# Opens http://localhost:3000
 ```
 
-The development server provides:
-- Hot reload on file changes
-- Instant preview of content updates
-- Live search functionality testing
+This opens the textbook at http://localhost:3000 with hot reloading enabled.
 
-## Build & Deploy
+## Building & Deploying
 
-### Build Static Site
-
-Generate the production-ready static site:
-
+### Local Build
+Create a production-ready build:
 ```bash
-npm run build          # Creates static site in build/
+npm run build
 ```
 
-### Preview Production Build
+This creates a static site in the `build/` directory.
 
-Test the production build locally:
-
+### Local Preview
+Preview the production build locally:
 ```bash
-npm run serve          # Preview production build at http://localhost:3000
+npm run serve
 ```
 
-### Deploy to GitHub Pages
+This serves the built site at http://localhost:3000.
 
+### Deployment
 Deploy to GitHub Pages (main branch only):
-
 ```bash
-npm run deploy         # Deploy to GitHub Pages
+npm run deploy
 ```
 
-**Note**: Deployment is restricted to the main branch. Feature branches will fail the deployment check.
+## Creating New Content
 
-## Creating New Chapter
+### New Chapter
+To create a new chapter:
 
-Follow these steps to add a new chapter:
-
-1. **Copy Template**: Use the chapter template as starting point
-   ```bash
-   cp .specify/templates/chapter-template.md docs/module-X-name/new-chapter.md
-   ```
-
-2. **Fill Frontmatter**: Update the YAML frontmatter metadata
-   - Use `contracts/chapter-metadata-schema.json` for field definitions
-   - Required fields: title, description, keywords, sidebar_position, estimated_time, week, module, prerequisites, learning_objectives
-   - Optional fields: sidebar_label, assessment_type, difficulty_level, capstone_component
-
-3. **Place in Module Directory**: Save to appropriate module
-   ```
-   docs/module-1-ros2/           # Module 1: ROS 2 (Weeks 3-5)
-   docs/module-2-digital-twin/   # Module 2: Digital Twin (Weeks 6-7)
-   docs/module-3-isaac/          # Module 3: NVIDIA Isaac (Weeks 8-10)
-   docs/module-4-vla-humanoids/  # Module 4: VLA & Humanoids (Weeks 11-13)
-   ```
-
-4. **Add to Sidebar**: Update `sidebars.js` with new entry
-   ```javascript
-   {
-     type: 'category',
-     label: 'Module 1: ROS 2 (Weeks 3-5)',
-     collapsible: true,
-     collapsed: false,
-     items: [
-       'module-1-ros2/index',
-       'module-1-ros2/week-3-architecture',
-       'module-1-ros2/new-chapter'  // Add here
-     ]
-   }
-   ```
-
-5. **Validate Metadata**: Run validation to ensure compliance
+1. Copy the chapter template from `.specify/templates/chapter-template.md`
+2. Fill in the frontmatter metadata (see schema in `contracts/chapter-metadata-schema.json`)
+3. Place the file in the appropriate module directory (`docs/module-X-name/`)
+4. Add the new chapter to `sidebars.js` in the correct category
+5. Validate the metadata:
    ```bash
    npm run validate-metadata
    ```
 
-## Running Quality Checks
+### New Module
+To create a new module:
 
-Before committing, run all quality checks:
+1. Create a new directory in `docs/` (e.g., `docs/module-5-new-topic/`)
+2. Create an `index.md` file for the module overview
+3. Add the module to `sidebars.js`
+4. Update the data model if needed
 
+### New Assessment
+To create a new assessment:
+
+1. Create a new file in `docs/assessments/`
+2. Follow the assessment template structure
+3. Add to `sidebars.js` under assessments
+4. Update the assessment data model if needed
+
+## Quality Checks
+
+Run all quality checks:
 ```bash
-# Build check (no errors/warnings allowed)
-npm run build
-
-# Link validation (internal and external links)
-npm run check-links
-
-# Performance, accessibility, and SEO checks
-npm run lighthouse
-
-# Metadata validation (chapter frontmatter against JSON Schema)
-npm run validate-metadata
+npm run build          # Ensures no build errors/warnings
+npm run check-links    # Validates internal/external links
+npm run lighthouse     # Runs performance/accessibility/SEO checks
+npm run validate-metadata  # Validates chapter frontmatter against schema
+npm run check-accessibility  # Verifies WCAG 2.1 AA compliance
 ```
 
-**Quality Gates** (must pass before merge):
-- Build completes with 0 errors, 0 warnings
-- Broken link count: 0
-- Lighthouse scores: Performance ≥ 90, Accessibility ≥ 95, SEO ≥ 95
-- All chapter metadata validates against schema
+### Individual Quality Checks
+
+- Build validation: `npm run build`
+- Link validation: `npm run check-links`
+- Performance/accessibility/SEO: `npm run lighthouse`
+- Metadata validation: `npm run validate-metadata`
+- Accessibility compliance: `npm run check-accessibility`
 
 ## Updating Glossary
 
-The glossary powers the instant glossary search component:
-
-1. **Edit Glossary File**: Add/update terms in `docs/references/glossary.md`
-   ```markdown
-   ## ROS 2 (Robot Operating System 2)
-   Open-source middleware framework for robot software development...
-   ```
-
-2. **Rebuild Search Index**: Regenerate the Flexsearch index
+1. Edit `docs/references/glossary.md`
+2. Rebuild the search index:
    ```bash
    npm run generate-glossary-index
    ```
 
-3. **Verify Search**: Start dev server and test glossary search component
+## Working with Components
 
-## Project Structure
+### Custom Components Location
+All custom React components are in `src/components/`
 
-```
-Physical-AI-Humanoid-Robotics-Textbook/
-├── docs/                           # Main content
-│   ├── intro.md
-│   ├── setup/                      # 3 hardware paths
-│   ├── module-1-ros2/              # Weeks 3-5
-│   ├── module-2-digital-twin/      # Weeks 6-7
-│   ├── module-3-isaac/             # Weeks 8-10
-│   ├── module-4-vla-humanoids/     # Weeks 11-13
-│   ├── capstone/
-│   ├── assessments/
-│   ├── references/                 # Glossary, notation, troubleshooting
-│   └── instructors/
-├── src/                            # Custom React components
-│   ├── components/
-│   │   ├── ModuleCard.tsx
-│   │   ├── QuickLinks.tsx
-│   │   ├── RecentUpdates.tsx
-│   │   └── GlossarySearch.tsx
-│   └── pages/
-│       └── index.tsx               # Dashboard homepage
-├── static/                         # Static assets
-│   └── img/
-├── docusaurus.config.js            # Docusaurus configuration
-├── sidebars.js                     # Sidebar structure
-├── package.json
-└── .github/workflows/              # CI/CD pipelines
-```
+### Creating New Components
+1. Create a new `.tsx` file in `src/components/`
+2. Follow the existing component patterns
+3. Use TypeScript interfaces for props
+4. Ensure accessibility compliance
+5. Test in the development environment
 
-## Common Tasks
+### Homepage Components
+The homepage is built with custom components in `src/pages/index.tsx`
+- ModuleCard: Displays module information
+- QuickLinks: Sidebar with common links
+- RecentUpdates: Shows recent content changes
+- GlossarySearch: Dedicated search for terminology
 
-### Add a Module
+## Configuration Files
 
-1. Create module directory: `docs/module-X-name/`
-2. Add `index.md` with module overview
-3. Update `sidebars.js` with new category
-4. Add module metadata to `src/data/modules.json`
+### Docusaurus Configuration
+Main configuration is in `docusaurus.config.js`
+- Site metadata (title, tagline, URL)
+- Theme configuration
+- Plugin configuration
+- Algolia search settings
+- Security headers
+- Accessibility features
 
-### Update Homepage
+### Sidebar Configuration
+Navigation structure is in `sidebars.js`
+- Organized by modules and weeks
+- Collapsible categories
+- Cross-references for topics
 
-Edit `src/pages/index.tsx` to modify:
-- Module cards
-- Quick links sidebar
-- Recent updates section
+### TypeScript Configuration
+Settings in `tsconfig.json`
+- Type checking rules
+- Module resolution
+- JSX compilation
 
-### Configure Search
+## Environment-Specific Commands
 
-Algolia DocSearch configuration in `docusaurus.config.js`:
-```javascript
-algolia: {
-  appId: 'YOUR_APP_ID',
-  apiKey: 'YOUR_SEARCH_API_KEY',
-  indexName: 'physical-ai-textbook',
-  searchParameters: {
-    attributesToRetrieve: ['hierarchy', 'content', 'url', 'week', 'module', 'capstone_component']
-  }
-}
-```
+### Development
+- `npm start`: Start development server with hot reloading
+- `npm run swizzle`: Customize Docusaurus themes/components
 
-### Customize Theme
+### Production
+- `npm run build`: Create production build
+- `npm run serve`: Serve production build locally
+- `npm run deploy`: Deploy to GitHub Pages
 
-Theme configuration in `docusaurus.config.js`:
-```javascript
-themeConfig: {
-  colorMode: {
-    defaultMode: 'light',
-    disableSwitch: false,
-    respectPrefersColorScheme: true
-  },
-  navbar: { ... },
-  footer: { ... }
-}
-```
+### Testing & Validation
+- `npm run check-links`: Check for broken links
+- `npm run lighthouse`: Performance/accessibility/SEO audit
+- `npm run validate-metadata`: Validate chapter metadata
+- `npm run check-accessibility`: WCAG compliance check
 
 ## Troubleshooting
 
-### Build Fails
+### Common Issues
 
-- **Check Node.js version**: `node --version` (must be 18+)
-- **Clear cache**: `npm run clear && npm install`
-- **Check for syntax errors**: Review error output for file paths
+1. **Build fails with errors**
+   - Check that all frontmatter metadata is valid according to the schema
+   - Ensure all required dependencies are installed
+   - Verify that all links are valid
 
-### Broken Links
+2. **Components not rendering properly**
+   - Check browser console for JavaScript errors
+   - Verify TypeScript interfaces match component props
+   - Ensure accessibility attributes are properly set
 
-- **Run link checker**: `npm run check-links`
-- **Fix internal links**: Use relative paths (`./other-chapter.md`)
-- **Check external links**: Verify URLs are accessible
+3. **Search not working**
+   - Verify Algolia configuration in `docusaurus.config.js`
+   - Check that the glossary search index is properly generated
+   - Ensure search selectors are correctly configured
 
-### Metadata Validation Errors
+### Performance Tips
 
-- **Review schema**: `contracts/chapter-metadata-schema.json`
-- **Check required fields**: All 9 required fields must be present
-- **Validate data types**: week/module must be integers, estimated_time must be number
+1. **Optimize images** using the ideal-image plugin
+2. **Minimize JavaScript bundle size** by code splitting large components
+3. **Use lazy loading** for non-critical content
+4. **Enable compression** in deployment configuration
 
-### Search Not Working
+## Contributing Guidelines
 
-- **Algolia**: Verify API key and index name in config
-- **Glossary**: Rebuild index with `npm run generate-glossary-index`
-- **Clear browser cache**: Hard refresh (Ctrl+Shift+R)
+### Content Creation
+- Follow the established chapter template
+- Include all required metadata
+- Write in clear, accessible language
+- Use consistent terminology (refer to glossary)
+- Include relevant code examples with proper syntax highlighting
 
-## Contributing
+### Code Contributions
+- Write TypeScript for all custom components
+- Follow accessibility best practices
+- Include JSDoc comments for exported functions/components
+- Ensure all tests pass before submitting PRs
+- Follow the established code style
 
-See [CONTRIBUTING.md](../CONTRIBUTING.md) for:
-- Code of conduct
-- Pull request process
-- Commit message conventions
-- Review guidelines
-
-## Support
-
-- **Documentation Issues**: Open issue with `docs` label
-- **Technical Issues**: Open issue with `bug` label
-- **Feature Requests**: Open issue with `enhancement` label
-
-## Next Steps
-
-1. Explore the codebase structure
-2. Read existing chapters to understand content patterns
-3. Review `contracts/chapter-metadata-schema.json` for metadata requirements
-4. Start contributing!
+### Review Process
+- All changes must pass quality checks
+- PRs require at least one approval
+- Changes to core functionality require additional review
+- Documentation updates should accompany code changes

@@ -1,0 +1,233 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Personalization API",
+    "version": "1.0.0",
+    "description": "API for content personalization based on user background"
+  },
+  "paths": {
+    "/api/personalization/content/{contentId}": {
+      "get": {
+        "summary": "Get personalized content for a specific user",
+        "parameters": [
+          {
+            "name": "contentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the content to personalize"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the user requesting personalized content"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Personalized content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalizedContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Content not found"
+          }
+        }
+      }
+    },
+    "/api/personalization/profile/{userId}": {
+      "post": {
+        "summary": "Update user profile for personalization",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the user whose profile to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated user profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfile"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserProfile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique user identifier"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email address"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Account creation timestamp"
+          },
+          "background": {
+            "$ref": "#/components/schemas/UserBackground"
+          },
+          "preferences": {
+            "$ref": "#/components/schemas/UserPreferences"
+          }
+        },
+        "required": ["id", "email", "createdAt", "background", "preferences"]
+      },
+      "UserBackground": {
+        "type": "object",
+        "properties": {
+          "primaryFocus": {
+            "type": "string",
+            "enum": ["software", "hardware", "both"],
+            "description": "Primary area of expertise"
+          },
+          "experienceLevel": {
+            "type": "string",
+            "enum": ["beginner", "intermediate", "advanced"],
+            "description": "Experience level"
+          },
+          "specificInterests": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Specific areas of interest"
+          }
+        },
+        "required": ["primaryFocus", "experienceLevel"]
+      },
+      "UserPreferences": {
+        "type": "object",
+        "properties": {
+          "preferredLanguage": {
+            "type": "string",
+            "description": "Default language preference"
+          },
+          "personalizationEnabled": {
+            "type": "boolean",
+            "description": "Whether to show personalized content"
+          },
+          "lastActive": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last activity timestamp"
+          }
+        },
+        "required": ["preferredLanguage", "personalizationEnabled", "lastActive"]
+      },
+      "UserProfileUpdate": {
+        "type": "object",
+        "properties": {
+          "background": {
+            "$ref": "#/components/schemas/UserBackground"
+          },
+          "preferences": {
+            "$ref": "#/components/schemas/UserPreferences"
+          }
+        }
+      },
+      "PersonalizedContent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the content"
+          },
+          "originalContentId": {
+            "type": "string",
+            "description": "Reference to the original content"
+          },
+          "userId": {
+            "type": "string",
+            "description": "User this content is personalized for"
+          },
+          "personalizedText": {
+            "type": "string",
+            "description": "The personalized content text"
+          },
+          "adaptations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContentAdaptation"
+            },
+            "description": "Details of how content was adapted"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When this personalized content was created"
+          }
+        },
+        "required": ["id", "originalContentId", "userId", "personalizedText", "createdAt"]
+      },
+      "ContentAdaptation": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["example", "explanation", "exercise", "resource"],
+            "description": "Type of adaptation"
+          },
+          "originalText": {
+            "type": "string",
+            "description": "Original content text"
+          },
+          "adaptedText": {
+            "type": "string",
+            "description": "Adapted content text"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Confidence in adaptation quality"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason for this adaptation"
+          }
+        },
+        "required": ["type", "originalText", "adaptedText", "confidence", "reason"]
+      }
+    }
+  }
+}

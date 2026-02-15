@@ -1,0 +1,178 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Translation API",
+    "version": "1.0.0",
+    "description": "API for Urdu translation of textbook content"
+  },
+  "paths": {
+    "/api/translate": {
+      "post": {
+        "summary": "Translate content to Urdu",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranslationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Translation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TranslationResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      }
+    },
+    "/api/translate/cache/{requestId}": {
+      "get": {
+        "summary": "Get cached translation result",
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the translation request"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cached translation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TranslationResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cache entry not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TranslationRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique request identifier"
+          },
+          "userId": {
+            "type": "string",
+            "description": "User requesting translation"
+          },
+          "contentId": {
+            "type": "string",
+            "description": "ID of content to translate"
+          },
+          "sourceLanguage": {
+            "type": "string",
+            "description": "Source language (e.g., 'en')"
+          },
+          "targetLanguage": {
+            "type": "string",
+            "description": "Target language (e.g., 'ur' for Urdu)"
+          },
+          "contentText": {
+            "type": "string",
+            "description": "Text to translate"
+          },
+          "context": {
+            "$ref": "#/components/schemas/TranslationContext"
+          }
+        },
+        "required": ["id", "userId", "contentId", "sourceLanguage", "targetLanguage", "contentText", "context"]
+      },
+      "TranslationContext": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "enum": ["robotics", "ai", "ros", "isaac", "gazebo", "other"],
+            "description": "Domain of the content"
+          },
+          "technicalTerms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Technical terms in the content"
+          },
+          "previousTranslations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Previous translations for consistency"
+          }
+        },
+        "required": ["domain", "technicalTerms"]
+      },
+      "TranslationResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Matches request ID"
+          },
+          "success": {
+            "type": "boolean",
+            "description": "Whether translation succeeded"
+          },
+          "translatedText": {
+            "type": "string",
+            "description": "Translated content (if successful)"
+          },
+          "error": {
+            "type": "string",
+            "description": "Error message (if failed)"
+          },
+          "sourceLanguage": {
+            "type": "string",
+            "description": "Detected source language"
+          },
+          "targetLanguage": {
+            "type": "string",
+            "description": "Target language"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Translation quality confidence"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When translation was completed"
+          },
+          "cached": {
+            "type": "boolean",
+            "description": "Whether result was from cache"
+          }
+        },
+        "required": ["id", "success", "sourceLanguage", "targetLanguage", "confidence", "timestamp", "cached"]
+      }
+    }
+  }
+}

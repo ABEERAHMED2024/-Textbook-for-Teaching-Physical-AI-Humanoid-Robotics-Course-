@@ -123,8 +123,25 @@ This project follows **Spec-Driven Development (SDD)** using [Spec-Kit Plus](htt
 - **Build Tools**: Node.js 18+
 - **Search**: Algolia DocSearch + Flexsearch
 - **CI/CD**: GitHub Actions
-- **Deployment**: GitHub Pages
+- **Deployment**: GitHub Pages / Vercel
+- **Backend**: FastAPI (Python)
+- **Vector Database**: Qdrant
+- **Authentication**: Custom JWT-based system
 - **AI Assistant**: Claude Code
+
+## Features
+
+### RAG Chatbot
+Integrated chatbot that answers questions about the textbook content using Retrieval-Augmented Generation (RAG) technology.
+
+### Authentication System
+Secure sign-up and sign-in functionality with background information collection to personalize the learning experience.
+
+### Content Personalization
+Personalize textbook content based on your software and hardware background for a tailored learning experience.
+
+### Urdu Translation
+Translate textbook content to Urdu with a single click (available to authenticated users).
 
 ## Roadmap
 

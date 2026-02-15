@@ -8,3 +8,5 @@ pydantic
 python-multipart
 chunking-library
 mdx-parser
+passlib[bcrypt]
+pyjwt

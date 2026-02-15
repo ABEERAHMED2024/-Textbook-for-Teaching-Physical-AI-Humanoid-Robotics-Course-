@@ -1,450 +1,209 @@
 # Data Model: Book Master Plan - Physical AI & Humanoid Robotics Textbook
 
-**Date**: 2025-11-29
-**Feature**: 001-book-master-plan
-**Purpose**: Define entities, metadata schema, and relationships for the Docusaurus-based textbook structure
+**Feature**: Book Master Plan | **Date**: 2025-11-29 | **Spec**: [spec.md](../001-book-master-plan/spec.md)
 
----
+## Overview
 
-## Entity Definitions
+This document defines the data model for the Physical AI & Humanoid Robotics textbook. It outlines the key entities, their attributes, relationships, and validation rules derived from the feature specification.
 
-### 1. Module
+## Entities
 
-Represents a major course section (4 total across the 13-week course).
-
-**Attributes**:
-
-| Field | Type | Required | Description | Example |
-|-------|------|----------|-------------|---------|
-| `id` | string | Yes | Unique identifier (kebab-case) | `"module-1-ros2"` |
-| `title` | string | Yes | Full module title | `"Module 1: The Robotic Nervous System (ROS 2)"` |
-| `weekRange` | string | Yes | Week span for this module | `"Weeks 3-5"` |
-| `description` | string | Yes | Module overview (2-3 sentences) | `"Learn ROS 2 architecture..."` |
-| `learningOutcomes` | array\<string\> | Yes | 3-5 measurable learning outcomes | `["Explain ROS 2 nodes", "Build a package"]` |
-| `chapters` | array\<string\> | Yes | Array of chapter IDs (references) | `["week-3-architecture", "week-4-topics"]` |
-| `capstoneIntegration` | string | Yes | How module contributes to capstone | `"Provides ROS 2 skills for robot control"` |
-
-**Example**:
-```json
-{
-  "id": "module-1-ros2",
-  "title": "Module 1: The Robotic Nervous System (ROS 2)",
-  "weekRange": "Weeks 3-5",
-  "description": "Learn ROS 2 architecture, communication patterns, and robot description. Build and deploy ROS 2 packages to control simulated robots.",
-  "learningOutcomes": [
-    "Explain ROS 2 architecture and core concepts",
-    "Create publishers and subscribers for sensor data",
-    "Define robot structure using URDF files"
-  ],
-  "chapters": [
-    "module-1-ros2/week-3-architecture",
-    "module-1-ros2/week-4-topics-services",
-    "module-1-ros2/week-5-urdf"
-  ],
-  "capstoneIntegration": "ROS 2 serves as the communication layer for the autonomous humanoid, enabling voice commands to be translated into robot actions."
-}
-```
-
-**Storage**: Modules are defined in `docusaurus.config.ts` or separate JSON file (`static/data/modules.json`)
-
----
-
-### 2. Chapter
-
-Represents a single topic within a module (typically 1-2 weeks of content). Defined via **Markdown frontmatter metadata**.
-
-**Frontmatter Schema** (all chapters must include these fields):
-
-| Field | Type | Required | Validation | Description | Example |
-|-------|------|----------|------------|-------------|---------|
-| `title` | string | Yes | minLength: 5 | Full chapter title | `"Week 3: ROS 2 Architecture and Core Concepts"` |
-| `description` | string | Yes | 20-160 chars | Brief summary (for SEO/TOC) | `"Introduction to ROS 2 nodes, topics..."` |
-| `keywords` | array\<string\> | Yes | 3-10 items | SEO keywords | `["ROS 2", "nodes", "topics", "robotics"]` |
-| `sidebar_position` | number | Yes | >= 1 | Ordering within category | `1` |
-| `sidebar_label` | string | No | maxLength: 40 | Short label override | `"ROS 2 Architecture"` |
-| `estimated_time` | number | Yes | 0.5-20 hours | Reading + lab time | `3` (3 hours) |
-| `week` | number | Yes | 1-13 | Course week number | `3` |
-| `module` | number | Yes | 1-4 | Module number | `1` |
-| `prerequisites` | array\<string\> | Yes | >= 0 items | Chapter IDs or `"none"` | `["intro", "setup/workstation"]` |
-| `learning_objectives` | array\<string\> | Yes | 3-8 items | Measurable objectives | `["Explain ROS 2 graph concept", "Create a node"]` |
-| `assessment_type` | string \| null | No | enum | Assessment category | `"project"` \| `"quiz"` \| `"capstone"` \| `null` |
-| `difficulty_level` | string \| null | No | enum | Complexity indicator | `"beginner"` \| `"intermediate"` \| `"advanced"` \| `null` |
-| `capstone_component` | string \| null | No | enum | Capstone relation | `"voice"` \| `"plan"` \| `"navigate"` \| `"perceive"` \| `"manipulate"` \| `null` |
-
-**Example Frontmatter**:
-```yaml
----
-title: "Week 3: ROS 2 Architecture and Core Concepts"
-description: "Introduction to ROS 2 nodes, topics, services, and the ROS 2 computation graph"
-keywords: ["ROS 2", "nodes", "topics", "services", "graph", "rclpy"]
-sidebar_position: 1
-sidebar_label: "ROS 2 Architecture"
-estimated_time: 3
-week: 3
-module: 1
-prerequisites: ["intro", "setup/workstation"]
-learning_objectives:
-  - "Explain the ROS 2 computation graph and its components"
-  - "Create a simple ROS 2 node using rclpy"
-  - "Launch multiple nodes and inspect the graph using command-line tools"
-assessment_type: null
-difficulty_level: "beginner"
-capstone_component: null
----
-
-# Week 3: ROS 2 Architecture and Core Concepts
-
-[Chapter content here...]
-```
-
-**Validation**: All chapters validated against `contracts/chapter-metadata-schema.json` using `ajv` library
-
-**Storage**: Chapter content in `docs/module-X-name/week-Y-topic.md` files
-
----
-
-### 3. Glossary Entry
-
-Represents a robotics term with definition and cross-references.
+### Module
+Represents a major course section (4 total: ROS 2, Digital Twin, Isaac, VLA). Contains learning outcomes, week ranges, chapters, and integration points with capstone.
 
 **Attributes**:
+- `id`: string (e.g., "module-1-ros2") - Required, unique identifier
+- `title`: string (e.g., "Module 1: The Robotic Nervous System (ROS 2)") - Required
+- `weekRange`: string (e.g., "Weeks 3-5") - Required, follows format "Weeks X-Y"
+- `description`: string (module overview) - Required, minimum 20 characters
+- `learningOutcomes`: array of strings - Required, minimum 3 outcomes
+- `chapters`: array of Chapter references - Required, minimum 1 chapter
+- `capstoneIntegration`: string (how module contributes to capstone) - Optional
 
-| Field | Type | Required | Description | Example |
-|-------|------|----------|-------------|---------|
-| `term` | string | Yes | Canonical term name | `"Forward Kinematics"` |
-| `definition` | string | Yes | Concise explanation | `"Computation of end-effector position from joint angles"` |
-| `relatedTerms` | array\<string\> | No | Cross-references | `["Inverse Kinematics", "Joint Space"]` |
-| `chapters` | array\<string\> | No | Where term is used | `["module-1-ros2/week-5-urdf", "module-4-vla/week-11-kinematics"]` |
-| `acronym` | string | No | Abbreviation | `"FK"` |
+**Validation Rules**:
+- `id` must be unique across all modules
+- `weekRange` must follow the format "Weeks X-Y" where X and Y are integers
+- `weekRange` values must be within the course duration (1-13 weeks)
+- `learningOutcomes` must have at least 3 items
+- `chapters` must reference valid chapter IDs
 
-**Example**:
-```markdown
-<!-- In docs/references/glossary.md -->
-## Forward Kinematics (FK)
+### Chapter
+Represents a single topic within a module. Metadata includes estimated time, week number, module number, prerequisites, learning objectives, and optional assessment type, difficulty level, and capstone component. Contains content sections, code examples, exercises, and references. Maps to 1-2 weeks of course content.
 
-**Definition**: Computation of the end-effector position and orientation from known joint angles.
+**Attributes** (as Markdown frontmatter):
+- `title`: string (full chapter title) - Required, minimum 5 characters
+- `description`: string (brief summary for SEO and TOC) - Required, 20-160 characters
+- `keywords`: array of strings (SEO keywords) - Required, 3-10 items
+- `sidebar_position`: number (ordering within parent category) - Required, positive integer
+- `sidebar_label`: string (optional override for long titles) - Optional, max 40 characters
+- `estimated_time`: number (hours of reading/lab work) - Required, 0.5-20 hours
+- `week`: number (1-13) - Required, within course duration
+- `module`: number (1-4) - Required, references valid module
+- `prerequisites`: array of strings (chapter slugs or "none") - Optional
+- `learning_objectives`: array of strings (measurable objectives) - Required, 3-8 items
+- `assessment_type`: string | null ("project", "quiz", "capstone", null) - Optional
+- `difficulty_level`: string | null ("beginner", "intermediate", "advanced", null) - Optional
+- `capstone_component`: string | null ("voice", "plan", "navigate", "perceive", "manipulate", null) - Optional
 
-**Related Terms**: Inverse Kinematics, Joint Space, Denavit-Hartenberg Parameters
+**Validation Rules**:
+- `title` must be unique across all chapters
+- `estimated_time` must be between 0.5 and 20 hours
+- `week` must be between 1 and 13
+- `module` must be between 1 and 4
+- `prerequisites` must reference valid chapter IDs or be "none"
+- `learning_objectives` must have 3-8 items
+- `assessment_type` must be one of the allowed values or null
+- `difficulty_level` must be one of the allowed values or null
+- `capstone_component` must be one of the allowed values or null
 
-**Used In**: [Week 5: URDF](../module-1-ros2/week-5-urdf.md), [Week 11: Kinematics](../module-4-vla/week-11-kinematics.md)
-```
-
-**Storage**: Markdown file at `docs/references/glossary.md`, indexed as JSON for search at build time (`static/data/glossary-index.json`)
-
----
-
-### 4. Hardware Configuration
-
-Represents one of three setup paths for the course.
-
-**Attributes**:
-
-| Field | Type | Required | Description | Example |
-|-------|------|----------|-------------|---------|
-| `id` | string | Yes | Configuration identifier | `"workstation"` \| `"edge-kit"` \| `"cloud"` |
-| `name` | string | Yes | Display name | `"Digital Twin Workstation"` |
-| `requirements` | array\<string\> | Yes | Hardware/software specs | `["NVIDIA RTX 4070 Ti (12GB VRAM)", "Ubuntu 22.04 LTS"]` |
-| `cost` | string | Yes | Estimated cost range | `"$2,500 - $4,000"` |
-| `setupSteps` | array\<string\> | Yes | Installation instructions | `["Install Ubuntu 22.04", "Install NVIDIA drivers"]` |
-| `limitations` | array\<string\> | No | What doesn't work | `["Cannot run Isaac Sim on non-RTX GPUs"]` |
-
-**Example**:
-```json
-{
-  "id": "workstation",
-  "name": "Digital Twin Workstation (RTX + Ubuntu)",
-  "requirements": [
-    "NVIDIA RTX 4070 Ti (12GB VRAM) or higher",
-    "Intel Core i7 (13th Gen+) or AMD Ryzen 9",
-    "64 GB DDR5 RAM (32 GB minimum)",
-    "Ubuntu 22.04 LTS (dual-boot or dedicated machine)"
-  ],
-  "cost": "$2,500 - $4,000",
-  "setupSteps": [
-    "Install Ubuntu 22.04 LTS from bootable USB",
-    "Install NVIDIA proprietary drivers (version 535+)",
-    "Install CUDA Toolkit 12.x",
-    "Install ROS 2 Humble via apt",
-    "Install NVIDIA Omniverse Launcher",
-    "Install Isaac Sim from Omniverse"
-  ],
-  "limitations": [
-    "Requires physical hardware purchase",
-    "Not portable (desktop setup)"
-  ]
-}
-```
-
-**Storage**: Markdown files at `docs/setup/*.md` (workstation.md, edge-kit.md, cloud.md)
-
----
-
-### 5. Assessment
-
-Represents a project or evaluation point with rubric.
+### Part
+High-level grouping of content. Parts include: Introduction, Foundational Setup, Modules 1-4, Capstone Guide, Assessments, References.
 
 **Attributes**:
+- `id`: string (unique identifier) - Required
+- `title`: string (display title) - Required
+- `description`: string (overview of content) - Required
+- `sections`: array of strings (references to child sections) - Required
 
-| Field | Type | Required | Description | Example |
-|-------|------|----------|-------------|---------|
-| `id` | string | Yes | Assessment identifier | `"ros2-package"` |
-| `title` | string | Yes | Assessment name | `"ROS 2 Package Development Project"` |
-| `modules` | array\<number\> | Yes | Modules assessed | `[1]` (Module 1) |
-| `description` | string | Yes | Project overview | `"Build a ROS 2 package that publishes sensor data..."` |
-| `rubric` | array\<RubricLevel\> | Yes | Evaluation levels | See RubricLevel below |
+**Validation Rules**:
+- `id` must be unique across all parts
+- `sections` must reference valid section IDs
+
+### Hardware Configuration
+Represents one of three setup paths. Contains hardware requirements, software installation steps, cost estimates, and limitations.
+
+**Attributes**:
+- `id`: string ("workstation", "edge-kit", "cloud") - Required, unique
+- `name`: string (display name) - Required
+- `requirements`: array of strings (hardware/software specs) - Required
+- `cost`: string (estimated cost range) - Required
+- `setupSteps`: array of strings (installation instructions) - Required
+- `limitations`: array of strings (what doesn't work) - Optional
+
+**Validation Rules**:
+- `id` must be one of the allowed values
+- `setupSteps` must have at least one item
+
+### Assessment
+Represents a project or evaluation point. Contains requirements, rubrics, evaluation criteria, and submission guidelines.
+
+**Attributes**:
+- `id`: string ("ros2-package", "gazebo-simulation", "isaac-perception", "capstone") - Required, unique
+- `title`: string - Required
+- `modules`: array of numbers (which modules assessed) - Required
+- `rubric`: array of RubricLevel objects - Required
+- `requirements`: string (what needs to be submitted) - Required
+- `submissionGuidelines`: string (how to submit) - Required
 
 **RubricLevel Object**:
+- `level`: string ("needs improvement", "proficient", "excellent") - Required
+- `criteria`: array of strings - Required
+- `points`: number - Required
 
-| Field | Type | Required | Description | Example |
-|-------|------|----------|-------------|---------|
-| `level` | string | Yes | Performance level | `"needs improvement"` \| `"proficient"` \| `"excellent"` |
-| `criteria` | array\<string\> | Yes | Evaluation criteria | `["Package builds successfully", "Code follows PEP 8"]` |
-| `points` | number | Yes | Point value | `70` (for "proficient") |
+**Validation Rules**:
+- `id` must be one of the allowed values
+- `modules` must contain valid module numbers (1-4)
+- `rubric` must have at least one RubricLevel object
+- Each RubricLevel must have valid `level` value
+- `criteria` in each RubricLevel must have at least one item
 
-**Example**:
-```json
-{
-  "id": "ros2-package",
-  "title": "ROS 2 Package Development Project",
-  "modules": [1],
-  "description": "Build a ROS 2 package that publishes simulated sensor data and subscribes to control commands. Demonstrate node communication and launch file configuration.",
-  "rubric": [
-    {
-      "level": "needs improvement",
-      "criteria": [
-        "Package structure incomplete or does not build",
-        "Nodes do not communicate correctly",
-        "Lack of comments or documentation"
-      ],
-      "points": 50
-    },
-    {
-      "level": "proficient",
-      "criteria": [
-        "Package builds successfully with all dependencies declared",
-        "Nodes communicate via topics with correct message types",
-        "Code follows PEP 8 style guide",
-        "Basic documentation provided (README)"
-      ],
-      "points": 85
-    },
-    {
-      "level": "excellent",
-      "criteria": [
-        "All proficient criteria met",
-        "Launch file includes parameter configuration",
-        "Unit tests included with >70% coverage",
-        "Comprehensive documentation with usage examples"
-      ],
-      "points": 100
-    }
-  ]
-}
-```
+### Glossary Entry
+Contains robotics terminology with definitions and cross-references.
 
-**Storage**: Markdown files at `docs/assessments/*.md` (ros2-package.md, gazebo-simulation.md, isaac-perception.md, capstone.md)
+**Attributes**:
+- `term`: string (canonical term) - Required, unique
+- `definition`: string (concise explanation) - Required
+- `relatedTerms`: array of strings (cross-references) - Optional
+- `chapters`: array of strings (where term is used) - Optional
 
----
+**Validation Rules**:
+- `term` must be unique across all glossary entries
+- `definition` must be at least 10 characters
+- `relatedTerms` must reference valid glossary terms
 
-## Entity Relationships
+### Reference Material
+Includes glossary entries, notation definitions, quick reference commands, troubleshooting solutions, and external resources.
 
-### Relationship Diagram
+**Attributes**:
+- `id`: string (unique identifier) - Required
+- `title`: string (display title) - Required
+- `type`: string ("glossary", "notation", "quick-reference", "troubleshooting", "external-resource") - Required
+- `content`: string (the actual reference material) - Required
+- `relatedChapters`: array of strings (relevant chapter IDs) - Optional
 
-```
-Module (1) ──────< (many) Chapter
-  │
-  └─> references in "chapters" array
+**Validation Rules**:
+- `id` must be unique across all reference materials
+- `type` must be one of the allowed values
+- `content` must be at least 10 characters
 
-Chapter ──────> Module
-  │           via "module" number
-  │
-  ├──────> other Chapters
-  │       via "prerequisites" array
-  │
-  └──────> Glossary Entries
-          via inline markdown links
+## Relationships
 
-Assessment ──────< (many) Module
-                 via "modules" array
+### Module → Chapter
+- One-to-many relationship
+- Module "has many" Chapters
+- Each Chapter "belongs to" one Module
 
-Hardware Configuration ──────< (many) Chapter
-                             referenced in setup guide chapters
-```
+### Chapter → Module
+- Many-to-one relationship
+- Each Chapter "references" one Module via `module` attribute
+- Module "contains" many Chapters
 
-### Relationship Details
+### Chapter → Chapter (Prerequisites)
+- Many-to-many relationship (self-referencing)
+- Chapter "has prerequisites" (other Chapters)
+- Implemented via `prerequisites` array in Chapter
 
-**Module → Chapter** (One-to-Many)
-- A Module contains multiple Chapters (typically 3-4 chapters per module)
-- Defined in Module's `chapters` array
-- Example: Module 1 (ROS 2) has chapters: week-3-architecture, week-4-topics, week-5-urdf
+### Chapter → Glossary Entry
+- Many-to-many relationship
+- Chapter "references" many Glossary Entries
+- Implemented via inline links in Chapter content
 
-**Chapter → Module** (Many-to-One)
-- Each Chapter belongs to exactly one Module
-- Defined via Chapter's `module` frontmatter field
-- Example: "Week 3: ROS 2 Architecture" has `module: 1`
-
-**Chapter → Chapter** (Prerequisite Chain)
-- Chapters can depend on other Chapters (or "none")
-- Defined via Chapter's `prerequisites` array
-- Example: "Week 4: Topics & Services" has `prerequisites: ["module-1-ros2/week-3-architecture"]`
-- Forms a directed acyclic graph (DAG) of dependencies
-
-**Chapter → Glossary Entry** (Many-to-Many)
-- Chapters reference Glossary Entries via inline markdown links: `[Forward Kinematics](../references/glossary.md#forward-kinematics)`
-- Glossary Entries track which Chapters use them via `chapters` array
-- Bidirectional cross-referencing for navigation
-
-**Assessment → Module** (Many-to-Many)
-- An Assessment can cover multiple Modules
-- Defined via Assessment's `modules` array
-- Example: "Capstone Project" has `modules: [1, 2, 3, 4]` (all modules)
-
-**Hardware Configuration → Chapter** (One-to-Many)
-- Hardware configurations referenced in setup guide chapters
-- Example: `docs/setup/workstation.md` describes the "workstation" configuration
-- Chapters may reference specific hardware in prerequisites: `prerequisites: ["setup/workstation"]`
-
----
+### Assessment → Module
+- Many-to-many relationship
+- Assessment "assesses" many Modules
+- Implemented via `modules` array in Assessment
 
 ## State Transitions
 
-**None** - All entities are static content with no workflow states. Content follows standard Git workflow:
+None (static content, no workflow states)
 
-```
-Draft → Review → Approved → Published
-```
+## Validation Rules Summary
 
-Managed via Git branches and pull requests, not entity state fields.
+1. **Module Validation**:
+   - Unique ID requirement
+   - Valid week range format and values
+   - Minimum learning outcomes count
+   - Valid chapter references
 
----
+2. **Chapter Validation**:
+   - Unique title requirement
+   - Valid time estimate range
+   - Valid week and module numbers
+   - Valid prerequisite references
+   - Required learning objectives count
+   - Valid optional field values
 
-## Data Storage Strategy
+3. **Hardware Configuration Validation**:
+   - Valid ID values
+   - Required setup steps
 
-### Build-Time Generation
+4. **Assessment Validation**:
+   - Valid ID values
+   - Valid module references
+   - Required rubric structure
 
-1. **Modules**: Defined in `static/data/modules.json` (manually curated)
-2. **Chapters**: Markdown files with frontmatter in `docs/module-X-name/*.md`
-3. **Glossary**: Markdown file at `docs/references/glossary.md`, parsed into `static/data/glossary-index.json` at build time
-4. **Hardware Configs**: Markdown files at `docs/setup/*.md`
-5. **Assessments**: Markdown files at `docs/assessments/*.md`
+5. **Glossary Entry Validation**:
+   - Unique term requirement
+   - Valid definition length
 
-### Build Scripts
+6. **Reference Material Validation**:
+   - Unique ID requirement
+   - Valid type values
+   - Valid content length
 
-**`scripts/generate-chapter-index.js`**:
-- Reads all `docs/**/*.md` files
-- Extracts frontmatter metadata
-- Validates against `chapter-metadata-schema.json`
-- Outputs `static/data/chapters-index.json` for filtering/search
+## Implementation Notes
 
-**`scripts/generate-glossary-index.js`**:
-- Parses `docs/references/glossary.md`
-- Extracts terms and definitions
-- Builds Flexsearch index
-- Outputs `static/data/glossary-index.json`
-
-**`scripts/validate-metadata.js`**:
-- Validates all chapter frontmatter against JSON Schema
-- Runs as pre-commit hook and in CI pipeline
-
----
-
-## Metadata Index Formats
-
-### chapters-index.json
-
-```json
-{
-  "chapters": [
-    {
-      "id": "module-1-ros2/week-3-architecture",
-      "title": "Week 3: ROS 2 Architecture and Core Concepts",
-      "description": "Introduction to ROS 2 nodes, topics...",
-      "week": 3,
-      "module": 1,
-      "estimated_time": 3,
-      "prerequisites": ["intro", "setup/workstation"],
-      "learning_objectives": ["Explain ROS 2 graph", "Create node"],
-      "difficulty_level": "beginner",
-      "path": "/docs/module-1-ros2/week-3-architecture"
-    }
-    // ... more chapters
-  ],
-  "meta": {
-    "generated": "2025-11-29T12:00:00Z",
-    "total_chapters": 18,
-    "total_hours": 135
-  }
-}
-```
-
-### glossary-index.json
-
-```json
-{
-  "terms": [
-    {
-      "id": 1,
-      "term": "Forward Kinematics",
-      "definition": "Computation of end-effector position from joint angles",
-      "acronym": "FK",
-      "relatedTerms": ["Inverse Kinematics", "Joint Space"],
-      "chapters": ["module-1-ros2/week-5-urdf", "module-4-vla/week-11-kinematics"]
-    }
-    // ... more terms
-  ],
-  "meta": {
-    "generated": "2025-11-29T12:00:00Z",
-    "total_terms": 120
-  }
-}
-```
-
----
-
-## Validation Rules
-
-### Chapter Metadata Validation
-
-1. **Required Fields**: title, description, keywords, sidebar_position, estimated_time, week, module, prerequisites, learning_objectives (enforced by JSON Schema)
-2. **Value Ranges**:
-   - `week`: 1-13
-   - `module`: 1-4
-   - `estimated_time`: 0.5-20 hours
-   - `keywords`: 3-10 items
-   - `learning_objectives`: 3-8 items
-3. **String Lengths**:
-   - `description`: 20-160 characters (SEO meta description)
-   - `sidebar_label`: max 40 characters (sidebar width constraint)
-4. **Enums**:
-   - `assessment_type`: "project" | "quiz" | "capstone" | null
-   - `difficulty_level`: "beginner" | "intermediate" | "advanced" | null
-   - `capstone_component`: "voice" | "plan" | "navigate" | "perceive" | "manipulate" | null
-
-### Cross-Reference Validation
-
-1. **Prerequisites**: All referenced chapter IDs must exist in `chapters-index.json`
-2. **Module References**: `module` number must correspond to valid Module ID
-3. **Glossary Links**: Inline links to glossary must reference valid term anchors
-
----
-
-## Data Model Summary
-
-| Entity | Storage | Format | Validation |
-|--------|---------|--------|------------|
-| Module | `static/data/modules.json` | JSON | Manual QA |
-| Chapter | `docs/module-X/*.md` | Markdown + Frontmatter | JSON Schema (ajv) |
-| Glossary Entry | `docs/references/glossary.md` | Markdown | Build-time parsing |
-| Hardware Config | `docs/setup/*.md` | Markdown | Manual QA |
-| Assessment | `docs/assessments/*.md` | Markdown | Manual QA |
-
-**Total Estimated Entities**:
-- Modules: 4
-- Chapters: ~18 (15-20 range)
-- Glossary Entries: ~120 (100+ requirement)
-- Hardware Configs: 3
-- Assessments: 4
-
----
-
-**Data Model Complete**: Ready for contract definition (JSON Schema) and quickstart guide.
+- All validation rules should be implemented using JSON Schema for automatic validation
+- Custom validation functions may be needed for complex relationships
+- Validation should occur during the build process and as part of the CI/CD pipeline
+- Validation errors should prevent deployment to ensure data integrity

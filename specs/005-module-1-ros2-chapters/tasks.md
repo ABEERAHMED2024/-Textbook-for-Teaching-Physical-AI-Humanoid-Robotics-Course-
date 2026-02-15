@@ -30,11 +30,11 @@
 
 **Scope**: Setup tasks that are prerequisites for all content authoring
 
-- [ ] T001 Create JSON Schema for chapter front matter at .specify/schemas/chapter-frontmatter.schema.json
-- [ ] T002 [P] Create directory structure for Module 1 content (docs/module-1-ros2/, static/code-examples/module-1/, static/img/module-1/)
-- [ ] T003 [P] Create skeleton code template with TODO markers following quickstart.md conventions in .specify/templates/code-example-skeleton-template.py
-- [ ] T004 [P] Create complete code template with docstrings and comments in .specify/templates/code-example-complete-template.py
-- [ ] T005 Update scripts/validate-metadata.js to validate chapter front matter against JSON Schema using AJV
+- [x] T001 Create JSON Schema for chapter front matter at .specify/schemas/chapter-frontmatter.schema.json
+- [x] T002 [P] Create directory structure for Module 1 content (docs/module-1-ros2/, static/code-examples/module-1/, static/img/module-1/)
+- [x] T003 [P] Create skeleton code template with TODO markers following quickstart.md conventions in .specify/templates/code-example-skeleton-template.py
+- [x] T004 [P] Create complete code template with docstrings and comments in .specify/templates/code-example-complete-template.py
+- [x] T005 Update scripts/validate-metadata.js to validate chapter front matter against JSON Schema using AJV
 
 **Checkpoint**: Basic infrastructure ready for content creation
 
@@ -46,17 +46,17 @@
 
 **⚠️ CRITICAL**: These components must be complete before any chapter MDX authoring begins
 
-- [ ] T006 [P] Implement CodeExample component in src/components/learning/CodeExample.tsx per contracts/CodeExample.md
-- [ ] T007 [P] Implement ExerciseBlock component in src/components/learning/ExerciseBlock.tsx per contracts/ExerciseBlock.md
-- [ ] T008 [P] Implement ConceptCallout component in src/components/learning/ConceptCallout.tsx per contracts/ConceptCallout.md
-- [ ] T009 [P] Implement AssessmentChecklist component in src/components/learning/AssessmentChecklist.tsx per contracts/AssessmentChecklist.md
-- [ ] T010 [P] Add CSS styles for custom components in src/css/custom.css (component-specific classes per contracts/)
-- [ ] T011 Register custom components in src/theme/MDXComponents.tsx for MDX usage
-- [ ] T012 Write unit tests for CodeExample component (Jest + React Testing Library)
-- [ ] T013 [P] Write unit tests for ExerciseBlock component
-- [ ] T014 [P] Write unit tests for ConceptCallout component
-- [ ] T015 [P] Write unit tests for AssessmentChecklist component
-- [ ] T016 Run npm run typecheck and npm run build to validate component implementation
+- [x] T006 [P] Implement CodeExample component in src/components/learning/CodeExample.tsx per contracts/CodeExample.md
+- [x] T007 [P] Implement ExerciseBlock component in src/components/learning/ExerciseBlock.tsx per contracts/ExerciseBlock.md
+- [x] T008 [P] Implement ConceptCallout component in src/components/learning/ConceptCallout.tsx per contracts/ConceptCallout.md
+- [x] T009 [P] Implement AssessmentChecklist component in src/components/learning/AssessmentChecklist.tsx per contracts/AssessmentChecklist.md
+- [x] T010 [P] Add CSS styles for custom components in src/css/custom.css (component-specific classes per contracts/)
+- [x] T011 Register custom components in src/theme/MDXComponents.tsx for MDX usage
+- [x] T012 Write unit tests for CodeExample component (Jest + React Testing Library)
+- [x] T013 [P] Write unit tests for ExerciseBlock component
+- [x] T014 [P] Write unit tests for ConceptCallout component
+- [x] T015 [P] Write unit tests for AssessmentChecklist component
+- [x] T016 Run npm run typecheck and npm run build to validate component implementation
 
 **Checkpoint**: All custom MDX components functional and tested - chapter authoring can begin
 

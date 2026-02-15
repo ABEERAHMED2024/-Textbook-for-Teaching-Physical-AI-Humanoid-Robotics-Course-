@@ -1,188 +1,230 @@
 ---
-title: "Assessment: Isaac Perception Pipeline Project"
-description: Build an Isaac Sim perception pipeline with VSLAM, object detection, and sensor fusion for robotic applications
-keywords: [Isaac Sim, perception, VSLAM, object detection, sensor fusion, robotics, GPU acceleration]
-sidebar_position: 1
-sidebar_label: "Isaac Perception Pipeline Project"
-estimated_time: 10
+title: "Assessment Guide: Isaac Perception Pipeline Project"
+description: "Detailed assessment guide for the Isaac perception pipeline project in Week 10"
+keywords: ["Isaac", "perception", "computer vision", "assessment", "project", "robotics"]
+sidebar_position: 3
+sidebar_label: "Isaac Perception Assessment"
+estimated_time: 4
 week: 10
 module: 3
-prerequisites: ["module-3-isaac"]
+prerequisites: ["module-3-isaac/week-10-nav2-rl"]
 learning_objectives:
-  - Set up Isaac Sim environment with RTX-accelerated rendering
-  - Implement Visual SLAM (VSLAM) for robot localization and mapping
-  - Deploy Nav2 navigation stack for autonomous navigation with dynamic obstacles
-  - Integrate multiple sensors for robust perception in complex environments
-  - Train reinforcement learning policies using Isaac Gym for manipulation tasks
+  - "Implement perception pipelines using Isaac ROS packages"
+  - "Process sensor data for computer vision applications"
+  - "Integrate visual SLAM algorithms with Isaac Sim"
+  - "Train and deploy perception models in simulation"
 assessment_type: "project"
-difficulty_level: "advanced"
-capstone_component: "perceive"
+difficulty_level: "intermediate"
+capstone_component: "navigate"
 ---
 
-import LearningObjectives from '@site/src/components/LearningObjectives';
-import Prerequisites from '@site/src/components/Prerequisites';
-import AssessmentChecklist from '@site/src/components/learning/AssessmentChecklist';
-
-# Assessment: Isaac Perception Pipeline Project
-
-<LearningObjectives objectives={frontMatter.learning_objectives} />
-<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
-
----
+# Assessment Guide: Isaac Perception Pipeline Project
 
 ## Overview
 
-In this assessment, you will build a comprehensive perception pipeline using NVIDIA Isaac Sim. You'll implement Visual SLAM for localization, integrate multiple sensors for robust perception, and deploy navigation algorithms in a photorealistic simulation environment. This project will demonstrate your understanding of GPU-accelerated robotics simulation and perception systems.
+This assessment evaluates your ability to implement advanced perception pipelines using NVIDIA Isaac Sim and Isaac ROS packages. You will create a complete perception system that processes sensor data for computer vision applications, integrates visual SLAM algorithms, and deploys perception models in simulation. The project will demonstrate your understanding of GPU-accelerated perception and multimodal sensor fusion.
 
-## Learning Objectives Assessed
+## Learning Objectives
 
-- [ ] Set up Isaac Sim environment with RTX-accelerated rendering
-- [ ] Implement Visual SLAM (VSLAM) for robot localization and mapping
-- [ ] Deploy Nav2 navigation stack for autonomous navigation with dynamic obstacles
-- [ ] Integrate multiple sensors for robust perception in complex environments
-- [ ] Train reinforcement learning policies using Isaac Gym for manipulation tasks
-- [ ] Optimize performance for real-time perception and navigation
+By completing this assessment, you will demonstrate the ability to:
+- Implement perception pipelines using Isaac ROS packages
+- Process sensor data for computer vision applications
+- Integrate visual SLAM algorithms with Isaac Sim
+- Train and deploy perception models in simulation
+- Optimize perception pipelines for real-time performance
+- Evaluate perception system performance in different conditions
 
-## Scenario
+## Project Requirements
 
-You are developing a perception system for an autonomous humanoid robot that needs to navigate through a complex indoor environment. The robot must localize itself using visual data, detect and map objects in the environment, and navigate safely around dynamic obstacles. The system will be tested in Isaac Sim before deployment on physical hardware.
+### Perception Pipeline Components
 
-## Requirements
+Your perception system must include:
 
-### Functional Requirements
+1. **Sensor Processing Pipeline**:
+   - Camera image processing with Isaac ROS Image Pipeline
+   - LIDAR processing with Isaac ROS Stereo Dense Reconstruction
+   - IMU integration for visual-inertial odometry
+   - Multi-sensor fusion for enhanced perception
 
-#### 1. Isaac Sim Environment Setup
-- Create a photorealistic indoor environment (office, warehouse, or home)
-- Configure RTX-accelerated rendering with realistic lighting and reflections
-- Import a humanoid robot model with appropriate sensors (RGB camera, LiDAR, IMU)
-- Set up ROS 2 bridge for communication with external nodes
-- Optimize rendering and physics settings for real-time performance
+2. **Computer Vision Modules**:
+   - Object detection using Isaac ROS DNN Inference
+   - Semantic segmentation for scene understanding
+   - Feature extraction and matching
+   - Depth estimation from stereo cameras
 
-#### 2. Visual SLAM Implementation
-- Implement ORB-SLAM3 or RTAB-Map for localization and mapping
-- Configure camera parameters to match Isaac Sim RGB camera
-- Generate occupancy grid maps from visual and depth data
-- Validate localization accuracy against ground truth
-- Handle tracking failures and relocalization
+3. **SLAM Integration**:
+   - Visual SLAM with Isaac ROS Visual SLAM
+   - Map building and localization
+   - Loop closure detection
+   - Trajectory optimization
 
-#### 3. Multi-Sensor Integration
-- Fuse data from RGB camera, LiDAR, and IMU sensors
-- Implement sensor calibration and extrinsic parameter estimation
-- Create a robust perception pipeline that handles sensor failures
-- Implement outlier rejection and data association algorithms
-- Validate sensor fusion performance against individual sensors
+### Isaac Sim Integration
 
-#### 4. Navigation System
-- Deploy Nav2 stack with appropriate costmap configuration
-- Implement global and local planners for dynamic obstacle avoidance
-- Configure recovery behaviors for navigation failures
-- Test navigation in environments with static and dynamic obstacles
-- Evaluate navigation performance metrics (path efficiency, obstacle avoidance)
+Your project must demonstrate:
 
-#### 5. Reinforcement Learning for Manipulation
-- Set up Isaac Gym environment for manipulation training
-- Define reward function for grasping and manipulation tasks
-- Train RL policy for object manipulation in simulation
-- Evaluate trained policy performance in various scenarios
-- Implement sim-to-real transfer techniques for policy deployment
+1. **Simulation Environment**:
+   - Complex scene with multiple objects and lighting conditions
+   - Dynamic elements for temporal perception challenges
+   - Ground truth data for evaluation
 
-### Technical Requirements
+2. **GPU Acceleration**:
+   - Leverage RTX capabilities for photorealistic rendering
+   - Use TensorRT for optimized inference
+   - Optimize pipeline for real-time performance
 
-- NVIDIA Isaac Sim with Omniverse
-- RTX GPU with CUDA 11.8+ support
-- ROS 2 Humble with Isaac ROS packages
-- Nav2 navigation stack
-- ORB-SLAM3 or RTAB-Map for VSLAM
-- Isaac Gym for reinforcement learning
-- Package structure:
-  ```
-  isaac_perception_project/
-  ├── configs/
-  │   ├── slam_config.yaml
-  │   ├── nav2_params.yaml
-  │   ├── sensor_fusion_params.yaml
-  │   └── robot_config.yaml
-  ├── launch/
-  │   ├── isaac_sim_launch.py
-  │   ├── slam_launch.py
-  │   ├── navigation_launch.py
-  │   └── sensor_fusion_launch.py
-  ├── scripts/
-  │   ├── slam_node.py
-  │   ├── sensor_fusion_node.py
-  │   ├── navigation_node.py
-  │   └── rl_training_script.py
-  ├── isaac_gym_envs/
-  │   └── manipulation_env.py
-  ├── results/
-  │   ├── slam_metrics.csv
-  │   ├── navigation_performance.csv
-  │   └── rl_training_curves.png
-  ├── test/
-  │   └── test_perception_pipeline.py
-  ├── CMakeLists.txt
-  ├── package.xml
-  └── README.md
-  ```
-- Must include:
-  - Configuration files for SLAM, navigation, and sensor fusion
-  - Launch files for different components of the pipeline
-  - Python scripts for perception, navigation, and RL components
-  - Isaac Gym environment for manipulation training
-  - Results analysis and performance metrics
-  - README.md with setup and execution instructions
+3. **ROS 2 Integration**:
+   - Proper message passing between Isaac Sim and ROS 2
+   - TF tree for coordinate transformations
+   - Parameter management for perception modules
+
+### Performance Optimization
+
+Your system must include:
+
+1. **Efficiency Measures**:
+   - Frame rate optimization for real-time operation
+   - Memory management for sustained operation
+   - Computational load balancing
+
+2. **Robustness Features**:
+   - Handling of sensor failures
+   - Degraded performance modes
+   - Recovery from tracking loss
 
 ## Assessment Rubric
 
-| Criterion | Exemplary (100%) | Proficient (80%) | Developing (60%) | Beginning (40%) |
-|-----------|------------------|------------------|------------------|-----------------|
-| **VSLAM Implementation** (25%) | Highly accurate localization, robust mapping, handles failures gracefully, exceeds performance requirements | Good localization accuracy, stable mapping, minor issues with failures | Basic SLAM working, accuracy issues, frequent failures | SLAM not working or major issues |
-| **Sensor Fusion** (25%) | Robust fusion, handles sensor failures, superior performance vs. individual sensors | Good fusion, handles some failures, improved performance vs. individual sensors | Basic fusion implemented, minimal improvement over individual sensors | Poor fusion or not implemented |
-| **Navigation Performance** (20%) | Efficient path planning, zero collisions, adapts to dynamic obstacles, optimal performance | Good navigation, few collisions, mostly adapts to dynamic obstacles | Basic navigation, frequent collisions, limited dynamic obstacle handling | Poor navigation, many collisions, unable to handle dynamic obstacles |
-| **RL for Manipulation** (20%) | Well-trained policy, generalizes to new scenarios, efficient training | Trained policy, works in trained scenarios, reasonable training time | Basic policy trained, limited generalization, inefficient training | Policy not trained or not functional |
-| **Documentation** (10%) | Comprehensive documentation, detailed analysis, performance comparisons, optimization insights | Good documentation, basic analysis, some performance comparisons | Basic documentation, minimal analysis | Poor or missing documentation |
+### Needs Improvement (50-69 points)
 
-## Submission
+**Pipeline Implementation (20 points)**:
+- Pipeline incomplete or non-functional
+- Missing required components
+- Poor integration between modules
 
-1. Create a GitHub repository: `<your-username>-isaac-perception-project`
-2. Repository structure must match technical requirements above
-3. Include a `REPORT.md` file that explains:
-   - Design decisions for the perception pipeline architecture
-   - Challenges faced during Isaac Sim setup and how they were resolved
-   - Performance analysis of SLAM, navigation, and manipulation components
-   - Comparison between different approaches tried for sensor fusion
-   - Recommendations for optimizing GPU utilization and real-time performance
+**Isaac Sim Integration (20 points)**:
+- Integration with Isaac Sim incomplete
+- Poor utilization of GPU acceleration
+- Missing ROS 2 interfaces
 
-## Self-Assessment Checklist
+**Computer Vision (20 points)**:
+- Computer vision components not properly implemented
+- Poor accuracy or performance
+- Missing required algorithms
 
-<AssessmentChecklist
-  items={[
-    "Isaac Sim environment properly configured with RTX rendering",
-    "VSLAM system implemented and validated for localization and mapping",
-    "Multi-sensor fusion pipeline integrated and tested",
-    "Nav2 navigation stack deployed and evaluated",
-    "Reinforcement learning environment set up for manipulation training",
-    "Configuration files properly set up for all components",
-    "Launch files properly configured for the perception pipeline",
-    "Performance metrics collected and analyzed",
-    "README.md includes setup and execution instructions",
-    "REPORT.md analyzes pipeline performance and optimization opportunities",
-    "All dependencies properly declared in package.xml"
-  ]}
-/>
+**Performance (20 points)**:
+- Significant performance issues
+- Unable to operate in real-time
+- Poor optimization
+
+**Documentation (20 points)**:
+- Lack of documentation or explanation
+- No usage instructions
+- Missing design rationale
+
+### Proficient (70-84 points)
+
+**Pipeline Implementation (20 points)**:
+- Pipeline includes required components
+- Proper integration between modules
+- Functional end-to-end operation
+
+**Isaac Sim Integration (20 points)**:
+- Integration with Isaac Sim functional
+- Basic utilization of GPU acceleration
+- Proper ROS 2 interfaces implemented
+
+**Computer Vision (20 points)**:
+- Computer vision components implemented correctly
+- Reasonable accuracy and performance
+- Required algorithms properly implemented
+
+**Performance (20 points)**:
+- Adequate performance for intended use
+- Some optimization efforts evident
+- Stable operation
+
+**Documentation (20 points)**:
+- Code follows appropriate style guides
+- Basic documentation provided
+- Clear usage instructions
+
+### Excellent (85-100 points)
+
+**Pipeline Implementation (20 points)**:
+- All proficient criteria met
+- Elegant and efficient pipeline design
+- Advanced integration techniques
+
+**Isaac Sim Integration (20 points)**:
+- All proficient criteria met
+- Advanced utilization of GPU acceleration
+- Sophisticated ROS 2 integration
+
+**Computer Vision (20 points)**:
+- All proficient criteria met
+- Advanced computer vision techniques
+- High accuracy and performance
+
+**Performance (20 points)**:
+- All proficient criteria met
+- Excellent optimization with high frame rates
+- Efficient resource utilization
+
+**Documentation (20 points)**:
+- All proficient criteria met
+- Comprehensive documentation with examples
+- Detailed performance analysis
+- Video demonstration of functionality
+
+**Additional Excellence (10 points)**:
+- Innovative features beyond basic requirements
+- Advanced optimization techniques
+- Novel computer vision approaches
+- Comprehensive evaluation and analysis
+
+## Submission Requirements
+
+Submit the following:
+
+1. **Perception Pipeline**: Complete Isaac ROS perception pipeline
+2. **Isaac Sim Scene**: Complex simulation environment with ground truth
+3. **Launch Files**: For different perception scenarios
+4. **ROS 2 Nodes**: For perception processing and integration
+5. **Documentation**: Comprehensive documentation including:
+   - Pipeline architecture overview
+   - Component descriptions and interfaces
+   - Performance benchmarks
+   - Usage instructions
+6. **Video Demonstration**: Show the perception system in operation (3-5 minutes)
+7. **Performance Analysis**: Detailed analysis of system performance
+8. **Reflection Report**: 1-2 pages discussing:
+   - Design decisions and rationale
+   - Challenges faced and solutions
+   - Performance optimization strategies
+   - Future improvements
+
+## Evaluation Process
+
+1. **Architecture Review**: Design quality and integration
+2. **Functionality Test**: Does the perception system work as described?
+3. **Performance Review**: Frame rates, accuracy, and resource usage
+4. **Integration Review**: Quality of Isaac Sim and ROS 2 integration
+5. **Innovation Assessment**: Creative approaches and novel solutions
 
 ## Resources
 
-- [Module 3: Isaac Sim](../module-3-isaac) - Isaac Sim concepts and setup
-- [NVIDIA Isaac Sim Documentation](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html) - Official Isaac Sim documentation
-- [Isaac ROS Documentation](https://nvidia-isaac-ros.github.io/released/index.html) - ROS integration for Isaac
-- [ORB-SLAM3 Documentation](https://github.com/UZ-SLAMLab/ORB_SLAM3) - Visual SLAM implementation
-- [Nav2 Documentation](https://navigation.ros.org/) - Navigation stack for ROS 2
-- [Isaac Gym Documentation](https://docs.omniverse.nvidia.com/isaacgym/latest/index.html) - Reinforcement learning environment
+- [Isaac ROS Documentation](https://nvidia-isaac-ros.github.io/released/index.html)
+- [Isaac Sim Documentation](https://docs.omniverse.nvidia.com/isaacsim/latest/index.html)
+- [Isaac ROS Perception Tutorials](https://nvidia-isaac-ros.github.io/released/isaac_ros_visual_slam/index.html)
+- [GPU Acceleration Best Practices](https://nvidia-isaac-ros.github.io/concepts/gpu_optimization/index.html)
 
-## Grading Notes
+## Support
 
-- **Late Submission**: -10% per day (max 3 days)
-- **Partial Credit**: Available for incomplete but well-documented attempts
-- **Performance Analysis**: Heavily weighted in evaluation
-- **GPU Optimization**: Evidence of optimizing for real-time performance will positively impact your grade
+If you encounter issues:
+- Review the Isaac ROS tutorials and documentation
+- Use the NVIDIA Developer Forums
+- Consult with peers and instructors
+- Attend office hours for additional support
+
+---
+
+**Ready to start?** Review the requirements and begin planning your Isaac perception pipeline project!

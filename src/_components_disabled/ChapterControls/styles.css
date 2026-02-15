@@ -1,0 +1,84 @@
+.chapter-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 2rem;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+[data-theme='dark'] .chapter-controls {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.control-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #00aeef;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 174, 239, 0.3);
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 174, 239, 0.4);
+    background: #0087b8;
+}
+
+.control-btn.urdu {
+    background: #28a745;
+    box-shadow: 0 2px 5px rgba(40, 167, 69, 0.3);
+}
+
+.control-btn.urdu:hover {
+    background: #218838;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
+}
+
+.control-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.personalization-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 16px 24px;
+    background: #fff;
+    border-left: 4px solid #00aeef;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    animation: slideIn 0.3s ease-out;
+}
+
+[data-theme='dark'] .personalization-toast {
+    background: #1a1a1a;
+    color: #fff;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

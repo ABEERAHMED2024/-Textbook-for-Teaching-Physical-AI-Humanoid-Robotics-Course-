@@ -1,214 +1,247 @@
 ---
-title: "Assessment: Autonomous Humanoid Capstone Project"
-description: Build a complete autonomous humanoid system that integrates all course modules to execute voice-driven manipulation tasks
-keywords: [autonomous humanoid, capstone, VLA, robotics, AI, ROS 2, Isaac Sim, Gazebo, perception, navigation, manipulation, voice]
-sidebar_position: 1
-sidebar_label: "Autonomous Humanoid Capstone"
-estimated_time: 30
+title: "Assessment Guide: Autonomous Humanoid Capstone Project"
+description: "Detailed assessment guide for the autonomous humanoid capstone project in Week 13"
+keywords: ["capstone", "humanoid", "autonomous", "assessment", "project", "robotics"]
+sidebar_position: 4
+sidebar_label: "Capstone Assessment"
+estimated_time: 10
 week: 13
 module: 4
-prerequisites: ["module-1-ros2", "module-2-digital-twin", "module-3-isaac", "module-4-vla-humanoids"]
+prerequisites: ["module-4-vla-humanoids/week-13-conversational-vla"]
 learning_objectives:
-  - Design and implement a complete autonomous humanoid system integrating all course modules
-  - Execute the 5-step voice → plan → navigate → perceive → manipulate pipeline
-  - Validate system performance through comprehensive testing and evaluation
-  - Document and present the final capstone project to technical audiences
-  - Demonstrate proficiency in all course learning outcomes
-assessment_type: "capstone"
+  - "Integrate all course components into a complete autonomous humanoid system"
+  - "Implement the complete pipeline: Voice Input → Plan → Navigate → Perceive → Manipulate"
+  - "Demonstrate multimodal AI integration with Vision-Language-Action models"
+  - "Evaluate system performance in complex scenarios"
+assessment_type: "project"
 difficulty_level: "advanced"
-capstone_component: "all"
+capstone_component: null
 ---
 
-import LearningObjectives from '@site/src/components/LearningObjectives';
-import Prerequisites from '@site/src/components/Prerequisites';
-import AssessmentChecklist from '@site/src/components/learning/AssessmentChecklist';
-
-# Assessment: Autonomous Humanoid Capstone Project
-
-<LearningObjectives objectives={frontMatter.learning_objectives} />
-<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
-
----
+# Assessment Guide: Autonomous Humanoid Capstone Project
 
 ## Overview
 
-This capstone project represents the culmination of all skills learned throughout the course. You will build a complete autonomous humanoid system that receives voice commands and executes them as physical actions. The system will implement the 5-step architecture: Voice → Plan → Navigate → Perceive → Manipulate, integrating all four modules to create a complete autonomous system.
+This capstone assessment evaluates your ability to integrate all course components into a complete autonomous humanoid system. You will implement the complete pipeline: **Voice Input → Plan → Navigate → Perceive → Manipulate**. This project demonstrates mastery of all modules covered in the course and showcases your ability to create a sophisticated autonomous robotic system.
 
-## Learning Objectives Assessed
+## Learning Objectives
 
-- [ ] Design and implement a complete autonomous humanoid system integrating all course modules
-- [ ] Execute the 5-step voice → plan → navigate → perceive → manipulate pipeline
-- [ ] Validate system performance through comprehensive testing and evaluation
-- [ ] Document and present the final capstone project to technical audiences
-- [ ] Demonstrate proficiency in all course learning outcomes
-- [ ] Integrate ROS 2 communication, simulation, perception, and manipulation components
+By completing this capstone assessment, you will demonstrate the ability to:
+- Integrate all course components into a cohesive system
+- Implement the complete voice-to-action pipeline
+- Apply multimodal AI with Vision-Language-Action models
+- Design and implement complex robotic behaviors
+- Evaluate system performance in realistic scenarios
+- Document and present a complex technical project
 
-## Scenario
+## Project Requirements
 
-Your autonomous humanoid system must respond to voice commands by executing complex tasks in a simulated environment. The system will receive a natural language command, interpret it, plan the required actions, navigate to the appropriate location, perceive and identify objects, and manipulate them as requested.
+### Complete Pipeline Implementation
 
-**Example Command**: "Please bring me the red cup from the kitchen table."
+Your system must implement the complete pipeline:
 
-## Requirements
+1. **Voice Input**:
+   - Natural language understanding of commands
+   - Speech-to-text conversion
+   - Command parsing and validation
+   - Intent recognition and entity extraction
 
-### Functional Requirements
+2. **Planning**:
+   - Task decomposition based on voice commands
+   - Path planning for navigation
+   - Manipulation planning for object interaction
+   - Resource allocation and scheduling
 
-#### 1. Voice Command Processing
-- Implement speech-to-text for natural language command interpretation
-- Use Large Language Model (LLM) for intent understanding and command parsing
-- Extract relevant information (objects, locations, actions) from commands
-- Handle variations in command phrasing and vocabulary
-- Validate command interpretation with user confirmation when needed
+3. **Navigation**:
+   - Localization in the environment
+   - Path planning and obstacle avoidance
+   - Dynamic replanning when needed
+   - Safe movement execution
 
-#### 2. Task Planning System
-- Decompose high-level commands into executable robot behaviors
-- Create behavior trees or state machines for complex task execution
-- Plan navigation routes avoiding static and dynamic obstacles
-- Order manipulation actions logically (approach → grasp → lift → transport → place)
-- Handle task failures and implement recovery behaviors
+4. **Perception**:
+   - Object detection and recognition
+   - Scene understanding
+   - State estimation
+   - Environmental modeling
 
-#### 3. Navigation System
-- Implement autonomous navigation to required locations
-- Use Nav2 stack for global and local path planning
-- Handle dynamic obstacle avoidance during navigation
-- Maintain accurate localization in the environment
-- Integrate with perception system for environment awareness
+5. **Manipulation**:
+   - Grasp planning and execution
+   - Tool use and interaction
+   - Force control for safe manipulation
+   - Bimanual coordination
 
-#### 4. Perception System
-- Implement object detection and recognition using computer vision
-- Use VSLAM for environment mapping and localization
-- Integrate sensor fusion for robust perception
-- Identify and locate specified objects in the environment
-- Provide semantic understanding of object relationships
+### System Integration
 
-#### 5. Manipulation System
-- Calculate forward and inverse kinematics for humanoid robot
-- Implement grasp planning for object manipulation
-- Execute precise manipulation tasks (reach, grasp, place)
-- Handle force control during object interaction
-- Integrate with navigation for mobile manipulation
+Your system must demonstrate:
 
-### Technical Requirements
+1. **Multimodal AI Integration**:
+   - Vision-Language-Action model implementation
+   - Real-time processing capabilities
+   - Context awareness and adaptation
+   - Error handling and recovery
 
-- Complete integration of all four course modules
-- ROS 2 Humble with appropriate packages for each module
-- Isaac Sim for GPU-accelerated simulation and perception
-- Gazebo for additional simulation and testing
-- Real-time performance requirements (responses within 30 seconds)
-- Package structure integrating all components:
-  ```
-  autonomous_humanoid_capstone/
-  ├── voice_interface/
-  │   ├── speech_to_text.py
-  │   ├── llm_parser.py
-  │   └── command_validator.py
-  ├── task_planning/
-  │   ├── behavior_tree.py
-  │   ├── path_planner.py
-  │   └── recovery_behaviors.py
-  ├── navigation/
-  │   ├── nav2_config.yaml
-  │   ├── local_planner.py
-  │   └── global_planner.py
-  ├── perception/
-  │   ├── object_detection.py
-  │   ├── vslam_integration.py
-  │   └── sensor_fusion.py
-  ├── manipulation/
-  │   ├── kinematics_solver.py
-  │   ├── grasp_planner.py
-  │   └── motion_controller.py
-  ├── launch/
-  │   ├── capstone_system_launch.py
-  │   └── individual_module_launch.py
-  ├── config/
-  │   ├── robot_config.yaml
-  │   ├── environment_config.yaml
-  │   └── performance_config.yaml
-  ├── test/
-  │   ├── integration_tests.py
-  │   ├── performance_tests.py
-  │   └── validation_tests.py
-  ├── docs/
-  │   ├── system_architecture.md
-  │   ├── user_manual.md
-  │   └── troubleshooting_guide.md
-  ├── results/
-  │   ├── performance_metrics.csv
-  │   ├── validation_results.json
-  │   └── user_feedback.md
-  ├── CMakeLists.txt
-  ├── package.xml
-  └── README.md
-  ```
-- Must include:
-  - Complete system integration with all modules working together
-  - Comprehensive testing and validation procedures
-  - Performance metrics and analysis
-  - Documentation for system architecture and user operation
-  - Troubleshooting guide for common issues
-  - README.md with setup and execution instructions
+2. **Human-Robot Interaction**:
+   - Natural conversation capabilities
+   - Socially appropriate behaviors
+   - Feedback and confirmation mechanisms
+   - Safety awareness
+
+3. **Autonomy Level**:
+   - Minimal human intervention required
+   - Self-monitoring and error detection
+   - Adaptive behavior based on context
+   - Learning from experience (if possible)
+
+### Scenario Implementation
+
+Your system must successfully complete at least 3 of the following scenarios:
+
+1. **Simple Retrieval**: "Get me the red cup from the kitchen counter"
+2. **Multi-Step Task**: "Go to the living room, find the book on the shelf, and bring it to me"
+3. **Social Interaction**: "Introduce yourself to the person in the blue shirt and ask them how they're doing"
+4. **Problem Solving**: "The door is closed. Figure out how to open it and go through"
+5. **Collaborative Task**: "Help me set the table by placing plates on the dining table"
 
 ## Assessment Rubric
 
-| Criterion | Exemplary (100%) | Proficient (80%) | Developing (60%) | Beginning (40%) |
-|-----------|------------------|------------------|------------------|-----------------|
-| **System Integration** (30%) | All modules seamlessly integrated, flawless communication, exceeds performance requirements | Good integration, minor communication issues, meets performance requirements | Basic integration, some communication issues, performance below requirements | Poor integration, major communication issues, system barely functional |
-| **Voice Command Processing** (15%) | Natural language understanding, handles variations, accurate interpretation, fast response | Good understanding, handles most variations, mostly accurate, reasonable response time | Basic understanding, limited variation handling, occasional errors | Poor understanding, frequent errors, slow response |
-| **Task Planning** (15%) | Sophisticated planning, handles complex tasks, robust recovery, optimal execution | Good planning, handles most tasks, reasonable recovery, efficient execution | Basic planning, simple tasks, basic recovery, inefficient execution | Poor planning, simple tasks only, no recovery, inefficient |
-| **Navigation & Manipulation** (20%) | Precise navigation, complex manipulation, zero failures, optimal paths | Good navigation, good manipulation, few failures, mostly optimal paths | Basic navigation, basic manipulation, frequent failures, suboptimal paths | Poor navigation, poor manipulation, many failures, inefficient |
-| **Documentation & Presentation** (20%) | Comprehensive documentation, clear architecture, detailed analysis, professional presentation | Good documentation, clear architecture, basic analysis, good presentation | Basic documentation, basic architecture, minimal analysis, adequate presentation | Poor documentation, unclear architecture, no analysis, poor presentation |
+### Needs Improvement (50-69 points)
 
-## Submission
+**Pipeline Implementation (20 points)**:
+- Pipeline incomplete or non-functional
+- Missing critical components
+- Poor integration between modules
 
-1. Create a GitHub repository: `<your-username>-autonomous-humanoid-capstone`
-2. Repository structure must match technical requirements above
-3. Include a `SYSTEM_ARCHITECTURE.md` file that explains:
-   - System design and component interactions
-   - Data flow between different modules
+**System Integration (20 points)**:
+- Integration issues between components
+- Poor multimodal AI implementation
+- Inadequate human-robot interaction
+
+**Scenario Completion (20 points)**:
+- Few scenarios completed successfully
+- Major issues with functionality
+- Unsafe or inappropriate behavior
+
+**Performance (20 points)**:
+- Significant performance issues
+- Unable to operate autonomously
+- Poor error handling
+
+**Documentation (20 points)**:
+- Lack of documentation or explanation
+- No usage instructions
+- Missing design rationale
+
+### Proficient (70-84 points)
+
+**Pipeline Implementation (20 points)**:
+- Pipeline includes required components
+- Proper integration between modules
+- Functional end-to-end operation
+
+**System Integration (20 points)**:
+- Integration between components functional
+- Basic multimodal AI implementation
+- Adequate human-robot interaction
+
+**Scenario Completion (20 points)**:
+- At least 3 scenarios completed successfully
+- Reasonable functionality
+- Safe and appropriate behavior
+
+**Performance (20 points)**:
+- Adequate performance for intended use
+- Some autonomy achieved
+- Basic error handling
+
+**Documentation (20 points)**:
+- Code follows appropriate style guides
+- Basic documentation provided
+- Clear usage instructions
+
+### Excellent (85-100 points)
+
+**Pipeline Implementation (20 points)**:
+- All proficient criteria met
+- Elegant and efficient pipeline design
+- Advanced integration techniques
+
+**System Integration (20 points)**:
+- All proficient criteria met
+- Sophisticated multimodal AI implementation
+- Natural and engaging human-robot interaction
+
+**Scenario Completion (20 points)**:
+- All scenarios completed successfully
+- Creative and robust functionality
+- Highly appropriate behavior
+
+**Performance (20 points)**:
+- All proficient criteria met
+- High level of autonomy achieved
+- Sophisticated error handling and recovery
+
+**Documentation (20 points)**:
+- All proficient criteria met
+- Comprehensive documentation with examples
+- Detailed performance analysis
+- Video demonstration of functionality
+
+**Additional Excellence (10 points)**:
+- Innovative features beyond basic requirements
+- Advanced optimization techniques
+- Novel approaches to integration challenges
+- Comprehensive evaluation and analysis
+
+## Submission Requirements
+
+Submit the following:
+
+1. **Complete System**: Fully integrated autonomous humanoid system
+2. **Source Code**: Well-documented implementation of all components
+3. **Launch Files**: For complete system operation
+4. **Configuration Files**: For different operational modes
+5. **Documentation**: Comprehensive documentation including:
+   - System architecture overview
+   - Component descriptions and interfaces
+   - Integration details
+   - Usage instructions
+   - Troubleshooting guide
+6. **Video Demonstration**: Show the system completing scenarios (5-10 minutes)
+7. **Performance Analysis**: Detailed analysis of system performance
+8. **Reflection Report**: 3-5 pages discussing:
+   - System design decisions and rationale
    - Integration challenges and solutions
    - Performance optimization strategies
-4. Include a `VALIDATION_REPORT.md` file that explains:
-   - Testing procedures and results
-   - Performance metrics and analysis
-   - Comparison to expected outcomes
-   - Lessons learned and recommendations
-5. Include a `DEMONSTRATION_VIDEO.mp4` showing the system in action
-6. Prepare a 15-minute presentation explaining your system design and lessons learned
+   - Lessons learned
+   - Future improvements
+9. **Presentation**: 10-15 minute presentation of your system
+10. **Demo Schedule**: Arrange a live demonstration of your system
 
-## Self-Assessment Checklist
+## Evaluation Process
 
-<AssessmentChecklist
-  items={[
-    "Voice command processing system implemented and tested",
-    "Task planning system decomposes commands into robot behaviors",
-    "Navigation system executes autonomous movement to locations",
-    "Perception system identifies and locates objects in environment",
-    "Manipulation system executes precise object interactions",
-    "All four course modules integrated into cohesive system",
-    "Performance metrics collected and analyzed",
-    "System architecture documented comprehensively",
-    "Validation procedures completed with results documented",
-    "Demonstration video created showing system capabilities",
-    "Presentation prepared explaining system design and outcomes",
-    "All dependencies properly declared in package.xml"
-  ]}
-/>
+1. **Architecture Review**: System design quality and integration
+2. **Functionality Test**: Does the complete pipeline work as described?
+3. **Scenario Evaluation**: Performance on required scenarios
+4. **Integration Review**: Quality of component integration
+5. **Presentation Review**: Quality of documentation and presentation
+6. **Live Demo**: Real-time performance and robustness
 
 ## Resources
 
-- [Module 1: ROS 2](../module-1-ros2) - Communication backbone
-- [Module 2: Digital Twin](../module-2-digital-twin) - Simulation and testing
-- [Module 3: Isaac Sim](../module-3-isaac) - Perception and navigation
-- [Module 4: VLA & Humanoids](../module-4-vla-humanoids) - Integration and control
-- [Capstone Guide](../capstone/autonomous-humanoid) - Complete system architecture
-- [Glossary](../references/glossary) - Key terminology
-- [Troubleshooting Guide](../references/troubleshooting) - Common issues and solutions
+- [Course Module Summaries](../intro)
+- [ROS 2 Best Practices](https://docs.ros.org/en/humble/The-ROS2-Project/Contributing/Code-Style-Language-Versions.html)
+- [Human-Robot Interaction Guidelines](https://ieeexplore.ieee.org/document/8793942)
+- [Multimodal AI Integration](https://arxiv.org/abs/2307.05973)
 
-## Grading Notes
+## Support
 
-- **Late Submission**: -10% per day (max 3 days)
-- **Partial Credit**: Available for incomplete but well-documented attempts
-- **System Integration**: Heavily weighted in evaluation
-- **Performance Validation**: Evidence of comprehensive testing and validation will significantly impact your grade
-- **Presentation**: Quality of demonstration and explanation will factor into final grade
+If you encounter issues:
+- Review all course modules and their integration points
+- Use the ROS and Isaac communities for technical support
+- Consult with peers and instructors regularly
+- Attend office hours for additional support
+- Participate in capstone project workshops
+
+---
+
+**Congratulations on reaching the capstone project!** This is your opportunity to showcase everything you've learned in this course. Plan your approach carefully, start early, and don't hesitate to iterate on your design. Good luck!

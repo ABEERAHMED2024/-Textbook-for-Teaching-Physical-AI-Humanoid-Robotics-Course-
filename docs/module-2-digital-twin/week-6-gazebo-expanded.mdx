@@ -1,0 +1,463 @@
+---
+# ============================================================================
+# TUTORIAL: Setting up Gazebo Simulation Environment
+# ============================================================================
+
+# REQUIRED METADATA (Replace ALL values below)
+title: Setting up Gazebo Simulation Environment
+description: Learn how to install and configure Gazebo for physics simulation and robot testing in a digital twin environment
+keywords: [gazebo, simulation, physics, digital twin, robot simulation, urdf, sdf]
+sidebar_position: 1
+learning_objectives:
+  - Understand Gazebo's role in robotics simulation and digital twin development
+  - Apply the installation procedure for Gazebo Harmonic on Ubuntu 22.04
+  - Implement a basic Gazebo simulation environment
+  - Demonstrate the creation of a simple robot model in Gazebo
+
+# Prerequisites: paths to required chapters (use "docs/path/to/chapter" format)
+# Use empty array [] if no prerequisites
+prerequisites:
+  - docs/module-1-ros2/chapter-1-intro-ros2-expanded
+  - docs/module-1-ros2/chapter-2-nodes-topics-expanded
+
+# Estimated completion time in minutes (must be multiple of 5: 15, 30, 45, 60, etc.)
+estimated_time: 90
+
+# Content type (DO NOT CHANGE for this template)
+content_type: tutorial
+
+# Difficulty level: beginner | intermediate | advanced
+difficulty: intermediate
+
+# OPTIONAL METADATA (Uncomment if needed)
+# tags: [gazebo, simulation, robotics, physics]  # For tag-based filtering
+# draft: true  # Hide from production builds during authoring
+# pagination_prev: docs/previous-chapter  # Override default previous link
+# pagination_next: docs/next-chapter      # Override default next link
+---
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+# {frontMatter.title}
+
+## Introduction
+
+In this tutorial, you'll learn how to install and configure Gazebo for physics simulation and robot testing in a digital twin environment. By the end, you'll have a fully functional Gazebo simulation environment ready for robotics development.
+
+**Why this matters:** Gazebo is a critical component of the digital twin concept, allowing you to test robot algorithms in a physics-accurate environment before deploying to real hardware. This reduces development time and risk.
+
+## Prerequisites and Setup
+
+Before you begin, ensure you have:
+
+- **Operating System:** Ubuntu 22.04 LTS with ROS 2 Humble installed
+- **Hardware:** At least 8GB RAM, 20GB free disk space, dedicated GPU recommended
+- **Internet Connection:** Required for package downloads
+- **Knowledge:** Basic understanding of ROS 2 concepts
+
+### Verify Your Environment
+
+```bash
+# Check if ROS 2 is properly sourced
+echo $ROS_DISTRO
+# Expected output: humble
+
+# Check if OpenGL is available (needed for Gazebo GUI)
+glxinfo | grep "OpenGL renderer"
+# Expected output: Should show your GPU renderer
+```
+
+## Step 1: Install Gazebo Harmonic
+
+Install the latest version of Gazebo Harmonic, which is designed for robotics simulation.
+
+### Instructions
+
+1. Add the OSRF APT repository key:
+   ```bash
+   wget https://packages.osrfoundation.org/gazebo.gpg -O /tmp/gazebo.gpg
+   sudo mv /tmp/gazebo.gpg /usr/share/keyrings/
+   ```
+
+2. Add the OSRF APT repository:
+   ```bash
+   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/gazebo.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+   ```
+
+3. Update the APT cache:
+   ```bash
+   sudo apt update
+   ```
+
+4. Install Gazebo Harmonic:
+   ```bash
+   sudo apt install gz-harmonic
+   ```
+
+5. Install ROS 2 Gazebo bridge:
+   ```bash
+   sudo apt install ros-humble-gz ros-humble-gazebo-ros-pkgs
+   ```
+
+**Expected result:** Gazebo Harmonic and the ROS 2 Gazebo bridge are installed successfully without errors.
+
+## Step 2: Verify Gazebo Installation
+
+Test that Gazebo is properly installed and can run.
+
+### Instructions
+
+1. Run Gazebo to test the installation:
+   ```bash
+   gz sim
+   ```
+
+2. If prompted to select a world, choose the default empty world.
+
+3. You should see the Gazebo interface with a ground plane and sky.
+
+4. Close Gazebo after verifying it runs correctly.
+
+**Expected result:** Gazebo launches successfully with the graphical interface.
+
+## Step 3: Create a Simple Robot Model
+
+Create a basic robot model using URDF (Unified Robot Description Format) that can be loaded into Gazebo.
+
+### Instructions
+
+1. Create a new ROS 2 package for your robot model:
+   ```bash
+   cd ~/ros2_ws/src
+   ros2 pkg create --build-type ament_cmake simple_robot_description
+   ```
+
+2. Navigate to the package directory:
+   ```bash
+   cd ~/ros2_ws/src/simple_robot_description
+   ```
+
+3. Create the directory structure for the robot model:
+   ```bash
+   mkdir -p models/simple_robot
+   mkdir -p meshes
+   mkdir -p launch
+   ```
+
+4. Create a URDF file for a simple differential drive robot:
+   ```bash
+   touch urdf/simple_robot.urdf
+   ```
+
+5. Edit the URDF file:
+   ```xml
+   <?xml version="1.0"?>
+   <robot name="simple_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+     <!-- Base Link -->
+     <link name="base_link">
+       <visual>
+         <geometry>
+           <box size="0.5 0.3 0.1"/>
+         </geometry>
+         <material name="blue">
+           <color rgba="0 0 1 0.8"/>
+         </material>
+       </visual>
+       <collision>
+         <geometry>
+           <box size="0.5 0.3 0.1"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="1.0"/>
+         <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+       </inertial>
+     </link>
+
+     <!-- Left Wheel -->
+     <link name="left_wheel">
+       <visual>
+         <geometry>
+           <cylinder radius="0.1" length="0.05"/>
+         </geometry>
+         <material name="black">
+           <color rgba="0 0 0 0.8"/>
+         </material>
+       </visual>
+       <collision>
+         <geometry>
+           <cylinder radius="0.1" length="0.05"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.2"/>
+         <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.002"/>
+       </inertial>
+     </link>
+
+     <!-- Right Wheel -->
+     <link name="right_wheel">
+       <visual>
+         <geometry>
+           <cylinder radius="0.1" length="0.05"/>
+         </geometry>
+         <material name="black">
+           <color rgba="0 0 0 0.8"/>
+         </material>
+       </visual>
+       <collision>
+         <geometry>
+           <cylinder radius="0.1" length="0.05"/>
+         </geometry>
+       </collision>
+       <inertial>
+         <mass value="0.2"/>
+         <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.002"/>
+       </inertial>
+     </link>
+
+     <!-- Base to Left Wheel Joint -->
+     <joint name="base_to_left_wheel" type="continuous">
+       <parent link="base_link"/>
+       <child link="left_wheel"/>
+       <origin xyz="-0.15 -0.2 0" rpy="1.5708 0 0"/>
+       <axis xyz="0 0 1"/>
+     </joint>
+
+     <!-- Base to Right Wheel Joint -->
+     <joint name="base_to_right_wheel" type="continuous">
+       <parent link="base_link"/>
+       <child link="right_wheel"/>
+       <origin xyz="-0.15 0.2 0" rpy="1.5708 0 0"/>
+       <axis xyz="0 0 1"/>
+     </joint>
+
+     <!-- Gazebo Plugins -->
+     <gazebo>
+       <plugin filename="libignition-gazebo-diff-drive-system.so" name="ignition::gazebo::systems::DiffDrive">
+         <left_joint>base_to_left_wheel</left_joint>
+         <right_joint>base_to_right_wheel</right_joint>
+         <wheel_separation>0.4</wheel_separation>
+         <wheel_radius>0.1</wheel_radius>
+         <odom_publish_frequency>30</odom_publish_frequency>
+         <topic>cmd_vel</topic>
+         <odom_topic>odom</odom_topic>
+         <tf_topic>tf</tf_topic>
+       </plugin>
+     </gazebo>
+
+   </robot>
+   ```
+
+6. Create a launch file to spawn the robot in Gazebo:
+   ```bash
+   touch launch/spawn_simple_robot.launch.py
+   ```
+
+7. Edit the launch file:
+   ```python
+   import os
+   from ament_index_python.packages import get_package_share_directory
+   from launch import LaunchDescription
+   from launch.actions import IncludeLaunchDescription
+   from launch.launch_description_sources import PythonLaunchDescriptionSource
+   from launch.substitutions import PathJoinSubstitution
+   from launch_ros.actions import Node
+   from launch_ros.substitutions import FindPackageShare
+
+
+   def generate_launch_description():
+       # Get the launch directory
+       gazebo_ros_dir = get_package_share_directory('gazebo_ros')
+
+       # Get the URDF file path
+       urdf_file_path = os.path.join(
+           get_package_share_directory('simple_robot_description'),
+           'urdf',
+           'simple_robot.urdf'
+       )
+
+       # Read the URDF file
+       with open(urdf_file_path, 'r') as infp:
+           robot_desc = infp.read()
+
+       # Launch Gazebo
+       gazebo = IncludeLaunchDescription(
+           PythonLaunchDescriptionSource(
+               os.path.join(gazebo_ros_dir, 'launch', 'gz_sim.launch.py')
+           ),
+           launch_arguments={'gz_args': '-r empty.sdf'}.items(),
+       )
+
+       # Spawn the robot in Gazebo
+       spawn_entity = Node(
+           package='gazebo_ros',
+           executable='spawn_entity.py',
+           arguments=[
+               '-topic', 'robot_description',
+               '-entity', 'simple_robot',
+               '-x', '0',
+               '-y', '0',
+               '-z', '0.1'
+           ],
+           output='screen'
+       )
+
+       # Robot State Publisher
+       robot_state_publisher = Node(
+           package='robot_state_publisher',
+           executable='robot_state_publisher',
+           output='both',
+           parameters=[{'use_sim_time': True, 'robot_description': robot_desc}],
+       )
+
+       return LaunchDescription([
+           gazebo,
+           spawn_entity,
+           robot_state_publisher
+       ])
+   ```
+
+8. Update the package.xml file to include dependencies:
+   ```xml
+   <?xml version="1.0"?>
+   <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+   <package format="3">
+     <name>simple_robot_description</name>
+     <version>0.0.0</version>
+     <description>Simple robot model for Gazebo simulation</description>
+     <maintainer email="your.email@example.com">Your Name</maintainer>
+     <license>Apache-2.0</license>
+
+     <buildtool_depend>ament_cmake</buildtool_depend>
+
+     <depend>gazebo_ros_pkgs</depend>
+     <depend>robot_state_publisher</depend>
+
+     <exec_depend>gazebo_ros</exec_depend>
+     <exec_depend>joint_state_publisher</exec_depend>
+     <exec_depend>rviz2</exec_depend>
+
+     <test_depend>ament_lint_auto</test_depend>
+     <test_depend>ament_lint_common</test_depend>
+
+     <export>
+       <build_type>ament_cmake</build_type>
+     </export>
+   </package>
+   ```
+
+**Expected result:** A simple robot model is defined in URDF format with appropriate Gazebo plugins for simulation.
+
+## Step 4: Build and Test the Robot Model
+
+Build the package and test the robot model in Gazebo.
+
+### Instructions
+
+1. Build the workspace:
+   ```bash
+   cd ~/ros2_ws
+   colcon build --packages-select simple_robot_description
+   ```
+
+2. Source the workspace:
+   ```bash
+   source install/setup.bash
+   ```
+
+3. Launch the simulation with your robot:
+   ```bash
+   ros2 launch simple_robot_description spawn_simple_robot.launch.py
+   ```
+
+4. You should see Gazebo launch with your simple robot model placed in the world.
+
+5. In another terminal, send velocity commands to test the robot's movement:
+   ```bash
+   # First, check available topics
+   ros2 topic list
+   
+   # Send a velocity command
+   ros2 topic pub /cmd_vel geometry_msgs/msg/Twist '{linear: {x: 1.0}, angular: {z: 0.5}}'
+   ```
+
+**Expected result:** The robot moves in Gazebo according to the velocity commands sent to the /cmd_vel topic.
+
+## Step 5: Explore Gazebo Features
+
+Explore some of Gazebo's key features for robotics simulation.
+
+### Instructions
+
+1. **Physics Properties:** In Gazebo, you can adjust gravity, friction coefficients, and other physical properties through the GUI or world files.
+
+2. **Sensors:** Add sensors to your robot model by including sensor elements in the URDF:
+   ```xml
+   <sensor name="camera" type="camera">
+     <pose>0.25 0 0.05 0 0 0</pose>
+     <camera>
+       <horizontal_fov>1.047</horizontal_fov>
+       <image>
+         <width>640</width>
+         <height>480</height>
+       </image>
+       <clip>
+         <near>0.1</near>
+         <far>10</far>
+       </clip>
+     </camera>
+   </sensor>
+   ```
+
+3. **Lighting:** Adjust lighting conditions to simulate different environments.
+
+4. **World Models:** Download and use pre-built world models from the Gazebo Fuel repository.
+
+**Expected result:** You understand how to enhance your robot model with sensors and how to customize the simulation environment.
+
+## Key Takeaways
+
+**What you learned:**
+- How to install and configure Gazebo Harmonic for robotics simulation
+- How to create a simple robot model in URDF format
+- How to integrate ROS 2 with Gazebo using the ROS 2 Gazebo bridge
+- How to launch and control a robot in simulation
+
+## Next Steps
+
+Now that you've mastered Gazebo simulation, you're ready to:
+
+1. **Try it yourself:** Add more complex geometries and sensors to your robot model
+2. **Go deeper:** Explore advanced Gazebo features like physics parameters and custom plugins
+3. **Apply it:** Use Gazebo simulation for testing your robotics algorithms before real-world deployment
+
+### Related Chapters
+
+- [Unity for Robot Visualization](../module-2-digital-twin/week-7-unity-sensors)
+- [NVIDIA Isaac Sim for Advanced Simulation](../module-3-isaac/week-8-isaac-sim)
+
+## Practice Exercises
+
+### Exercise 1: Enhance Robot Model
+
+**Challenge:** Add a camera sensor to your robot model and visualize the camera feed using RViz2.
+
+**Hints:**
+- Include the camera sensor in your URDF file
+- Add the appropriate Gazebo plugin for the camera
+- Use image_view2 package to visualize the camera feed
+- Consider the mounting position and orientation of the camera
+
+**Solution:** Available in `examples/gazebo-simulation/exercise1-solution.urdf`
+
+---
+
+## References
+
+- [Gazebo Harmonic Installation Guide](https://gazebosim.org/docs/harmonic/install)
+- [ROS 2 Gazebo Bridge Documentation](https://github.com/ros-simulation/gazebo_ros_pkgs)
+- [URDF Tutorials](http://wiki.ros.org/urdf/Tutorials)
+- [Gazebo Fuel Repository](https://fuel.gazebosim.org/)

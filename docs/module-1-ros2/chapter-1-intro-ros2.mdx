@@ -20,7 +20,9 @@ chapter_number: 1
 
 Welcome to your first chapter in the Robot Operating System 2 (ROS 2)! If you're coming from an AI/ML background, you might be familiar with frameworks like PyTorch or TensorFlow that help you build neural networks. ROS 2 serves a similar purpose for robotics—it's a middleware framework that helps you build distributed robotic systems.
 
-<ConceptCallout type="definition" title="What is ROS 2?">
+
+
+<ConceptCallout>
 
 **ROS 2 (Robot Operating System 2)** is an open-source middleware framework that provides:
 - **Communication infrastructure** for distributed robotic systems
@@ -30,7 +32,6 @@ Welcome to your first chapter in the Robot Operating System 2 (ROS 2)! If you're
 
 Think of it as the "nervous system" that connects all parts of your robot together.
 
-</ConceptCallout>
 
 ## 1.1 Why ROS 2? The Evolution from ROS 1
 
@@ -52,11 +53,10 @@ graph TD
 
 **Single Point of Failure**: If the ROS Master crashes, the entire robotic system stops communicating. This is unacceptable for production robots, especially humanoids operating in unstructured environments.
 
-<ConceptCallout type="warning" title="ROS 1 is Legacy">
+
 
 While ROS 1 (Noetic) is still used in some legacy systems, it reached end-of-life in May 2025. **All new robotics projects should use ROS 2.** This course focuses exclusively on ROS 2 Humble Hawksbill LTS.
 
-</ConceptCallout>
 
 ### The ROS 2 Distributed Architecture
 
@@ -78,7 +78,7 @@ graph LR
 - **Security**: Built-in authentication and encryption (SROS2)
 - **Multi-robot support**: Nodes can communicate across networks seamlessly
 
-<ConceptCallout type="concept">
+
 
 **DDS (Data Distribution Service)** is an Object Management Group (OMG) standard for real-time, scalable, publish-subscribe communication. It handles:
 - **Service discovery**: Nodes find each other automatically without a central broker
@@ -87,7 +87,6 @@ graph LR
 
 Popular DDS implementations: Fast DDS (default in ROS 2 Humble), Cyclone DDS, RTI Connext DDS.
 
-</ConceptCallout>
 
 ## 1.2 Core Concepts: The Computational Graph
 
@@ -97,7 +96,7 @@ ROS 2 represents your robot as a **computational graph** where:
 
 ### 1.2.1 Nodes
 
-<ConceptCallout type="definition" title="What is a Node?">
+
 
 A **node** is an independent executable process that performs a specific task in your robotic system. Each node should have a **single, well-defined responsibility**.
 
@@ -107,7 +106,6 @@ Examples:
 - A planning node that generates motion trajectories
 - A control node that sends commands to motors
 
-</ConceptCallout>
 
 **Design Philosophy**: ROS 2 encourages **many small nodes** rather than one monolithic program. This provides:
 - **Modularity**: Replace or upgrade individual components
@@ -131,7 +129,7 @@ Each box represents a separate node. This 6-node system is easier to develop, te
 
 ### 1.2.2 Topics: Publish-Subscribe Communication
 
-<ConceptCallout type="definition" title="What is a Topic?">
+
 
 A **topic** is a named bus over which nodes exchange **messages**. Communication is:
 - **Anonymous**: Publishers don't know who subscribes, subscribers don't know who publishes
@@ -140,16 +138,15 @@ A **topic** is a named bus over which nodes exchange **messages**. Communication
 
 Use topics for **continuous data streams** (sensor readings, state updates, commands).
 
-</ConceptCallout>
 
 **Publish-Subscribe Pattern**:
 
 ```mermaid
 sequenceDiagram
-    participant Pub as Publisher<br/>(Camera Node)
+    participant Pub as Publisher\\n(Camera Node)
     participant Topic as /camera/image
-    participant Sub1 as Subscriber 1<br/>(Object Detector)
-    participant Sub2 as Subscriber 2<br/>(Image Logger)
+    participant Sub1 as Subscriber 1\\n(Object Detector)
+    participant Sub2 as Subscriber 2\\n(Image Logger)
 
     Pub->>Topic: publish(Image msg)
     Topic->>Sub1: callback(Image msg)
@@ -166,7 +163,7 @@ sequenceDiagram
 
 ### 1.2.3 Services: Request-Response Communication
 
-<ConceptCallout type="definition" title="What is a Service?">
+
 
 A **service** is a synchronous request-response communication pattern:
 - **One client** sends a request
@@ -175,14 +172,13 @@ A **service** is a synchronous request-response communication pattern:
 
 Use services for **infrequent, atomic operations** (trigger a behavior, query robot state, reconfigure parameters).
 
-</ConceptCallout>
 
 **Service Call Pattern**:
 
 ```mermaid
 sequenceDiagram
-    participant Client as Service Client<br/>(Planning Node)
-    participant Server as Service Server<br/>(Inverse Kinematics)
+    participant Client as Service Client\\n(Planning Node)
+    participant Server as Service Server\\n(Inverse Kinematics)
 
     Client->>Server: Request(target_pose)
     Note over Server: Compute joint angles
@@ -199,7 +195,7 @@ sequenceDiagram
 
 ### 1.2.4 Actions: Goal-Oriented Behavior
 
-<ConceptCallout type="definition" title="What is an Action?">
+
 
 An **action** is an extended request-response pattern for **long-running, goal-oriented tasks**:
 - Client sends a **goal**
@@ -209,14 +205,13 @@ An **action** is an extended request-response pattern for **long-running, goal-o
 
 Use actions for behaviors that take time and require progress updates (navigate to waypoint, grasp object, perform gesture).
 
-</ConceptCallout>
 
 **Action Communication Pattern**:
 
 ```mermaid
 sequenceDiagram
-    participant Client as Action Client<br/>(Behavior Node)
-    participant Server as Action Server<br/>(Navigation)
+    participant Client as Action Client\\n(Behavior Node)
+    participant Server as Action Server\\n(Navigation)
 
     Client->>Server: Goal(target_waypoint)
     Server->>Client: Feedback(distance_remaining: 5.2m)
@@ -237,7 +232,7 @@ sequenceDiagram
 
 ROS 2 releases new distributions every 6-12 months, named alphabetically after turtles.
 
-<ConceptCallout type="tip" title="Which Distribution Should I Use?">
+
 
 **For this course, use ROS 2 Humble Hawksbill** (released May 2022):
 - **Long-Term Support (LTS)**: Supported until May 2027
@@ -247,7 +242,6 @@ ROS 2 releases new distributions every 6-12 months, named alphabetically after t
 
 **Avoid non-LTS releases** (Galactic, Iron) unless you need cutting-edge features—they have shorter support lifecycles.
 
-</ConceptCallout>
 
 | Distribution | Release | EOL | Ubuntu | Python | LTS |
 |--------------|---------|-----|--------|--------|-----|
@@ -263,8 +257,10 @@ Before diving into code, ensure ROS 2 Humble is installed correctly.
 
 Open a terminal and run:
 
-<CodeExample language="bash" showLineNumbers={false}>
-{`# Source ROS 2 environment
+</ConceptCallout>
+
+```bash
+# Source ROS 2 environment
 source /opt/ros/humble/setup.bash
 
 # Verify installation
@@ -274,10 +270,10 @@ ros2 --version
 # ros2 cli version: 0.25.x
 
 # List available commands
-ros2 --help`}
-</CodeExample>
+ros2 --help
+```
 
-<ConceptCallout type="warning" title="Environment Setup Required">
+
 
 You **must** source the ROS 2 setup script in every new terminal:
 
@@ -291,14 +287,14 @@ source /opt/ros/humble/setup.bash
 echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 ```
 
-</ConceptCallout>
 
 ### Your First ROS 2 Command: Viewing the Computational Graph
 
 Let's explore a live ROS 2 system using the `turtlesim` demo:
 
-<CodeExample language="bash" showLineNumbers={false}>
-{`# Terminal 1: Start the turtlesim node
+
+```bash
+# Terminal 1: Start the turtlesim node
 ros2 run turtlesim turtlesim_node
 
 # Terminal 2: Start the keyboard teleop node
@@ -317,8 +313,8 @@ ros2 topic list
 # Expected output:
 # /turtle1/cmd_vel
 # /turtle1/color_sensor
-# /turtle1/pose`}
-</CodeExample>
+# /turtle1/pose
+```
 
 You just created a 2-node computational graph! The `turtle_teleop_key` node publishes to `/turtle1/cmd_vel`, and `turtlesim` subscribes to it.
 
@@ -326,10 +322,11 @@ You just created a 2-node computational graph! The `turtle_teleop_key` node publ
 
 ROS 2 includes `rqt_graph`, a tool to visualize node connections:
 
-<CodeExample language="bash" showLineNumbers={false}>
-{`# Terminal 4: Launch rqt_graph
-ros2 run rqt_graph rqt_graph`}
-</CodeExample>
+
+```bash
+# Terminal 4: Launch rqt_graph
+ros2 run rqt_graph rqt_graph
+```
 
 You'll see:
 - **Nodes**: Ovals representing processes

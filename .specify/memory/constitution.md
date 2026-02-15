@@ -1,55 +1,110 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- SYNC IMPACT REPORT
+Version change: 1.0.0 → 1.0.0 (no functional change, adding report)
+Modified principles: None (existing principles unchanged)
+Added sections: Sync Impact Report (this section)
+Removed sections: None
+Templates requiring updates: 
+  - .specify/templates/plan-template.md ✅ updated
+  - .specify/templates/spec-template.md ✅ updated  
+  - .specify/templates/tasks-template.md ✅ updated
+  - README.md ✅ updated
+Runtime docs requiring updates:
+  - specs/001-book-master-plan/quickstart.md ✅ updated
+Follow-up TODOs: None
+-->
+
+# Physical AI & Humanoid Robotics Textbook Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Constitution First (Non-Negotiable)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All work on this project must be governed by this constitution.
+No implementation, refactoring, content generation, or automation may occur
+until the constitution is defined, reviewed, and ratified.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Authoritative Source of Truth
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+The Hackathon PDF (“Hackathon I: Physical AI & Humanoid Robotics Textbook”)
+is the single authoritative source for scope, structure, and evaluation criteria.
+If any conflict arises between repository state, agent output, or assumptions,
+the PDF always takes precedence.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. State-Aware Continuation
 
-### [PRINCIPLE_6_NAME]
+Agents must audit the existing repository state before making any changes.
+Duplicate files, regenerated chapters, or parallel implementations are forbidden.
+Existing work must be extended, not replaced, unless explicitly approved.
 
+### IV. Spec Before Code
 
-[PRINCIPLE__DESCRIPTION]
+All non-trivial changes must follow the Spec-Kit Plus lifecycle:
+`/sp.constitution → /sp.specify → /sp.plan → /sp.tasks → implementation`.
+Direct coding without an approved specification is not allowed.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### V. Non-Hallucination & Safety
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+Agents must not invent features, APIs, files, or content.
+If information is missing or ambiguous, the agent must stop and report
+instead of guessing or improvising.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### VI. Atomic & Traceable Changes
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+Changes must be small, justified, and reversible.
+Bulk edits, blind regex replacements, repeated fix loops, and destructive refactors
+are prohibited.
+
+## Project Scope & Constraints
+
+### In Scope
+
+- Docusaurus-based textbook with structured modules and chapters
+- Physical AI & Humanoid Robotics curriculum:
+  - ROS 2 (Robotic Nervous System)
+  - Digital Twins (Gazebo, Unity)
+  - NVIDIA Isaac (AI-Robot Brain)
+  - Vision-Language-Action (VLA)
+- Integrated RAG chatbot grounded in textbook content
+- Authentication with user background collection
+- Personalization based on user background (software / hardware)
+- Urdu translation of textbook content
+- Claude Code subagents / reusable skills
+- GitHub Pages deployment (textbook)
+- Cloud deployment for RAG backend
+
+### Out of Scope
+
+- Physical robot hardware control beyond simulation
+- Commercial-grade auth, billing, or user management
+- Full multilingual support beyond Urdu
+- Ethics or vendor comparisons unless explicitly required by the PDF
+
+## Development Workflow & Quality Gates
+
+- Always begin with a read-only audit
+- Never regenerate completed chapters
+- Never repeat the same fix twice
+- Never enter infinite edit or replacement loops
+- Stop immediately if an error source is unclear
+- All Docusaurus builds must pass:
+  - `npm start`
+  - `npm run build`
+- No MDX parse errors
+- No LaTeX rendering failures
+- No broken internal links
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other prompts, plans, and tasks.
+Any amendment requires:
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+- Written justification
+- Explicit approval
+- Migration guidance if behavior changes
+
+All specifications, plans, and tasks must demonstrate compliance
+with this constitution before execution.
+
+**Version**: 1.0.0  
+**Ratified**: 2026-02-15  
+**Last Amended**: 2026-02-15

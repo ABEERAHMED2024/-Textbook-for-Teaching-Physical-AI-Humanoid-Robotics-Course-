@@ -31,12 +31,14 @@ This chapter teaches you these advanced communication primitives and shows how t
 
 ## 3.1 Services: Request-Response Communication
 
-<ConceptCallout type="definition" title="What is a Service?">
+
 
 A **service** is a synchronous, one-to-one communication pattern:
 - **Client** sends a **request** to a **server**
 - **Server** processes the request and returns a **response**
 - Communication is **blocking**: client waits for the response (or times out)
+
+<ConceptCallout>
 
 Use services for:
 - ✅ Infrequent operations (trigger calibration, query robot state)
@@ -45,7 +47,6 @@ Use services for:
 - ❌ High-frequency data streams (use topics)
 - ❌ Tasks taking > 1 second (use actions for feedback)
 
-</ConceptCallout>
 
 ### 3.1.1 Service Definitions
 
@@ -68,8 +69,10 @@ The `---` separator divides request (top) from response (bottom). Standard servi
 
 A **service server** listens for requests and executes a callback function:
 
-<CodeExample language="python" filename="add_two_ints_server.py" difficulty="intermediate" estimatedTime={20}>
-{`import rclpy
+</ConceptCallout>
+
+```python
+import rclpy
 from rclpy.node import Node
 from example_interfaces.srv import AddTwoInts
 
@@ -104,8 +107,7 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-`}
-</CodeExample>
+```
 
 **Service Server API:**
 
@@ -131,7 +133,7 @@ def callback(self, request, response):
 
 A **service client** sends requests and waits for responses:
 
-<CodeExample language="python" filename="add_two_ints_client.py" difficulty="intermediate" estimatedTime={20}>
+
 {`import sys
 import rclpy
 from rclpy.node import Node
@@ -184,7 +186,6 @@ def main(args=None):
 if __name__ == '__main__':
     main()
 `}
-</CodeExample>
 
 **Service Client API:**
 
@@ -212,15 +213,15 @@ response = future.result()
 
 ```mermaid
 sequenceDiagram
-    participant Client as Service Client<br/>(AddTwoIntsClient)
-    participant Server as Service Server<br/>(AddTwoIntsServer)
+    participant Client as Service Client\\n(AddTwoIntsClient)
+    participant Server as Service Server\\n(AddTwoIntsServer)
 
     Client->>Client: create_client()
     Client->>Server: wait_for_service()
     Note over Server: Server already running
 
     Client->>Server: call_async(Request{a=5, b=3})
-    Note over Client: Non-blocking call,<br/>returns Future
+    Note over Client: Non-blocking call,\\nreturns Future
 
     activate Server
     Server->>Server: add_two_ints_callback()
@@ -232,7 +233,9 @@ sequenceDiagram
     Note over Client: Blocking wait for Future
 ```
 
-<ConceptCallout type="tip" title="Async vs Blocking Service Calls">
+
+
+<ConceptCallout>
 
 ROS 2 supports two service call patterns:
 
@@ -252,7 +255,6 @@ response = self.client.call(request)  # Blocks entire node!
 - Blocks node from processing other callbacks
 - Can cause deadlocks in complex systems
 
-</ConceptCallout>
 
 ## 3.2 Actions: Long-Running Tasks with Feedback
 
@@ -261,7 +263,7 @@ Services are great for quick computations, but what about tasks that take second
 - **Cancellation**: Client can cancel the goal mid-execution
 - **Result**: Final outcome when task completes
 
-<ConceptCallout type="concept" title="When to Use Actions">
+
 
 Use actions for tasks that:
 - ✅ Take > 1 second to complete (navigation, object manipulation)
@@ -300,7 +302,7 @@ int32[] partial_sequence
 
 ### 3.2.2 Creating an Action Server
 
-<CodeExample language="python" filename="fibonacci_action_server.py" difficulty="advanced" estimatedTime={30}>
+
 {`import time
 import rclpy
 from rclpy.node import Node
@@ -368,7 +370,6 @@ def main(args=None):
 if __name__ == '__main__':
     main()
 `}
-</CodeExample>
 
 **Action Server API:**
 
@@ -401,7 +402,7 @@ def execute_callback(self, goal_handle):
 
 ### 3.2.3 Creating an Action Client
 
-<CodeExample language="python" filename="fibonacci_action_client.py" difficulty="advanced" estimatedTime={25}>
+
 {`import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
@@ -473,7 +474,6 @@ def main(args=None):
 if __name__ == '__main__':
     main()
 `}
-</CodeExample>
 
 ### 3.2.4 Action Communication Flow
 
@@ -504,7 +504,7 @@ sequenceDiagram
 
 **Parameters** allow you to configure node behavior at runtime without restarting the node.
 
-<ConceptCallout type="definition" title="What are Parameters?">
+
 
 **Parameters** are key-value pairs stored in each node:
 - Types: `bool`, `int`, `float`, `string`, `byte_array`, `bool_array`, `int_array`, `float_array`, `string_array`
@@ -516,11 +516,10 @@ Use cases:
 - ✅ Mode switching (debug mode, simulation vs. hardware)
 - ✅ Resource paths (model files, config files)
 
-</ConceptCallout>
 
 ### 3.3.1 Declaring and Using Parameters
 
-<CodeExample language="python" filename="parameter_example.py" difficulty="beginner" estimatedTime={15}>
+
 {`import rclpy
 from rclpy.node import Node
 
@@ -560,7 +559,6 @@ def main(args=None):
 if __name__ == '__main__':
     main()
 `}
-</CodeExample>
 
 **Setting Parameters at Launch:**
 
@@ -579,7 +577,7 @@ ros2 param set /parameter_node max_speed 3.0
 
 ### 3.3.2 Dynamic Parameter Updates with Callbacks
 
-<CodeExample language="python" filename="parameter_callback_example.py" difficulty="intermediate">
+
 {`import rclpy
 from rclpy.node import Node
 from rcl_interfaces.msg import SetParametersResult
@@ -621,9 +619,8 @@ def main(args=None):
 if __name__ == '__main__':
     main()
 `}
-</CodeExample>
 
-<ConceptCallout type="tip" title="Parameter Validation">
+
 
 Always validate parameters in callbacks:
 - **Range checks**: Ensure values are within acceptable bounds
@@ -632,13 +629,12 @@ Always validate parameters in callbacks:
 
 Rejecting invalid parameters prevents runtime errors from bad configuration.
 
-</ConceptCallout>
 
 ## 3.4 AI-ROS Integration Patterns
 
 Now let's bridge everything together: integrating **AI decision logic** with ROS 2 communication.
 
-<ConceptCallout type="concept" title="Separation of Concerns">
+
 
 **Best Practice**: Separate AI logic from ROS communication:
 
@@ -663,11 +659,10 @@ Now let's bridge everything together: integrating **AI decision logic** with ROS
 - ✅ Reuse AI code across different robot platforms
 - ✅ Easier debugging (separate ROS communication from decision logic)
 
-</ConceptCallout>
 
 ### 3.4.1 AI Agent Pattern
 
-<CodeExample language="python" filename="ai_robot_controller.py" difficulty="advanced" estimatedTime={40}>
+
 {`import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
@@ -781,9 +776,8 @@ def main(args=None):
 if __name__ == '__main__':
     main()
 `}
-</CodeExample>
 
-<ConceptCallout type="warning" title="Latency Considerations">
+
 
 For real-time control, keep decision cycles fast:
 - **Target**: < 100ms per decision cycle (10 Hz minimum)
@@ -796,7 +790,6 @@ If AI inference is slow (e.g., deep neural networks):
 - Use GPU acceleration (CUDA)
 - Consider offloading to edge device (NVIDIA Jetson)
 
-</ConceptCallout>
 
 ## 3.5 Hands-On Exercise: Implement a Calculator Service
 

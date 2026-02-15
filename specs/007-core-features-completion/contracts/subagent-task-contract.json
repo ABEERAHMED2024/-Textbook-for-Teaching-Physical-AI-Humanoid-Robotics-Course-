@@ -1,0 +1,301 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Subagent API",
+    "version": "1.0.0",
+    "description": "API for Claude Code subagents"
+  },
+  "paths": {
+    "/api/subagents": {
+      "get": {
+        "summary": "Get list of available subagents",
+        "responses": {
+          "200": {
+            "description": "List of subagent definitions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubagentDefinition"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/subagents/{subagentId}/execute": {
+      "post": {
+        "summary": "Execute a subagent task",
+        "parameters": [
+          {
+            "name": "subagentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the subagent to execute"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubagentTaskParameters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created subagent task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubagentTask"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/subagents/task/{taskId}": {
+      "get": {
+        "summary": "Get status of a subagent task",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the task to check"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subagent task status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubagentTask"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Task not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SubagentDefinition": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the subagent"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name"
+          },
+          "description": {
+            "type": "string",
+            "description": "What the subagent does"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["content-generation", "qa-validation", "maintenance"]
+            },
+            "description": "Capabilities of the subagent"
+          },
+          "configSchema": {
+            "type": "object",
+            "description": "JSON schema for configuration"
+          },
+          "requiredPermissions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["read-content", "write-content", "validate-content", "execute-shell"]
+            },
+            "description": "Required permissions for the subagent"
+          }
+        },
+        "required": ["id", "name", "description", "capabilities", "configSchema", "requiredPermissions"]
+      },
+      "SubagentTaskParameters": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "User who initiated task"
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Task-specific parameters"
+          }
+        },
+        "required": ["userId", "parameters"]
+      },
+      "SubagentTask": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique task identifier"
+          },
+          "subagentId": {
+            "type": "string",
+            "description": "Which subagent to use"
+          },
+          "userId": {
+            "type": "string",
+            "description": "User who initiated task"
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Task-specific parameters"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in-progress", "completed", "failed"],
+            "description": "Current status of the task"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When task was created"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When task execution began"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When task was completed"
+          },
+          "result": {
+            "$ref": "#/components/schemas/SubagentResult"
+          },
+          "error": {
+            "type": "string",
+            "description": "Error if task failed"
+          }
+        },
+        "required": ["id", "subagentId", "userId", "status", "createdAt"]
+      },
+      "SubagentResult": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "description": "Associated task ID"
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubagentOutput"
+            },
+            "description": "Generated outputs"
+          },
+          "metrics": {
+            "$ref": "#/components/schemas/SubagentMetrics"
+          },
+          "validationReport": {
+            "$ref": "#/components/schemas/ValidationResult"
+          }
+        },
+        "required": ["taskId", "outputs", "metrics", "validationReport"]
+      },
+      "SubagentOutput": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["content", "code", "metadata", "report"],
+            "description": "Type of output"
+          },
+          "content": {
+            "type": "string",
+            "description": "The actual output"
+          },
+          "format": {
+            "type": "string",
+            "enum": ["markdown", "json", "yaml", "other"],
+            "description": "Format of the output"
+          },
+          "validated": {
+            "type": "boolean",
+            "description": "Whether output passed validation"
+          }
+        },
+        "required": ["type", "content", "format", "validated"]
+      },
+      "SubagentMetrics": {
+        "type": "object",
+        "properties": {
+          "tokensUsed": {
+            "type": "integer",
+            "description": "Number of tokens consumed"
+          },
+          "executionTimeMs": {
+            "type": "integer",
+            "description": "Time taken to execute in milliseconds"
+          },
+          "qualityScore": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Quality score (0-1)"
+          },
+          "complianceScore": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Constitution compliance score (0-1)"
+          }
+        },
+        "required": ["tokensUsed", "executionTimeMs", "qualityScore", "complianceScore"]
+      },
+      "ValidationResult": {
+        "type": "object",
+        "properties": {
+          "valid": {
+            "type": "boolean",
+            "description": "Whether the output is valid"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of validation issues"
+          },
+          "recommendations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Recommendations for fixing issues"
+          }
+        },
+        "required": ["valid", "issues", "recommendations"]
+      }
+    }
+  }
+}

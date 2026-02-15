@@ -67,8 +67,6 @@ difficulty: intermediate
   ============================================================================
 -->
 
-import LearningObjectives from '@site/src/components/LearningObjectives';
-import Prerequisites from '@site/src/components/Prerequisites';
 
 <LearningObjectives objectives={frontMatter.learning_objectives} />
 <Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
@@ -226,7 +224,7 @@ Now that you've mastered [this topic], you're ready to:
 ## Practice Exercises
 
 <!-- Import ExerciseBlock component when it's implemented in later phases -->
-<!-- <ExerciseBlock title="Extend the Implementation" difficulty="intermediate">
+<!-- 
 
 ### Problem
 Modify the tutorial code to [specific challenge].

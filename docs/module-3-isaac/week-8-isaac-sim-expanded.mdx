@@ -1,0 +1,314 @@
+---
+# ============================================================================
+# TUTORIAL: Getting Started with NVIDIA Isaac Sim
+# ============================================================================
+
+# REQUIRED METADATA (Replace ALL values below)
+title: Getting Started with NVIDIA Isaac Sim
+description: Learn how to install and configure NVIDIA Isaac Sim for photorealistic simulation and synthetic data generation
+keywords: [nvidia, isaac, sim, omniverse, simulation, synthetic data, ai, robotics]
+sidebar_position: 1
+learning_objectives:
+  - Understand NVIDIA Isaac Sim's role in robotics development and AI training
+  - Apply the installation procedure for Isaac Sim in Omniverse
+  - Implement a basic Isaac Sim environment for robot testing
+  - Demonstrate the creation of a simple robot simulation in Isaac Sim
+
+# Prerequisites: paths to required chapters (use "docs/path/to/chapter" format)
+# Use empty array [] if no prerequisites
+prerequisites:
+  - docs/module-2-digital-twin/week-6-gazebo-expanded
+  - docs/module-2-digital-twin/week-7-unity-sensors
+
+# Estimated completion time in minutes (must be multiple of 5: 15, 30, 45, 60, etc.)
+estimated_time: 120
+
+# Content type (DO NOT CHANGE for this template)
+content_type: tutorial
+
+# Difficulty level: beginner | intermediate | advanced
+difficulty: advanced
+
+# OPTIONAL METADATA (Uncomment if needed)
+# tags: [isaac, nvidia, simulation, ai, omniverse]  # For tag-based filtering
+# draft: true  # Hide from production builds during authoring
+# pagination_prev: docs/previous-chapter  # Override default previous link
+# pagination_next: docs/next-chapter      # Override default next link
+---
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+# {frontMatter.title}
+
+## Introduction
+
+In this tutorial, you'll learn how to install and configure NVIDIA Isaac Sim for photorealistic simulation and synthetic data generation. By the end, you'll have a functional Isaac Sim environment ready for advanced robotics development.
+
+**Why this matters:** NVIDIA Isaac Sim provides photorealistic simulation capabilities that are essential for training AI models with synthetic data. This is particularly important for robotics applications where collecting real-world data is expensive or dangerous.
+
+## Prerequisites and Setup
+
+Before you begin, ensure you have:
+
+- **Hardware:** NVIDIA RTX GPU with at least 12GB VRAM (RTX 4070 Ti or higher recommended)
+- **Operating System:** Ubuntu 22.04 LTS or Windows 10/11
+- **Software:** NVIDIA Omniverse installed, CUDA toolkit
+- **Internet Connection:** Required for Isaac Sim download and asset downloads
+- **Knowledge:** Understanding of Gazebo and Unity simulation environments
+
+### Verify Your Environment
+
+```bash
+# Check if NVIDIA GPU is available
+nvidia-smi
+# Expected output: Information about your NVIDIA GPU
+
+# Check CUDA installation
+nvcc --version
+# Expected output: CUDA compiler driver version information
+```
+
+## Step 1: Install NVIDIA Omniverse
+
+Install the Omniverse platform which hosts Isaac Sim.
+
+### Instructions
+
+1. Visit the NVIDIA Omniverse website and download the Omniverse Launcher:
+   - Go to https://www.nvidia.com/en-us/omniverse/
+   - Download and install the Omniverse Launcher
+
+2. Launch the Omniverse Launcher and sign in with your NVIDIA developer account.
+
+3. Install Isaac Sim from the Omniverse App Library:
+   - Click on "CREATE" tab
+   - Find "Isaac Sim" in the app library
+   - Click "INSTALL" to download and install Isaac Sim
+
+4. Alternatively, if you have access to the Isaac Sim Docker container:
+   ```bash
+   # Pull the Isaac Sim Docker image
+   docker pull nvcr.io/nvidia/isaac-sim:latest
+   ```
+
+**Expected result:** Isaac Sim is installed and available in the Omniverse Launcher.
+
+## Step 2: Launch Isaac Sim
+
+Launch Isaac Sim and familiarize yourself with the interface.
+
+### Instructions
+
+1. Launch Isaac Sim from the Omniverse Launcher.
+
+2. The first time you launch Isaac Sim, it will download additional assets. This may take some time depending on your internet connection.
+
+3. Once loaded, you'll see the Isaac Sim interface with:
+   - Viewport for 3D scene visualization
+   - Stage panel showing the scene hierarchy
+   - Property panel for adjusting object properties
+   - Timeline for animation and simulation control
+
+4. Create a new scene by selecting "File" → "New Scene".
+
+**Expected result:** Isaac Sim launches successfully and displays the main interface.
+
+## Step 3: Explore Isaac Sim Basics
+
+Learn the basic operations in Isaac Sim.
+
+### Instructions
+
+1. **Scene Navigation:**
+   - Orbit: Hold Alt + Left Mouse Button and drag
+   - Pan: Hold Alt + Middle Mouse Button and drag
+   - Zoom: Scroll Mouse Wheel or Alt + Right Mouse Button and drag vertically
+
+2. **Adding Objects:**
+   - In the "Create" menu, select "Geometry" → "Cube" to add a cube to the scene
+   - Notice how the cube appears in both the viewport and the Stage panel
+
+3. **Transforming Objects:**
+   - Select the cube in the viewport or Stage panel
+   - Use the transform gizmos (Move, Rotate, Scale) to modify the object
+   - Adjust properties in the Property panel
+
+4. **Running Simulation:**
+   - Press the Play button in the timeline to start the physics simulation
+   - Watch how objects interact with physics (gravity, collisions)
+
+**Expected result:** You can navigate the scene, add objects, transform them, and run physics simulation.
+
+## Step 4: Create a Simple Robot in Isaac Sim
+
+Import or create a simple robot model in Isaac Sim.
+
+### Instructions
+
+1. **Using the Robot Generator:**
+   - In the "Window" menu, select "Extensions" → "Isaac" → "Robot Generator"
+   - Use the robot generator to create a simple wheeled robot
+   - Configure the robot with appropriate dimensions and wheel properties
+
+2. **Alternatively, import a URDF:**
+   - If you have a URDF file from previous modules, you can import it:
+   - In the "Window" menu, select "Extensions" → "URDF Importer"
+   - Browse to your URDF file and import it
+   - The robot should appear in the scene with all its joints and links
+
+3. **Configure Differential Drive Controller:**
+   - Select your robot in the Stage panel
+   - In the Property panel, add a "Differential Controller" component
+   - Configure the controller with appropriate wheel separation and radius values
+
+4. **Add Sensors:**
+   - Right-click on your robot in the Stage panel
+   - Select "Add" → "Sensor" → "RGB Camera" to add a camera
+   - Position the camera appropriately on your robot
+   - You can also add other sensors like LiDAR, depth cameras, etc.
+
+**Expected result:** A robot model is created or imported with differential drive control and at least one sensor.
+
+## Step 5: Set up a Basic Environment
+
+Create a simple environment for your robot to navigate.
+
+### Instructions
+
+1. **Add Ground Plane:**
+   - In the "Create" menu, select "Ground Plane"
+   - Adjust the size as needed
+
+2. **Add Obstacles:**
+   - Add cubes, cylinders, or other shapes to create obstacles
+   - Position them to create a simple maze or navigation challenge
+
+3. **Configure Lighting:**
+   - In the "Create" menu, select "Light" → "Distant Light" for sun-like lighting
+   - Adjust intensity and direction as needed
+   - You can also add dome lights or other light sources
+
+4. **Add Textures and Materials:**
+   - In the "Window" menu, open the "Content Browser"
+   - Browse to available textures and materials
+   - Apply different materials to your ground plane and obstacles for visual distinction
+
+**Expected result:** A simple environment is created with ground, obstacles, lighting, and materials.
+
+## Step 6: Control the Robot
+
+Control your robot using Isaac Sim's scripting capabilities.
+
+### Instructions
+
+1. **Open the Script Editor:**
+   - In the "Window" menu, select "Script Editor"
+
+2. **Create a simple movement script:**
+   ```python
+   import omni
+   from pxr import Gf
+   import carb
+
+   # Get the differential controller for your robot
+   try:
+       # Replace "my_robot" with your robot's prim path
+       diff_controller = omni.isaac.wheeled_robots.controllers.DifferentialController(
+           name="simple_diff_controller",
+           wheel_radius=0.1,  # Adjust to match your robot
+           wheel_base=0.4     # Adjust to match your robot
+       )
+       
+       # Set target velocities (linear and angular)
+       command = [1.0, 0.5]  # Move forward at 1 m/s with slight turn
+       diff_controller.forward(command)
+       
+       print("Robot movement command sent!")
+       
+   except Exception as e:
+       print(f"Error controlling robot: {e}")
+   ```
+
+3. **Run the script:**
+   - Paste the script in the Script Editor
+   - Click the "Run" button
+   - Your robot should start moving in the simulation
+
+4. **Alternative: Use ROS 2 Bridge:**
+   - Isaac Sim has built-in ROS 2 bridge capabilities
+   - You can control your robot using ROS 2 topics like `/cmd_vel`
+   - Enable the ROS 2 bridge extension in Isaac Sim
+
+**Expected result:** Your robot moves in the simulation based on the control commands.
+
+## Step 7: Capture Synthetic Data
+
+Learn how to capture synthetic data from Isaac Sim.
+
+### Instructions
+
+1. **Camera Data:**
+   - If you added an RGB camera to your robot, you can capture images
+   - In the "Window" menu, open "Isaac Examples" → "Sensors" → "Camera Publisher"
+   - This will publish camera images that can be captured and saved
+
+2. **LiDAR Data:**
+   - If you added a LiDAR sensor, you can capture point cloud data
+   - Use the appropriate publisher extension for LiDAR data
+
+3. **Data Logging:**
+   - Isaac Sim can log various sensor data streams
+   - Use the "Dataset Capture" extension to automatically collect sensor data
+   - Configure the dataset capture with appropriate settings for your use case
+
+4. **Synthetic Dataset Creation:**
+   - Use the "Synthetic Data" extension to generate datasets
+   - Configure parameters like lighting variations, object positions, etc.
+   - Run the simulation to generate diverse synthetic data
+
+**Expected result:** You can capture various types of sensor data from your simulation for AI training.
+
+## Key Takeaways
+
+**What you learned:**
+- How to install and launch NVIDIA Isaac Sim
+- How to create and configure a robot model in Isaac Sim
+- How to set up environments and control robots
+- How to capture synthetic data for AI training
+
+## Next Steps
+
+Now that you've mastered Isaac Sim basics, you're ready to:
+
+1. **Try it yourself:** Create more complex environments and robot behaviors
+2. **Go deeper:** Explore advanced Isaac Sim features like reinforcement learning environments
+3. **Apply it:** Use Isaac Sim for generating synthetic training data for your AI models
+
+### Related Chapters
+
+- [Isaac ROS: Hardware-Accelerated Perception](../module-3-isaac/week-9-isaac-ros-vslam)
+- [Nav2: Path Planning for Humanoid Movement](../module-3-isaac/week-10-nav2-rl)
+
+## Practice Exercises
+
+### Exercise 1: Create Navigation Challenge
+
+**Challenge:** Design a more complex environment with multiple rooms, doors, and obstacles. Program your robot to navigate from a start point to an end point using path planning algorithms.
+
+**Hints:**
+- Use the Stage panel to organize your scene hierarchically
+- Consider adding fiducial markers for localization
+- Think about how you would implement a simple path planner in the simulation
+- Consider adding dynamic obstacles that move during simulation
+
+**Solution:** Available in `examples/isaac-sim/navigation-challenge.usd`
+
+---
+
+## References
+
+- [NVIDIA Isaac Sim Documentation](https://docs.omniverse.nvidia.com/isaacsim/latest/index.html)
+- [Isaac Sim Tutorials](https://docs.omniverse.nvidia.com/isaacsim/latest/tutorial.html)
+- [NVIDIA Omniverse](https://www.nvidia.com/en-us/omniverse/)
+- [Synthetic Data Generation Guide](https://docs.omniverse.nvidia.com/isaacsim/latest/features/synthetic_data_generation.html)

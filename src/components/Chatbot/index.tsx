@@ -27,7 +27,11 @@ const Chatbot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/chat', {
+      // Use environment variable for API URL, fallback to localhost for development
+      // For Vercel deployment, set REACT_APP_API_URL to your backend API endpoint
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/chat';
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -38,6 +42,7 @@ const Chatbot: React.FC = () => {
       const data = await response.json();
       setMessages(prev => [...prev, { role: 'assistant', text: data.answer }]);
     } catch (error) {
+      console.error('Chat error:', error);
       setMessages(prev => [...prev, { role: 'assistant', text: 'Sorry, I encountered an error. Please try again later.' }]);
     } finally {
       setIsLoading(false);

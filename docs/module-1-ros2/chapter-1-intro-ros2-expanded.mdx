@@ -1,0 +1,258 @@
+---
+# ============================================================================
+# TUTORIAL: Setting up ROS 2 Environment
+# ============================================================================
+
+# REQUIRED METADATA (Replace ALL values below)
+title: Setting up ROS 2 Environment
+description: Learn how to install and configure ROS 2 (Humble Hawksbill) on Ubuntu 22.04 for robotics development
+keywords: [ros2, humble, ubuntu, setup, installation, configuration, robotics]
+sidebar_position: 1
+learning_objectives:
+  - Understand the ROS 2 architecture and core concepts
+  - Apply the installation procedure for ROS 2 Humble Hawksbill
+  - Implement a basic ROS 2 workspace setup
+  - Demonstrate the creation of a simple ROS 2 package
+
+# Prerequisites: paths to required chapters (use "docs/path/to/chapter" format)
+# Use empty array [] if no prerequisites
+prerequisites:
+  - docs/week-1-foundations
+  - docs/week-2-sensors
+
+# Estimated completion time in minutes (must be multiple of 5: 15, 30, 45, 60, etc.)
+estimated_time: 60
+
+# Content type (DO NOT CHANGE for this template)
+content_type: tutorial
+
+# Difficulty level: beginner | intermediate | advanced
+difficulty: beginner
+
+# OPTIONAL METADATA (Uncomment if needed)
+# tags: [ros2, python, hands-on]  # For tag-based filtering
+# draft: true  # Hide from production builds during authoring
+# pagination_prev: docs/previous-chapter  # Override default previous link
+# pagination_next: docs/next-chapter      # Override default next link
+---
+
+<LearningObjectives objectives={frontMatter.learning_objectives} />
+<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+
+# {frontMatter.title}
+
+## Introduction
+
+In this tutorial, you'll learn how to install and configure ROS 2 (Robot Operating System 2) on Ubuntu 22.04. By the end, you'll have a fully functional ROS 2 development environment ready for robotics development.
+
+**Why this matters:** ROS 2 is the middleware that enables communication between different parts of a robot system. Understanding how to set it up properly is fundamental to all subsequent robotics development in this course.
+
+## Prerequisites and Setup
+
+Before you begin, ensure you have:
+
+- **Operating System:** Ubuntu 22.04 LTS (recommended) or Ubuntu 20.04 LTS
+- **Hardware:** At least 4GB RAM, 20GB free disk space
+- **Internet Connection:** Required for package downloads
+- **Knowledge:** Basic command line familiarity
+
+### Verify Your Environment
+
+```bash
+# Check Ubuntu version
+lsb_release -a
+# Expected output: Ubuntu 22.04.x LTS
+```
+
+## Step 1: Configure Ubuntu Repositories
+
+First, ensure your Ubuntu system has the necessary repositories enabled for ROS 2 installation.
+
+### Instructions
+
+1. Enable universe repository:
+   ```bash
+   sudo apt update && sudo apt install -y locales
+   sudo locale-gen en_US en_US.UTF-8
+   sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+   export LANG=en_US.UTF-8
+   ```
+
+2. Add the ROS 2 GPG key:
+   ```bash
+   sudo apt update && sudo apt install -y curl gnupg lsb-release
+   sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+   ```
+
+3. Add the ROS 2 repository to your sources list:
+   ```bash
+   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+   ```
+
+**Expected result:** The ROS 2 repository is added to your system. If not, check that you're using a supported Ubuntu version.
+
+## Step 2: Install ROS 2 Humble Hawksbill
+
+Now that the repository is configured, install the ROS 2 desktop package which includes all necessary components.
+
+### Instructions
+
+1. Update apt repository cache:
+   ```bash
+   sudo apt update
+   ```
+
+2. Install ROS 2 Humble Hawksbill desktop package:
+   ```bash
+   sudo apt install -y ros-humble-desktop
+   ```
+
+3. Install colcon build tool:
+   ```bash
+   sudo apt install -y python3-colcon-common-extensions
+   ```
+
+4. Install additional dependencies:
+   ```bash
+   sudo apt install -y python3-rosdep python3-vcstool
+   ```
+
+5. Initialize rosdep:
+   ```bash
+   sudo rosdep init
+   rosdep update
+   ```
+
+**Expected result:** All ROS 2 packages are installed successfully without errors.
+
+## Step 3: Set up ROS 2 Environment
+
+Configure your shell environment to use ROS 2 commands and tools.
+
+### Instructions
+
+1. Source the ROS 2 setup script in your current terminal:
+   ```bash
+   source /opt/ros/humble/setup.bash
+   ```
+
+2. Add the source command to your bashrc to make it permanent:
+   ```bash
+   echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+   ```
+
+3. Reload your bash configuration:
+   ```bash
+   source ~/.bashrc
+   ```
+
+4. Verify the installation:
+   ```bash
+   printenv | grep -i ros
+   ```
+   
+   You should see environment variables like `ROS_DISTRO=humble` and `ROS_VERSION=2`.
+
+**Expected result:** ROS 2 environment variables are properly set in your terminal.
+
+## Step 4: Create a ROS 2 Workspace
+
+Set up a workspace where you'll develop your own ROS 2 packages.
+
+### Instructions
+
+1. Create a workspace directory:
+   ```bash
+   mkdir -p ~/ros2_ws/src
+   cd ~/ros2_ws
+   ```
+
+2. Build the workspace:
+   ```bash
+   colcon build
+   ```
+
+3. Source the workspace:
+   ```bash
+   source install/setup.bash
+   ```
+
+4. Add workspace sourcing to your bashrc:
+   ```bash
+   echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
+   source ~/.bashrc
+   ```
+
+**Expected result:** A functional ROS 2 workspace is created and sourced.
+
+## Step 5: Create Your First ROS 2 Package
+
+Create a simple ROS 2 package to verify everything is working correctly.
+
+### Instructions
+
+1. Navigate to your workspace source directory:
+   ```bash
+   cd ~/ros2_ws/src
+   ```
+
+2. Create a new package using ros2 pkg:
+   ```bash
+   ros2 pkg create --build-type ament_python my_first_ros2_pkg
+   ```
+
+3. Navigate to the package directory:
+   ```bash
+   cd my_first_ros2_pkg
+   ```
+
+4. List the package structure:
+   ```bash
+   ls -la
+   ```
+   
+   You should see the package structure with folders like `my_first_ros2_pkg`, `launch`, `test`, etc.
+
+**Expected result:** A new ROS 2 package named `my_first_ros2_pkg` is created with the proper structure.
+
+## Key Takeaways
+
+**What you learned:**
+- How to install ROS 2 Humble Hawksbill on Ubuntu 22.04
+- How to configure the ROS 2 environment
+- How to create a ROS 2 workspace
+- How to create a new ROS 2 package
+
+## Next Steps
+
+Now that you've mastered ROS 2 setup, you're ready to:
+
+1. **Try it yourself:** Experiment with different ROS 2 package creation options
+2. **Go deeper:** Explore the ROS 2 documentation for more advanced workspace configurations
+3. **Apply it:** Use this workspace for the upcoming ROS 2 tutorials
+
+### Related Chapters
+
+- [Nodes, Topics, and Messages in ROS 2](../module-1-ros2/chapter-2-nodes-topics)
+- [Creating Your First ROS 2 Publisher and Subscriber](../module-1-ros2/chapter-2-nodes-topics)
+
+## Practice Exercises
+
+### Exercise 1: Verify Installation
+
+**Challenge:** Create a simple publisher node in your new package that publishes "Hello, ROS 2!" to a topic called "hello".
+
+**Hints:**
+- Look at the ROS 2 tutorials for Python publisher examples
+- Remember to use the proper ROS 2 Python package structure
+- Make sure to create a launch file for easy execution
+
+**Solution:** Available in `examples/ros2-setup/exercise1-solution.py`
+
+---
+
+## References
+
+- [Official ROS 2 Humble Hawksbill Installation Guide](https://docs.ros.org/en/humble/Installation.html)
+- [ROS 2 Tutorials](https://docs.ros.org/en/humble/Tutorials.html)
+- [Ubuntu Installation Guide](https://ubuntu.com/download/desktop)

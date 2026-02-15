@@ -1,282 +1,385 @@
 ---
-title: "Capstone: Autonomous Humanoid System"
-description: Complete 5-step architecture guide for the autonomous humanoid project integrating all course modules
-keywords: [autonomous humanoid, capstone, VLA, robotics, AI, ROS 2, Isaac Sim, Gazebo, perception, navigation, manipulation]
+title: "Capstone Project Guide: Autonomous Humanoid Robot"
+description: "Complete guide for the autonomous humanoid capstone project integrating all course components"
+keywords: ["capstone", "humanoid", "autonomous", "project", "integration", "robotics"]
 sidebar_position: 1
-sidebar_label: "Autonomous Humanoid Capstone"
-estimated_time: 30
+sidebar_label: "Capstone Project Guide"
+estimated_time: 15
 week: 13
 module: 4
-prerequisites: ["module-1-ros2", "module-2-digital-twin", "module-3-isaac", "module-4-vla-humanoids"]
+prerequisites: ["module-4-vla-humanoids/week-13-conversational-vla"]
 learning_objectives:
-  - Design and implement a complete autonomous humanoid system integrating all course modules
-  - Execute the 5-step voice → plan → navigate → perceive → manipulate pipeline
-  - Validate system performance through comprehensive testing and evaluation
-  - Document and present the final capstone project to technical audiences
+  - "Synthesize all course knowledge into a complete autonomous humanoid system"
+  - "Implement the complete voice-to-action pipeline: Voice Input → Plan → Navigate → Perceive → Manipulate"
+  - "Integrate multimodal AI with Vision-Language-Action models"
+  - "Design and execute a comprehensive testing and validation plan"
+assessment_type: "project"
+difficulty_level: "advanced"
+capstone_component: null
 ---
 
-import LearningObjectives from '@site/src/components/LearningObjectives';
-import Prerequisites from '@site/src/components/Prerequisites';
+# Capstone Project Guide: Autonomous Humanoid Robot
 
-# Capstone: Autonomous Humanoid System
+## Overview
 
-<LearningObjectives objectives={frontMatter.learning_objectives} />
-<Prerequisites prereqs={frontMatter.prerequisites} estimatedTime={frontMatter.estimated_time} />
+The capstone project represents the culmination of your learning in the Physical AI & Humanoid Robotics course. You will design, implement, and validate a complete autonomous humanoid robot system that demonstrates the integration of all course components.
 
----
+### The Complete Pipeline
 
-## Capstone Overview
+Your system will implement the complete pipeline:
+**Voice Input → Plan → Navigate → Perceive → Manipulate**
 
-The Autonomous Humanoid System represents the culmination of all skills learned throughout this course. This capstone project integrates all four modules to create a complete system that can receive voice commands and execute them as physical actions.
+This represents a sophisticated autonomous system capable of understanding natural language commands, planning complex tasks, navigating environments, perceiving objects and situations, and manipulating objects to complete tasks.
 
-Your system will implement the following 5-step architecture:
+## Project Phases
 
-1. **Voice**: Receive and interpret natural language commands
-2. **Plan**: Decompose high-level commands into executable robot behaviors
-3. **Navigate**: Move the humanoid to required locations
-4. **Perceive**: Sense and understand the environment
-5. **Manipulate**: Execute physical interactions with objects
+### Phase 1: System Design and Architecture (Week 1)
 
-## 5-Step Architecture Guide
+**Duration**: 2 days
 
-### Step 1: Voice → Natural Language Processing
+**Deliverables**:
+- System architecture diagram
+- Component interface specifications
+- Technology stack selection
+- Risk assessment and mitigation plan
 
-**Module 4 (VLA & Humanoids)** provides the foundation for voice command processing:
+**Activities**:
+1. **Requirements Analysis**: Review the complete pipeline requirements
+2. **Architecture Design**: Design the system architecture with all components
+3. **Technology Selection**: Choose appropriate technologies for each component
+4. **Risk Assessment**: Identify potential risks and mitigation strategies
+5. **Timeline Planning**: Create a detailed project timeline
 
-- **Speech-to-Text**: Convert spoken commands to text using speech recognition APIs
-- **Intent Understanding**: Use Large Language Models (LLMs) to interpret user intent
-- **Command Parsing**: Extract relevant information (objects, locations, actions) from commands
+### Phase 2: Component Implementation (Weeks 2-4)
 
-**Example Pipeline**:
-```
-User: "Please bring me the red cup from the kitchen table"
-    ↓
-[Speech Recognition] → "Please bring me the red cup from the kitchen table"
-    ↓
-[LLM Parser] → Intent: "bring_object", Object: "red cup", Location: "kitchen table"
-```
+**Duration**: 3 weeks
 
-### Step 2: Plan → Task Decomposition
+**Deliverables**:
+- Voice input and natural language processing module
+- Planning and task decomposition system
+- Navigation and path planning module
+- Perception and computer vision system
+- Manipulation and control module
 
-**Module 4 (VLA & Humanoids)** and **Module 3 (Isaac Sim)** enable task planning:
+**Activities**:
+1. **Voice Input Module**: Implement speech recognition and natural language understanding
+2. **Planning System**: Create task decomposition and planning algorithms
+3. **Navigation Module**: Implement localization, mapping, and path planning
+4. **Perception System**: Develop object detection, recognition, and scene understanding
+5. **Manipulation Module**: Implement grasp planning and manipulation control
 
-- **Behavior Trees**: Structure complex tasks as sequences of simpler behaviors
-- **Path Planning**: Plan navigation routes avoiding obstacles
-- **Action Sequencing**: Order manipulation actions logically (approach → grasp → lift → transport → place)
+### Phase 3: Integration and Testing (Weeks 5-6)
 
-**Example Pipeline**:
-```
-Intent: "bring_object", Object: "red cup", Location: "kitchen table"
-    ↓
-[Task Planner] → Subtasks:
-  1. Navigate to kitchen table
-  2. Locate red cup
-  3. Approach red cup
-  4. Grasp red cup
-  5. Lift red cup
-  6. Navigate to user
-  7. Hand over red cup
-```
+**Duration**: 2 weeks
 
-### Step 3: Navigate → Autonomous Mobility
+**Deliverables**:
+- Integrated system
+- Integration test results
+- Performance benchmarks
+- Bug reports and fixes
 
-**Module 3 (Isaac Sim)** provides navigation capabilities:
+**Activities**:
+1. **Component Integration**: Integrate all components into a cohesive system
+2. **Interface Validation**: Verify component interfaces work correctly
+3. **Performance Testing**: Benchmark system performance
+4. **Bug Fixing**: Address integration issues and bugs
+5. **Optimization**: Optimize system performance
 
-- **SLAM**: Simultaneous Localization and Mapping for environment awareness
-- **Path Planning**: Use Nav2 for global and local path planning
-- **Obstacle Avoidance**: Dynamic obstacle detection and avoidance during navigation
-- **Localization**: Maintain accurate position estimation in the environment
+### Phase 4: Validation and Demonstration (Week 7)
 
-**Example Pipeline**:
-```
-Destination: kitchen table
-    ↓
-[Global Planner] → Path to kitchen table
-    ↓
-[Local Planner] → Velocity commands to follow path
-    ↓
-[Controller] → Motor commands to execute navigation
-```
+**Duration**: 1 week
 
-### Step 4: Perceive → Environmental Awareness
+**Deliverables**:
+- Validated system
+- Demonstration videos
+- Performance analysis
+- Final project report
 
-**Module 2 (Digital Twin) and Module 3 (Isaac Sim)** enable perception:
-
-- **Object Detection**: Identify and locate objects using computer vision
-- **Scene Understanding**: Interpret spatial relationships between objects
-- **Sensor Fusion**: Combine data from multiple sensors (cameras, LiDAR, IMU)
-- **Semantic Mapping**: Associate object identities with spatial locations
-
-**Example Pipeline**:
-```
-Camera Input: Image of kitchen table
-    ↓
-[Object Detection] → Bounding boxes for objects on table
-    ↓
-[Classification] → "Red cup detected at coordinates (x, y, z)"
-    ↓
-[Localization] → Transform coordinates to robot's reference frame
-```
-
-### Step 5: Manipulate → Physical Interaction
-
-**Module 4 (VLA & Humanoids)** enables manipulation:
-
-- **Kinematics**: Calculate joint angles for desired end-effector poses (forward/inverse kinematics)
-- **Grasp Planning**: Determine optimal grasp points and configurations
-- **Force Control**: Apply appropriate forces during manipulation
-- **Trajectory Execution**: Execute smooth, coordinated movements
-
-**Example Pipeline**:
-```
-Object: red cup at (x, y, z)
-    ↓
-[IK Solver] → Joint angles for reaching pose
-    ↓
-[Grasp Planner] → Optimal grasp configuration
-    ↓
-[Controller] → Motor commands to execute grasp
-```
-
-## Chapter Mappings
-
-The following chapters from each module contribute to the capstone system:
-
-### Module 1: ROS 2 (Communication Layer)
-- **Week 3**: ROS 2 Architecture → System communication backbone
-- **Week 4**: Topics & Services → Inter-module communication
-- **Week 5**: URDF → Robot model definition
-
-### Module 2: Digital Twin (Simulation & Testing)
-- **Week 6**: Gazebo Simulation → Safe testing environment
-- **Week 7**: Unity Sensors → Photorealistic sensor simulation
-
-### Module 3: Isaac Sim (Perception & Navigation)
-- **Week 8**: Isaac Sim Setup → GPU-accelerated simulation
-- **Week 9**: VSLAM & Nav2 → Localization and navigation
-- **Week 10**: Reinforcement Learning → Manipulation policy training
-
-### Module 4: VLA & Humanoids (Integration & Control)
-- **Week 11**: Humanoid Kinematics → Manipulation control
-- **Week 12**: Manipulation Primitives → Grasping and manipulation
-- **Week 13**: Conversational VLA → Voice-to-action pipeline
+**Activities**:
+1. **Scenario Testing**: Test system on required scenarios
+2. **Performance Analysis**: Analyze system performance
+3. **Documentation**: Complete project documentation
+4. **Demonstration Preparation**: Prepare for final demonstration
+5. **Final Presentation**: Present and demonstrate the system
 
 ## System Architecture
 
-The complete system architecture integrates all components:
+### High-Level Architecture
 
-```mermaid
-graph TB
-    A[Voice Command] --> B[Speech-to-Text]
-    B --> C[LLM Task Planner]
-    
-    C --> D[Navigate: Nav2]
-    C --> E[Perceive: VSLAM]
-    C --> F[Manipulate: IK/Grasp Planning]
-    
-    D --> G[Motor Controllers]
-    E --> H[Sensor Processing]
-    F --> G
-    
-    G --> I[Physical Robot]
-    H --> I
-    I --> J[System Feedback]
-    
-    J --> C
-    
-    K[Module 1: ROS 2] --> D
-    K --> E
-    K --> F
-    L[Module 2: Simulation] --> D
-    L --> E
-    L --> F
-    M[Module 3: Isaac Sim] --> D
-    M --> E
-    M --> F
-    N[Module 4: VLA] --> B
-    N --> C
-    N --> F
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Voice Input   │    │    Planning     │    │   Navigation    │
+│                 │───▶│                 │───▶│                 │
+│  - Speech Rec.  │    │  - Task Decomp  │    │  - Localization │
+│  - NLU          │    │  - Path Plan    │    │  - Path Planning│
+│  - Intent Rec.  │    │  - Scheduling   │    │  - Obstacle Avoid│
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                              │                        │
+                              ▼                        ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Perception    │    │  Integration    │    │ Manipulation    │
+│                 │───▶│                 │───▶│                 │
+│  - Object Det.  │    │  - Coordination │    │  - Grasp Plan   │
+│  - Scene Und.   │    │  - State Man.   │    │  - Control      │
+│  - Tracking     │    │  - Error Hand.  │    │  - Force Ctrl   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## Capstone Project Requirements
+### Component Specifications
 
-### Functional Requirements
-1. **Voice Interface**: Accept and process natural language commands
-2. **Task Planning**: Decompose high-level commands into executable actions
-3. **Navigation**: Move to specified locations autonomously
-4. **Perception**: Identify and locate specified objects
-5. **Manipulation**: Execute physical interactions with objects
-6. **Integration**: All modules work together seamlessly
+#### Voice Input Module
+- **Responsibility**: Process natural language commands
+- **Inputs**: Audio stream
+- **Outputs**: Parsed commands with intents and entities
+- **Technologies**: Speech recognition API, NLP models
+- **Performance**: &lt;1 second response time
 
-### Technical Requirements
-1. **ROS 2**: All communication uses ROS 2 topics, services, and actions
-2. **Modularity**: Components are modular and reusable
-3. **Documentation**: Comprehensive documentation for all components
-4. **Testing**: Unit tests for critical components
-5. **Performance**: System responds to commands within 30 seconds
+#### Planning Module
+- **Responsibility**: Decompose high-level commands into executable tasks
+- **Inputs**: Parsed commands, environment state
+- **Outputs**: Task sequences and execution plans
+- **Technologies**: Task planners, optimization algorithms
+- **Performance**: &lt;2 seconds for complex plans
 
-### Evaluation Criteria
-- **Functionality** (40%): Does the system complete the requested tasks?
-- **Robustness** (25%): How well does the system handle unexpected situations?
-- **Efficiency** (20%): How efficiently does the system execute tasks?
-- **Documentation** (15%): Quality and completeness of documentation
+#### Navigation Module
+- **Responsibility**: Move the robot safely through the environment
+- **Inputs**: Environment map, target location
+- **Outputs**: Motion commands
+- **Technologies**: SLAM, path planning, motion control
+- **Performance**: 0.5 m/s average speed
 
-## Getting Started
+#### Perception Module
+- **Responsibility**: Understand the environment and objects
+- **Inputs**: Camera feeds, sensor data
+- **Outputs**: Object detections, scene understanding
+- **Technologies**: Computer vision, deep learning
+- **Performance**: 30 FPS processing
 
-1. **Review All Modules**: Ensure you understand all components from previous modules
-2. **Set Up Environment**: Install all required dependencies from previous modules
-3. **Start Simple**: Begin with a basic navigation task before adding complexity
-4. **Iterate**: Build and test components incrementally
-5. **Integrate**: Combine components systematically
+#### Manipulation Module
+- **Responsibility**: Interact with objects in the environment
+- **Inputs**: Object information, task requirements
+- **Outputs**: Manipulation commands
+- **Technologies**: Grasp planning, control algorithms
+- **Performance**: 90% success rate
 
-## Visual Learning Pathway
+## Implementation Guidelines
 
-The following diagram illustrates the progression through the modules and their dependencies for the capstone project:
+### Technology Stack Recommendations
 
-```mermaid
-graph TD
-    A[Week 1-2: Introduction] --> B[Module 1: ROS 2 - Communication Layer]
-    B --> C[Module 2: Digital Twin - Simulation & Sensors]
-    C --> D[Module 3: Isaac Sim - Perception & Navigation]
-    D --> E[Module 4: VLA & Humanoids - Integration & Control]
-    E --> F[Capstone: Autonomous Humanoid System]
+#### Simulation Environment
+- **Isaac Sim**: For realistic physics and rendering
+- **ROS 2 Humble**: For communication and coordination
+- **Isaac ROS**: For perception and control packages
 
-    B -.-> F
-    C -.-> F
-    D -.-> F
+#### Voice Input
+- **Speech Recognition**: Google Speech-to-Text API or Whisper
+- **NLP**: spaCy, NLTK, or Transformers library
+- **Intent Recognition**: Custom model or Rasa
 
-    style A fill:#e1f5fe
-    style F fill:#f3e5f5
-    style B fill:#e8f5e8
-    style C fill:#fff3e0
-    style D fill:#fce4ec
-    style E fill:#f1f8e9
-```
+#### Planning
+- **Task Planning**: PDDL planners or custom implementations
+- **Path Planning**: OMPL or navigation2 stack
+- **Optimization**: OR-Tools or custom algorithms
 
-## Module Dependencies
+#### Perception
+- **Object Detection**: YOLOv8 or Detectron2
+- **Semantic Segmentation**: SegFormer or DeepLab
+- **SLAM**: RTAB-Map or Isaac ROS Visual SLAM
 
-Each module builds upon the previous ones:
+#### Manipulation
+- **Grasp Planning**: GraspNet or custom algorithms
+- **Control**: ROS Control or MoveIt!
+- **Force Control**: Impedance control implementations
 
-- **Module 1 (ROS 2)**: Provides the communication backbone for all subsequent modules
-- **Module 2 (Digital Twin)**: Requires ROS 2 knowledge, provides simulation environment for testing
-- **Module 3 (Isaac Sim)**: Requires ROS 2 and simulation knowledge, adds perception and navigation
-- **Module 4 (VLA & Humanoids)**: Integrates all previous modules, adds voice and manipulation
+### Development Environment
 
-## Capstone Integration Points
+1. **Hardware Requirements**:
+   - NVIDIA RTX GPU (3080 or better)
+   - 32GB+ RAM
+   - Multi-core CPU (8+ cores)
 
-The capstone project integrates components from all modules:
+2. **Software Requirements**:
+   - Ubuntu 22.04 LTS
+   - ROS 2 Humble Hawksbill
+   - Isaac Sim 2023.1+
+   - CUDA 12.2+
+   - Python 3.10+
 
-- **Voice Component**: From Module 4 (VLA & Humanoids)
-- **Planning Component**: From Module 4 (VLA & Humanoids) with LLM integration
-- **Navigation Component**: From Module 3 (Isaac Sim) with Nav2
-- **Perception Component**: From Module 3 (Isaac Sim) with VSLAM
-- **Manipulation Component**: From Module 4 (VLA & Humanoids) with kinematics
+3. **Development Tools**:
+   - VS Code with ROS extensions
+   - Git for version control
+   - Docker for environment consistency
 
-## Resources
+## Testing and Validation
 
-- [Module 1: ROS 2](../module-1-ros2) - Communication backbone
-- [Module 2: Digital Twin](../module-2-digital-twin) - Simulation and testing
-- [Module 3: Isaac Sim](../module-3-isaac) - Perception and navigation
-- [Module 4: VLA & Humanoids](../module-4-vla-humanoids) - Integration and control
-- [Glossary](../references/glossary) - Key terminology
-- [Troubleshooting Guide](../references/troubleshooting) - Common issues and solutions
+### Unit Testing
+- Test each component individually
+- Mock dependencies for isolated testing
+- Achieve >80% code coverage
+
+### Integration Testing
+- Test component interactions
+- Validate data flow between modules
+- Identify and fix interface issues
+
+### System Testing
+- Test complete pipeline functionality
+- Validate performance requirements
+- Assess robustness to failures
+
+### Scenario Testing
+Test your system on these scenarios:
+
+1. **Simple Retrieval**: "Get me the red cup from the kitchen counter"
+2. **Multi-Step Task**: "Go to the living room, find the book on the shelf, and bring it to me"
+3. **Social Interaction**: "Introduce yourself to the person in the blue shirt and ask them how they're doing"
+4. **Problem Solving**: "The door is closed. Figure out how to open it and go through"
+5. **Collaborative Task**: "Help me set the table by placing plates on the dining table"
+
+## Performance Benchmarks
+
+### Required Benchmarks
+- **Voice Recognition**: >90% accuracy in quiet environment
+- **Task Completion**: >80% success rate on test scenarios
+- **Navigation**: >95% success rate in known environment
+- **Object Detection**: >85% accuracy for common objects
+- **Manipulation**: >75% success rate for grasp attempts
+
+### Performance Optimization
+- Profile system bottlenecks
+- Optimize critical paths
+- Implement caching where appropriate
+- Use GPU acceleration effectively
+
+## Documentation Requirements
+
+### Technical Documentation
+1. **System Architecture**: Detailed diagrams and explanations
+2. **Component Interfaces**: API specifications and protocols
+3. **Installation Guide**: Step-by-step setup instructions
+4. **User Manual**: How to operate and troubleshoot the system
+
+### Process Documentation
+1. **Design Decisions**: Rationale for architectural choices
+2. **Iteration Log**: Changes made during development
+3. **Lessons Learned**: Challenges and solutions
+4. **Future Improvements**: Potential enhancements
+
+## Presentation Requirements
+
+### Final Presentation (15 minutes)
+1. **System Overview**: Architecture and components
+2. **Technical Challenges**: Key problems and solutions
+3. **Results**: Performance metrics and scenario completion
+4. **Demonstration**: Live or recorded system operation
+5. **Lessons Learned**: Key insights from the project
+
+### Demonstration
+- Live demonstration preferred
+- Recorded backup if live demo not possible
+- Show system completing at least 3 scenarios
+- Highlight key capabilities and innovations
+
+## Evaluation Criteria
+
+### Technical Execution (40%)
+- System functionality and completeness
+- Quality of implementation
+- Performance benchmarks
+- Innovation and creativity
+
+### Integration (25%)
+- Quality of component integration
+- Data flow and coordination
+- Error handling and recovery
+- System robustness
+
+### Documentation (15%)
+- Completeness and clarity
+- Technical accuracy
+- Usability for others
+- Process documentation
+
+### Presentation (20%)
+- Clarity and organization
+- Technical depth
+- Demonstration quality
+- Response to questions
+
+## Resources and References
+
+### Course Integration
+- Review all module materials for component implementation
+- Leverage code examples from previous assignments
+- Apply lessons learned throughout the course
+
+### External Resources
+- [ROS 2 Documentation](https://docs.ros.org/en/humble/)
+- [Isaac Sim Documentation](https://docs.omniverse.nvidia.com/isaacsim/latest/)
+- [Isaac ROS Documentation](https://nvidia-isaac-ros.github.io/)
+- [Robotics Research Papers](https://arxiv.org/list/cs.RO/recent)
+
+### Community Support
+- ROS Discourse forums
+- NVIDIA Developer forums
+- Course discussion boards
+- Peer collaboration
+
+## Timeline and Milestones
+
+### Week 1: System Design
+- [ ] Complete requirements analysis
+- [ ] Design system architecture
+- [ ] Select technology stack
+- [ ] Create project timeline
+
+### Week 2: Voice and Planning
+- [ ] Implement voice input module
+- [ ] Develop planning algorithms
+- [ ] Test individual components
+- [ ] Integrate voice with planning
+
+### Week 3: Navigation and Perception
+- [ ] Implement navigation module
+- [ ] Develop perception system
+- [ ] Test individual components
+- [ ] Integrate navigation with perception
+
+### Week 4: Manipulation and Integration
+- [ ] Implement manipulation module
+- [ ] Integrate all components
+- [ ] Conduct initial system tests
+- [ ] Identify and fix integration issues
+
+### Week 5: Optimization and Testing
+- [ ] Optimize system performance
+- [ ] Conduct comprehensive testing
+- [ ] Fix bugs and issues
+- [ ] Benchmark system performance
+
+### Week 6: Validation and Documentation
+- [ ] Validate system on scenarios
+- [ ] Complete technical documentation
+- [ ] Prepare presentation materials
+- [ ] Practice demonstration
+
+### Week 7: Final Preparation
+- [ ] Final system testing
+- [ ] Complete all documentation
+- [ ] Prepare for presentation
+- [ ] Deliver final presentation
+
+## Success Strategies
+
+1. **Start Early**: Begin with system design and architecture
+2. **Iterate Frequently**: Test components early and often
+3. **Focus on Integration**: Plan for integration from the start
+4. **Document Progress**: Keep detailed records of decisions and changes
+5. **Seek Feedback**: Regularly consult with instructors and peers
+6. **Plan for Failure**: Design robust error handling and recovery
+
+## Conclusion
+
+The capstone project is your opportunity to demonstrate mastery of all course concepts by creating a sophisticated autonomous humanoid system. Success requires careful planning, systematic implementation, and thorough testing. Focus on creating a robust, well-integrated system that demonstrates the complete voice-to-action pipeline.
+
+Remember to document your process, seek help when needed, and enjoy the challenge of bringing together everything you've learned. Good luck!
