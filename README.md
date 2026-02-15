@@ -1,6 +1,9 @@
 <<<<<<< HEAD
+
 # -Textbook-for-Teaching-Physical-AI-Humanoid-Robotics-Course-
+
 =======
+
 # Physical AI & Humanoid Robotics Textbook
 
 > Comprehensive 13-week textbook for industry practitioners: ROS 2, Digital Twin (Gazebo/Unity), NVIDIA Isaac Sim, and Vision-Language-Action models.
@@ -11,6 +14,7 @@
 ## Overview
 
 This textbook provides hands-on training for building autonomous humanoid robots using:
+
 - **ROS 2** (Weeks 3-5): Robot Operating System fundamentals
 - **Digital Twin** (Weeks 6-7): Gazebo and Unity simulation
 - **NVIDIA Isaac Sim** (Weeks 8-10): GPU-accelerated simulation and synthetic data
@@ -41,7 +45,7 @@ Choose one of three hardware configurations:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Ameen-Alam/Physical-AI-Humanoid-Robotics-Textbook.git
+https://github.com/ABEERAHMED2024/-Textbook-for-Teaching-Physical-AI-Humanoid-Robotics-Course-.git
 cd Physical-AI-Humanoid-Robotics-Textbook
 
 # Install dependencies
@@ -58,6 +62,7 @@ For detailed setup instructions, see [`specs/001-book-master-plan/quickstart.md`
 ## Documentation Site
 
 This project uses [Docusaurus 3](https://docusaurus.io/) with:
+
 - Dashboard-style homepage with module cards
 - Nested sidebar with collapsible categories
 - Hybrid search (Algolia + Flexsearch for glossary)
@@ -92,6 +97,7 @@ Physical-AI-Humanoid-Robotics-Textbook/
 ## Contributing
 
 We welcome contributions! Please see the [Quickstart Guide](specs/001-book-master-plan/quickstart.md) for:
+
 - Development setup
 - Creating new chapters
 - Running quality checks
@@ -100,6 +106,7 @@ We welcome contributions! Please see the [Quickstart Guide](specs/001-book-maste
 ### Quality Gates
 
 All PRs must pass:
+
 - Build with 0 errors/warnings
 - Link validation (0 broken links)
 - Lighthouse scores: Performance ≥90, Accessibility ≥95, SEO ≥95
@@ -132,15 +139,19 @@ This project follows **Spec-Driven Development (SDD)** using [Spec-Kit Plus](htt
 ## Features
 
 ### RAG Chatbot
+
 Integrated chatbot that answers questions about the textbook content using Retrieval-Augmented Generation (RAG) technology.
 
 ### Authentication System
+
 Secure sign-up and sign-in functionality with background information collection to personalize the learning experience.
 
 ### Content Personalization
+
 Personalize textbook content based on your software and hardware background for a tailored learning experience.
 
 ### Urdu Translation
+
 Translate textbook content to Urdu with a single click (available to authenticated users).
 
 ## Roadmap
